@@ -1,25 +1,23 @@
 #include "RegrasVel.hpp"
 #include "Regras.hpp"
+#include "robotino.hpp"
 #include <iostream>
 
 using namespace std;
 
-template <class Owner>
-void TurboBackward<Owner>::executar(){
+void TurboBackward::executar(){
     cout << "Turbo Backward" << endl;
+    this->owner->setVelocity(200,0,0);
 }
 
-template <class Owner>
-void VeryFastBackward<Owner>::executar(){
+void VeryFastBackward::executar(){
     cout << "Very Fast Backward" << endl;
 }
 
-template <class Owner>
-void FastBackward<Owner>::executar(){
+void FastBackward::executar(){
     cout << "Fast Backward" << endl;
 }
 
-template <class Owner>
-void Backward<Owner>::executar(){
+void Backward::executar(){
     cout << "Backward" << endl;
 }

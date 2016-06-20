@@ -1,7 +1,6 @@
 #include "robotinotest.hpp"
 #include "robotino.hpp"
-#include "Classificadores.hpp"
-#include "TabelaRegrasVel.hpp"
+
 //*****************************************************************************************************************
 // Test
 //*****************************************************************************************************************
@@ -27,20 +26,15 @@ void Test::execute(Robotino *robotino)
 {
     std::cout << "Running Test...\n";
     if(false == robotino->bumper()){
-        ClassificadorAngulo CA;
-        ClassificadorDistancia CD;
-        TabelaRegrasVel tabReg(robotino);
         if(robotino->odometryX() < 1200){
-            robotino->setVelocity(200,0,0);
-            std::cout << robotino->odometryX() << "\n";
-            std::cout << robotino->odometryY() << "\n";
-            //tabReg.acharRegra(CA.classificar(-180),CD.classificar(0.5));
-
+            //robotino->setVelocity(200,0,0);
+            //std::cout << robotino->odometryX() << "\n";
+           // std::cout << robotino->odometryY() << "\n";
             std::cout << robotino->ir_distance(Robotino::IF_FRONTAL) << "\n";
         }else if(robotino->odometryY() > -900){
-            robotino->setVelocity(0,-200,0);
-            std::cout << robotino->odometryX() << "\n";
-            std::cout << robotino->odometryY() << "\n";
+            //robotino->setVelocity(0,-200,0);
+            //std::cout << robotino->odometryX() << "\n";
+            //std::cout << robotino->odometryY() << "\n";
             std::cout << robotino->ir_distance(Robotino::IF_FRONTAL) << "\n";
         }
         else{
