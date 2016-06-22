@@ -1,9 +1,13 @@
 #include "robotino.hpp"
+#include <cmath>
 
 Robotino::Robotino(const char *hostname,
     State<Robotino> *initial_state):
     BaseCom(hostname),
-    RobotBase<Robotino>(this, initial_state){
+    RobotBase<Robotino>(this, initial_state),
+    x_d(1600),
+    y_d(900),
+    theta_d(45){
     // Connect
     try
     {
@@ -76,6 +80,10 @@ void Robotino::setVelocity(float vx, float vy, float omega){
     this->omniDrive.setVelocity(vx,vy,omega);
 }
 
+float Robotino::calc_dist(float x1, float x2, float y1, float y2){
+    return std::sqrt(std::pow(x1-x2,2)+std::pow(y1-y2,2));
+}
+
 void Robotino::update(){
     try{
         if(this->isConnected()){
@@ -95,6 +103,49 @@ void Robotino::update(){
     }
     catch( ... ){
         std::cerr << "Unknow Error" << std::endl;
+    }
+}
+
+void Robotino::obstacleDetectionUnit(float & d_obs,float & theta_obs){
+    float dist;
+    float min_dist = 9999;
+    unsigned int i_min=-1;
+    for(unsigned int i=0;i<9;i++){
+        dist = this->ir_distance(i);
+        if(dist < min_dist){
+            min_dist = dist;
+            i_min = i;
+        }
+    }
+    d_obs = min_dist;
+    switch(i_min){
+        case IR_FRONTAL:
+            theta_obs = 40;
+            break;
+        case IR_F_ESQUERDO:
+            theta_obs = 40;
+            break;
+        case IR_ESQUERDO_1:
+            theta_obs = 80;
+            break;
+        case IR_ESQUERDO_2:
+            theta_obs = 120;
+            break;
+        case IR_T_ESQUERDO:
+            theta_obs = 160;
+            break;
+        case IR_T_DIREITO:
+            theta_obs = -160;
+            break;
+        case IR_DIREITO_2:
+            theta_obs = -120;
+            break;
+        case IR_DIREITO_1:
+            theta_obs = -80;
+            break;
+        case IR_F_DIREITO:
+            theta_obs = -40;
+            break;
     }
 }
 

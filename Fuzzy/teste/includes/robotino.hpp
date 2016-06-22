@@ -22,15 +22,15 @@ public:
         M_DIREITO = 2
     };
     enum Infra: unsigned int {
-        IF_FRONTAL = 0,
-        IF_F_ESQUERDO = 1,
-        IF_ESQUERDO_1 = 2,
-        IF_ESQUERDO_2 = 3,
-        IF_T_ESQUERDO = 4,
-        IF_T_DIREITO = 5,
-        IF_DIREITO_2 = 6,
-        IF_DIREITO_1 = 7,
-        IF_F_DIREITO = 8
+        IR_FRONTAL = 0,
+        IR_F_ESQUERDO = 1,
+        IR_ESQUERDO_1 = 2,
+        IR_ESQUERDO_2 = 3,
+        IR_T_ESQUERDO = 4,
+        IR_T_DIREITO = 5,
+        IR_DIREITO_2 = 6,
+        IR_DIREITO_1 = 7,
+        IR_F_DIREITO = 8
     };
 
     // Return the bumper state
@@ -53,6 +53,20 @@ public:
 
     //Set velocitys in X, Y and Omega
     void setVelocity(float, float, float);
+
+    void obstacleDetectionUnit(float &, float &);
+
+    // Calculate distance
+    float calc_dist(float x1, float y1, float x2, float y2);
+
+    // Variaveis necessárias
+    float d_obs;
+    float theta_obs;
+    float x_d;
+    float y_d;
+    float theta_d;
+    float d_e;
+    float theta_e;
 
 private:
     OmniDrive omniDrive;

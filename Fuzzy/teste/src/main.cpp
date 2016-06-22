@@ -9,7 +9,7 @@
 #include "rec/core_lt/Timer.h"
 
 #include "robotino.hpp"
-#include "robotinotest.hpp"
+#include "avoidancecontrol.hpp"
 
 using namespace rec::robotino::com;
 
@@ -22,7 +22,7 @@ int main( int argc, char **argv )
 		hostname = argv[1];
 	}
 
-	Robotino robo(hostname.c_str(), Test::instance());
+	Robotino robo(hostname.c_str(), AvoidanceControl::instance());
 
 	while(true){
 		try{
