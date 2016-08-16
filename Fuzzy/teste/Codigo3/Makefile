@@ -6,14 +6,14 @@ INCPATH2 = $(OPENROBOTINOAPI_DIR)/share/include
 NOME_EXECUTAVEL = pertinencia
 CPP_FILES := $(wildcard src/*.cpp)
 OBJ_FILES := $(addprefix obj/,$(notdir $(CPP_FILES:.cpp=.o)))
-CXXFLAGS = -O2 -g -Wall -std=c++0x -I$(INCPATH) -I$(INCPATH2)
+CXXFLAGS = -O2 -g -Wall -std=c++0x -I$(INCPATH) -I$(INCPATH2) 
 
 SOURCE = src
 BUILD = build
 
-LIBS = -I includes/
+LIBS = -I includes/ `pkg-config --libs opencv`
 
-CFLAGS = -Dlinux32 -Wall -I$(INCPATH) -I$(INCPATH2)
+CFLAGS = -Dlinux32 -Wall -I$(INCPATH) -I$(INCPATH2) `pkg-config --cflags opencv`
 LDFLAGS += -Wl,-rpath,$(LIBPATH),-rpath,$(LIBPATH2) -L$(LIBPATH) -L$(LIBPATH2) -lrec_robotino_com -lrec_core_lt
 CC = g++
 OBJ = main.o

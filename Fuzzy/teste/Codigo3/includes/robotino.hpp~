@@ -2,15 +2,28 @@
 #define ROBOTINO_HPP
 
 #include "rec/robotino/com/all.h"
-#include "mycamera.hpp"
+#include "rec/robotino/com/JPGCamera.h"
 #include "basecom.hpp"
 #include "robotbase.hpp"
-#include <opencv2/opencv.hpp>
 
+class MyCamera:public JPGCamera{
+    /*void imageReceivedEvent(const unsigned char* data,
+                                                                     unsigned int dataSize,
+                                                                                                 unsigned int width,
+                                                                                                 unsigned int height,
+                                                                                                 unsigned int numChannels,
+                                                                                                 unsigned int bitsPerChannel,
+                                                                                                 unsigned int step){
+        std::cout << "Imagem recebida\n";
+    }*/
+    void jpgReceivedEvent( const unsigned char* jpgData,
+                                  unsigned int jpgDataSize ){
+        std::cout << "Imagem recebida\n";
+    }
+};
 
 class Robotino: public BaseCom, public RobotBase<Robotino>{
 public:
-
     Robotino(const char *hostname,
                 State<Robotino> *initial_state);
 
@@ -37,7 +50,7 @@ public:
         IR_F_DIREITO = 8
     };
 
-    //void definirEstado();
+    void definirEstado();
 
     // Return the bumper state
     bool bumper();
@@ -74,18 +87,13 @@ public:
     float d_e;
     float theta_e;
 
-    void setImage(cv::Mat image);
-
-    cv::Mat getImage();
-
 private:
     OmniDrive omniDrive;
     rec::iocontrol::remotestate::SensorState currentSensorState;
     rec::iocontrol::remotestate::SetState setState;
     Odometry odometry;
-    MyCamera<Robotino> camera;
-    // Imagem da camera
-    cv::Mat cameraImage;
+public:
+    MyCamera camera;
 
 };
 

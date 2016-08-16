@@ -5,6 +5,8 @@
 #include "defuzzyficador.hpp"
 #include <vector>
 #include <cmath>
+#include <opencv2/highgui/highgui.hpp>
+#include <opencv2/opencv.hpp>
 
 #define PI 3.14159265
 //*****************************************************************************************************************
@@ -195,11 +197,13 @@ void AvoidanceControl::execute(Robotino *robotino)
     //     std::cout << theta_d[i] << " ";
     // }
     // std::cout << std::endl;
-
-    //std::cout << robotino->camera.isStreaming() << "\n";
-    robotino->setImageServerPort(12);
-    //robotino->definirEstado();
-    std::cout << robotino->imageServerPort() << "\n";
+    //for (int i = 0; i < 1827; ++i)
+    //{
+    //        std::cout << (unsigned int)robotino->getImage()[i] << " ";
+    //}
+    std::cout << robotino->getImage();
+    cv::imshow("Amor", robotino->getImage());
+    cv::waitKey(20);
 }
 
 void AvoidanceControl::exit(Robotino *robotino) {}

@@ -10,12 +10,15 @@
 
 #include "robotino.hpp"
 #include "avoidancecontrol.hpp"
+#include <opencv2/highgui/highgui.hpp>
+#include <opencv2/opencv.hpp>
 
 using namespace rec::robotino::com;
 
 
 int main( int argc, char **argv )
 {
+
 	std::string hostname = "172.26.1.1";
 	if( argc > 1 )
 	{

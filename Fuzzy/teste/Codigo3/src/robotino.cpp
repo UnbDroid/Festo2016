@@ -1,5 +1,7 @@
 #include "robotino.hpp"
 #include <cmath>
+#include <opencv2/highgui/highgui.hpp>
+#include <opencv2/opencv.hpp>
 
 Robotino::Robotino(const char *hostname,
     State<Robotino> *initial_state):
@@ -7,10 +9,13 @@ Robotino::Robotino(const char *hostname,
     RobotBase<Robotino>(this, initial_state),
     x_d(1500),
     y_d(-900),
-    theta_d(0){
+    theta_d(0),
+    camera(this){
     // Connect
     try
     {
+        cv::namedWindow("Amor");
+        cv::waitKey();
         this->start_connection();
         odometry.set(0,0,0);
         //this->setImageServerPort(0);
@@ -60,7 +65,7 @@ float Robotino::motorVelocity(unsigned int motor){
 float Robotino::motorPosition(unsigned int motor){
     if(motor > 3)
         return 0;
-    return this->currentSensorState.actualVelocity[motor];
+    return this->currentSensorState.actualPosition[motor];
 }
 
 float Robotino::ir_distance(unsigned int IF){
@@ -79,12 +84,17 @@ void Robotino::setMotorVelocity(unsigned int motor, float rpm){
     this->setSetState(setState);
 }
 
-void Robotino::definirEstado(){
-    this->setSetState(setState);
-}
-
 void Robotino::setVelocity(float vx, float vy, float omega){
     this->omniDrive.setVelocity(vx,vy,omega);
+}
+
+void Robotino::setImage(cv::Mat image){
+    //this->cameraImage = new unsigned char[tamImagem]();
+    this->cameraImage = image;
+}
+
+cv::Mat Robotino::getImage(){
+    return this->cameraImage;
 }
 
 float Robotino::calc_dist(float x1, float x2, float y1, float y2){
