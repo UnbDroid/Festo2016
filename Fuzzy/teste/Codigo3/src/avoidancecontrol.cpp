@@ -201,9 +201,13 @@ void AvoidanceControl::execute(Robotino *robotino)
     //{
     //        std::cout << (unsigned int)robotino->getImage()[i] << " ";
     //}
-    std::cout << robotino->getImage();
-    cv::imshow("Amor", robotino->getImage());
-    cv::waitKey(20);
+    //cv::Mat test = cv::imread("temp.jpg",CV_LOAD_IMAGE_COLOR);
+    //std::cout << test << "\n";
+    cv::Mat img = robotino->getImage(); 
+    //std::cout << img;
+    cv::imshow("Amor",img);
+    cv::waitKey(1);
+    //std::cout << robotino->getImage();
 }
 
 void AvoidanceControl::exit(Robotino *robotino) {}

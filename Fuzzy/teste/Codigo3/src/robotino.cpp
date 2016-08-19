@@ -14,8 +14,8 @@ Robotino::Robotino(const char *hostname,
     // Connect
     try
     {
-        cv::namedWindow("Amor");
-        cv::waitKey();
+        //cv::namedWindow("Amor");
+        //cv::waitKey();
         this->start_connection();
         odometry.set(0,0,0);
         //this->setImageServerPort(0);
@@ -94,7 +94,7 @@ void Robotino::setImage(cv::Mat image){
 }
 
 cv::Mat Robotino::getImage(){
-    return this->cameraImage;
+    return cv::imread("temp.jpg",CV_LOAD_IMAGE_COLOR);//this->cameraImage;
 }
 
 float Robotino::calc_dist(float x1, float x2, float y1, float y2){
