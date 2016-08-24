@@ -58,11 +58,13 @@ void IrParaPonto::execute(Robotino *robotino)
     float Vy = D.centroDeMassa(saidaVy);
 
     // Falando para o robo as velocidades que ele deve se mover
-    robotino->setVelocity(Vx,Vy,0);
+    robotino->setVelocity(7.5*Vx,7.5*Vy,0);
 
     // Se tiver chegado ao alvo, voltar para o estado anterior
     std::cout << "D_E "<<robotino->d_e<<"...\n";
-    if(robotino->d_e < 20){
+    std::cout << "X_D "<<robotino->x_d<<"...\n";
+    std::cout << "Y_D "<<robotino->y_d<<"...\n";
+    if(robotino->d_e < 1){
         robotino->change_state(robotino->previous_state());
     }
 }

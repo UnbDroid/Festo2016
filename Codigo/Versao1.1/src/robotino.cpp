@@ -138,8 +138,8 @@ float Robotino::readInductiveSensor(){
 }
 
 void Robotino::definirDestino(float x, float y){
-    this->x_d = x*100;
-    this->y_d = y*100;
+    this->x_d = x*10;
+    this->y_d = y*10;
 }
 
 void Robotino::obstacleDetectionUnit(float & d_obs,float & theta_obs){

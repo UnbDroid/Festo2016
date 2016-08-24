@@ -41,12 +41,19 @@ float corrigirAngulo(float Angulo){
 
 void AvoidanceControl::execute(Robotino *robotino)
 {
+    static int objetivo_completo = 0;
     //robotino->definirDestino(0,100);
     //robotino->change_state(IrParaPonto::instance());
-    robotino->definirDestino(-10,0);
-    robotino->change_state(IrParaPonto::instance());
+    if (objetivo_completo)
+    {
+        robotino->exit("Terminou essa porra!");
+    }else{
+        robotino->definirDestino(0,50);
+        robotino->change_state(IrParaPonto::instance());
+        objetivo_completo = 1;
+    }
+
     //robotino->update();
-    robotino->exit("Terminou essa porra!");
     //std::cout << test << "\n";
     //std::cout << "Vendo na direita: " <<robotino->readColorSensor(Robotino::SC_DIREITO) << "\n";
     //std::cout << "Vendo na esquerda: " <<robotino->readColorSensor(Robotino::SC_ESQUERDO) << "\n";
