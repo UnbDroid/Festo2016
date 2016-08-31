@@ -1,4 +1,4 @@
-#include "Mapa.hpp"
+#include "MapaImage.hpp"
 #include <string>
 #include <iostream>
 #include <map>
@@ -6,11 +6,18 @@
 using namespace std;
 
 // Insira a altura e largula do objeto em metros, se quiser escolhe a granulacao
-Mapa::Mapa(float altura, float largura, float granulacao){
+MapaImage::MapaImage(float altura, float largura, float granulacao){
 	int m = (int) (altura/granulacao  + 1);
 	int n = (int) (largura/granulacao + 1);
 	mapa = new int [m*n];
+	img_mapa =  Mat::zeros(m, n, CV_8UC3);
 	coordenadas_do_mapa = new Coordenadas [m*n];
+	cores[0] = Scalar(0,255,255);
+	cores[1] = Scalar(255,255,255);
+	cores[2] =  Scalar(255,0,0);
+	cores[3] =  Scalar(0,255,0);
+	cores[4] = Scalar(0,0,255);
+	cores[5] = Scalar(255,255,0);
 	this->m = m;
 	this->n = n;
 	this->altura = altura;
@@ -23,15 +30,16 @@ Mapa::Mapa(float altura, float largura, float granulacao){
 	construir_representacao();
 }
 
-Mapa::~Mapa(){
+MapaImage::~MapaImage(){
 	delete[] mapa;
+	delete[] coordenadas_do_mapa;
 }
 
-string Mapa::representacao() const{
+string MapaImage::representacao() const{
 	return repr;
 }
 
-void Mapa::inserir_parede(Coordenadas coord){
+void MapaImage::inserir_parede(Coordenadas coord){
 	int m = coord.get_x()/granulacao;
 	int n = coord.get_y()/granulacao;
 	if(m >= this->m || n >= this->n || m < 0 || n < 0)
@@ -40,7 +48,7 @@ void Mapa::inserir_parede(Coordenadas coord){
 	repr.replace(4*(m*this->n+n)+2,1,"\u25A0",2,2);
 }
 
-void Mapa::inserir_retangulo(Coordenadas coord1, Coordenadas coord2, int tipo){
+void MapaImage::inserir_retangulo(Coordenadas coord1, Coordenadas coord2, int tipo){
 	int m_inicial = coord1.get_x()/granulacao;
 	int n_inicial = coord1.get_y()/granulacao;
 	int m_final = coord2.get_x()/granulacao;
@@ -50,6 +58,8 @@ void Mapa::inserir_retangulo(Coordenadas coord1, Coordenadas coord2, int tipo){
 	bool cond3 = (m_inicial > m_final || n_inicial > n_final);
 	if(cond1 || cond2 || cond3)
 		return;
+
+	rectangle(img_mapa,Point(m_inicial,n_inicial),Point(m_final,n_final), cores[tipo],-1);
 
 	for (int i = m_inicial; i <= m_final; ++i){
 		for (int j = n_inicial; j <= n_final; ++j){
@@ -64,7 +74,7 @@ void Mapa::inserir_retangulo(Coordenadas coord1, Coordenadas coord2, int tipo){
 	}
 }
 
-void Mapa::inserir_linha(Coordenadas coord){
+void MapaImage::inserir_linha(Coordenadas coord){
 	int m = coord.get_x()/granulacao;
 	int n = coord.get_y()/granulacao;
 	if(m >= this->m || n >= this->n || m < 0 || n < 0)
@@ -73,7 +83,7 @@ void Mapa::inserir_linha(Coordenadas coord){
 	repr.replace(4*(m*this->n+n)+2,1,"\u25A4",2,2);
 }
 
-void Mapa::inserir_marcador(Coordenadas coord, int tipo){
+void MapaImage::inserir_marcador(Coordenadas coord, int tipo){
 	int m = coord.get_x()/granulacao;
 	int n = coord.get_y()/granulacao;
 	if(m >= this->m || n >= this->n || m < 0 || n < 0 || tipo == LINHA || tipo == PAREDE)
@@ -82,7 +92,7 @@ void Mapa::inserir_marcador(Coordenadas coord, int tipo){
 	repr.replace(4*(m*this->n+n)+2,1,"\u25B2",2,2);
 }
 
-bool Mapa::checar_se_na_area(Coordenadas p, int area){
+bool MapaImage::checar_se_na_area(Coordenadas p, int area){
 	int m = p.get_x()/granulacao;
 	int n = p.get_y()/granulacao;
 	if(m >= this->m || n >= this->n || m < 0 || n < 0)
@@ -90,7 +100,7 @@ bool Mapa::checar_se_na_area(Coordenadas p, int area){
 	return mapa[m*this->n+n]==area;
 }
 
-int Mapa::qual_area(Coordenadas p){
+int MapaImage::qual_area(Coordenadas p){
 	int m = p.get_x()/granulacao;
 	int n = p.get_y()/granulacao;
 	if(m >= this->m || n >= this->n || m < 0 || n < 0)
@@ -114,7 +124,7 @@ void Mapa::atualizar_mapa(){
 	}
 }*/
 
-void Mapa::construir_representacao(){
+void MapaImage::construir_representacao(){
 	repr = string();
 	for (int i = 0; i < n; ++i){
 		for (int j = 0; j < m; ++j){
@@ -134,6 +144,10 @@ void Mapa::construir_representacao(){
 	}
 }
 
+void MapaImage::mostrar_mapa(){
+	imshow("Mapa",img_mapa);
+}
+
 /*void Mapa::desenhar_objeto(Objeto* obj, int x, int y){
 	if(x >= m || y >= n || x < 0 || y < 0)
 		return;
@@ -148,6 +162,6 @@ void Mapa::remover_objeto(int x, int y){
 	repr.replace(4*(y*m+x)+2,1,"\u25A1",2,2);
 }*/
 
-std::ostream &operator<<(std::ostream &os, Mapa const &m) {
+std::ostream &operator<<(std::ostream &os, MapaImage const &m) {
     return os << m.representacao();
 }

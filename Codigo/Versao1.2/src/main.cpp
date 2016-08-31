@@ -12,6 +12,8 @@
 #include "robotino.hpp"
 #include "avoidancecontrol.hpp"
 #include "irparaponto.hpp"
+#include "MapaImage.hpp"
+#include "Coordenadas.hpp"
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/opencv.hpp>
 
@@ -27,13 +29,18 @@ int main( int argc, char **argv )
 		hostname = argv[1];
 	}
 
-	Robotino robo(hostname.c_str(), AvoidanceControl::instance());
+	//Robotino robo(hostname.c_str(), AvoidanceControl::instance());
 
-	std::cout << "Esperando\n";
+	MapaImage mapa(201.5, 201.5, 0.5);
+	mapa.inserir_retangulo(Coordenadas(0,0), Coordenadas(201.5,1.5),mapa.PAREDE);
+	mapa.inserir_retangulo(Coordenadas(0,0), Coordenadas(1.5,201.5),mapa.PAREDE);
+	mapa.inserir_retangulo(Coordenadas(0,200), Coordenadas(201.5,201.5),mapa.PAREDE);
+	mapa.inserir_retangulo(Coordenadas(200,0), Coordenadas(201.5,201.5),mapa.PAREDE);
+	mapa.inserir_retangulo(Coordenadas(170,2),Coordenadas(172,32),2);
+	mapa.mostrar_mapa();
+	cv::waitKey();
 
-	//rec::core_lt::waitForKey();
-	std::cout << "Esperei\n";
-	while(true){
+	/*while(true){
 		try{
 			robo.update();
 		}catch(const char * erro){
@@ -41,7 +48,7 @@ int main( int argc, char **argv )
 			break;
 		}
 
-	}
+	}*/
 
 	//std::cout << "Press any key to exit..." << std::endl;
 	//rec::core_lt::waitForKey();
