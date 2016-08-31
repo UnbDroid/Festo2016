@@ -2,6 +2,12 @@
 #include <string>
 #include <iostream>
 #include <map>
+#include <cmath>
+
+#include <opencv2/opencv.hpp>
+#include <opencv2/highgui/highgui.hpp>
+
+#define PI 3.14159265359
 
 using namespace std;
 
@@ -12,12 +18,7 @@ MapaImage::MapaImage(float altura, float largura, float granulacao){
 	mapa = new int [m*n];
 	img_mapa =  Mat::zeros(m, n, CV_8UC3);
 	coordenadas_do_mapa = new Coordenadas [m*n];
-	cores[0] = Scalar(0,255,255);
-	cores[1] = Scalar(255,255,255);
-	cores[2] =  Scalar(255,0,0);
-	cores[3] =  Scalar(0,255,0);
-	cores[4] = Scalar(0,0,255);
-	cores[5] = Scalar(255,255,0);
+	definir_cores();
 	this->m = m;
 	this->n = n;
 	this->altura = altura;
@@ -31,8 +32,17 @@ MapaImage::MapaImage(float altura, float largura, float granulacao){
 }
 
 MapaImage::~MapaImage(){
-	delete[] mapa;
-	delete[] coordenadas_do_mapa;
+	//delete[] mapa;
+	//delete[] coordenadas_do_mapa;
+}
+
+void MapaImage::definir_cores(){
+	cores[0] = Scalar(0,255,255);
+	cores[1] = Scalar(255,255,255);
+	cores[2] =  Scalar(255,0,0);
+	cores[3] =  Scalar(0,255,0);
+	cores[4] = Scalar(0,0,255);
+	cores[5] = Scalar(255,255,0);
 }
 
 string MapaImage::representacao() const{
@@ -58,9 +68,7 @@ void MapaImage::inserir_retangulo(Coordenadas coord1, Coordenadas coord2, int ti
 	bool cond3 = (m_inicial > m_final || n_inicial > n_final);
 	if(cond1 || cond2 || cond3)
 		return;
-
 	rectangle(img_mapa,Point(m_inicial,n_inicial),Point(m_final,n_final), cores[tipo],-1);
-
 	for (int i = m_inicial; i <= m_final; ++i){
 		for (int j = n_inicial; j <= n_final; ++j){
 			if(tipo == LINHA){
@@ -146,6 +154,15 @@ void MapaImage::construir_representacao(){
 
 void MapaImage::mostrar_mapa(){
 	imshow("Mapa",img_mapa);
+}
+
+void MapaImage::mostrar_mapa_com_robo(Coordenadas p){
+	Mat pos_robo = Mat::zeros(m, n, CV_8UC3);
+	int m = p.get_x()/granulacao;
+	int n  = p.get_y()/granulacao;
+	circle(pos_robo,Point(m,n),20/granulacao,Scalar(0,0,255),-1);
+	line(pos_robo,Point(m,n),Point(m+20*cos(p.get_theta()*PI/180)/granulacao,n+20*sin(p.get_theta()*PI/180)/granulacao),Scalar(255,255,255),2);
+	imshow("Mapa",img_mapa+pos_robo);
 }
 
 /*void Mapa::desenhar_objeto(Objeto* obj, int x, int y){

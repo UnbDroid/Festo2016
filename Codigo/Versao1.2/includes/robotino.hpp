@@ -5,6 +5,7 @@
 #include "mycamera.hpp"
 #include "basecom.hpp"
 #include "robotbase.hpp"
+#include "MapaImage.hpp"
 #include <opencv2/opencv.hpp>
 
 
@@ -99,7 +100,7 @@ private:
     MyCamera<Robotino> camera;
     // Imagem da camera
     cv::Mat cameraImage;
-
+    MapaImage mapa;
 };
 
 

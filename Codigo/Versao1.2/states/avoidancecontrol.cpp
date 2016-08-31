@@ -48,11 +48,11 @@ void AvoidanceControl::execute(Robotino *robotino)
     {
         robotino->exit("Terminou essa porra!");
     }else if(objetivo_completo == 1){
-        robotino->definirDestino(50,50);
+        robotino->definirDestino(150,100);
         robotino->change_state(IrParaPonto::instance());
         objetivo_completo = 2;
     }else if(objetivo_completo == 0){
-        robotino->definirDestino(0,50);
+        robotino->definirDestino(50,50);
         robotino->change_state(IrParaPonto::instance());
         objetivo_completo = 1;
     }

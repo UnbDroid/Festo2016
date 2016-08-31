@@ -33,6 +33,8 @@ public:
 
 	void mostrar_mapa();
 
+	void mostrar_mapa_com_robo(Coordenadas);
+
 	static const int LINHA = 0, PAREDE = 1;
 
 private:
@@ -46,6 +48,7 @@ private:
 	void inserir_parede(Coordenadas);
 	void inserir_linha(Coordenadas);
 	void inserir_marcador(Coordenadas,int);
+	void definir_cores();
 	Scalar cores[6];
 
 };

@@ -1,4 +1,5 @@
 #include "robotino.hpp"
+#include "Coordenadas.hpp"
 #include <iostream>
 #include <cmath>
 #include <opencv2/highgui/highgui.hpp>
@@ -18,10 +19,17 @@ Robotino::Robotino(const char *hostname,
         //cv::namedWindow("Amor");
         //cv::waitKey();
         this->start_connection();
-        odometry.set(0,0,0);
+        odometry.set(250,250,0);
         //this->setImageServerPort(0);
         //camera.setComId(this->id());
         camera.setStreaming(true);
+        mapa = MapaImage(201.5, 201.5, 0.5);
+        mapa.inserir_retangulo(Coordenadas(0,0), Coordenadas(201.5,1.5),mapa.PAREDE);
+        mapa.inserir_retangulo(Coordenadas(0,0), Coordenadas(1.5,201.5),mapa.PAREDE);
+        mapa.inserir_retangulo(Coordenadas(0,200), Coordenadas(201.5,201.5),mapa.PAREDE);
+        mapa.inserir_retangulo(Coordenadas(200,0), Coordenadas(201.5,201.5),mapa.PAREDE);
+        mapa.inserir_retangulo(Coordenadas(170,2),Coordenadas(172,32),2);
+        mapa.inserir_retangulo(Coordenadas(160,2),Coordenadas(169.5,72),3);
     }
     catch( const rec::robotino::com::ComException& e )
     {
@@ -108,11 +116,13 @@ void Robotino::update(){
     try{
         if(this->isConnected()){
             if(this->bumper() == true){
-                this->exit("Bateu"); 
+                this->exit("Bateu");
             }
+            mapa.mostrar_mapa_com_robo(Coordenadas(this->odometryX()/10,this->odometryY()/10,this->odometryPhi()));
             state_machine.update();
             this->waitForUpdate();
             this->currentSensorState = this->sensorState();
+            cv::waitKey(1);
         }
     }
     catch( const rec::robotino::com::ComException& e ){
