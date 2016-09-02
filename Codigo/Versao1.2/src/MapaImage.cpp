@@ -41,7 +41,7 @@ void MapaImage::definir_cores(){
 	cores[1] = Scalar(255,255,255);
 	cores[2] =  Scalar(255,0,0);
 	cores[3] =  Scalar(0,255,0);
-	cores[4] = Scalar(0,0,255);
+	cores[4] = Scalar(0,140,127);
 	cores[5] = Scalar(255,255,0);
 }
 
@@ -68,6 +68,13 @@ void MapaImage::inserir_retangulo(Coordenadas coord1, Coordenadas coord2, int ti
 	bool cond3 = (m_inicial > m_final || n_inicial > n_final);
 	if(cond1 || cond2 || cond3)
 		return;
+	if(tipo != LINHA && tipo != PAREDE){
+		if(areas_armazenadas.count(tipo))
+			return;
+		else
+			areas_armazenadas[tipo] = Area(tipo);
+	}
+
 	rectangle(img_mapa,Point(m_inicial,n_inicial),Point(m_final,n_final), cores[tipo],-1);
 	for (int i = m_inicial; i <= m_final; ++i){
 		for (int j = n_inicial; j <= n_final; ++j){
@@ -76,10 +83,23 @@ void MapaImage::inserir_retangulo(Coordenadas coord1, Coordenadas coord2, int ti
 			}else if(tipo == PAREDE){
 				inserir_parede(Coordenadas(i*granulacao,j*granulacao));
 			}else{
+				areas_armazenadas[tipo].adicionar_coordenada(coordenadas_do_mapa[i*this->n+j]);
 				inserir_marcador(Coordenadas(i*granulacao,j*granulacao),tipo);
 			}
 		}
 	}
+}
+
+Coordenadas MapaImage::coordenada_area(int id, Coordenadas p){
+	if(!areas_armazenadas.count(id) || id == LINHA || id == PAREDE)
+		return Coordenadas(0,0);
+	return areas_armazenadas[id].pegar_coordenada(p);
+}
+
+Coordenadas MapaImage::coordenada_area(int id){
+	if(!areas_armazenadas.count(id) || id == LINHA || id == PAREDE)
+		return Coordenadas(0,0);
+	return areas_armazenadas[id].pegar_meio();
 }
 
 void MapaImage::inserir_linha(Coordenadas coord){

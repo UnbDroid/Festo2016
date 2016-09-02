@@ -5,6 +5,9 @@
 #include <map>
 #include <iostream>
 #include "Coordenadas.hpp"
+#include "Area.hpp"
+
+#include <vector>
 
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/opencv.hpp>
@@ -35,10 +38,15 @@ public:
 
 	void mostrar_mapa_com_robo(Coordenadas);
 
+	Coordenadas coordenada_area(int, Coordenadas);
+
+	Coordenadas coordenada_area(int);
+
 	static const int LINHA = 0, PAREDE = 1;
 
 private:
 	int * mapa;
+	map<int,Area> areas_armazenadas;
 	Coordenadas * coordenadas_do_mapa;
 	int m,n;
 	float altura, largura, granulacao;

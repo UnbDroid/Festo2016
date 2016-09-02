@@ -76,8 +76,13 @@ public:
 
     void definirDestino(float, float);
 
+    void setTheta_r(float);
+
     // Calculate distance
     float calc_dist(float x1, float y1, float x2, float y2);
+
+    Coordenadas pegar_coordenada_area(int , Coordenadas);
+    Coordenadas pegar_coordenada_area(int);
 
     // Variaveis necessárias
     float d_obs;
@@ -87,12 +92,14 @@ public:
     float theta_d;
     float d_e;
     float theta_e;
+    float theta_r;
 
     void setImage(cv::Mat image);
 
     cv::Mat getImage();
 
 private:
+    void construir_mapa();
     OmniDrive omniDrive;
     rec::iocontrol::remotestate::SensorState currentSensorState;
     rec::iocontrol::remotestate::SetState setState;

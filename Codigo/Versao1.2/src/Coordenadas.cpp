@@ -10,13 +10,13 @@ Coordenadas::Coordenadas(){
 
 Coordenadas::Coordenadas(float x,float y, float theta){
 	this->x = x;
-	this->y = y; 
+	this->y = y;
 	this->theta = theta;
 }
 
 Coordenadas::Coordenadas(const Coordenadas& coord){
 	this->x = coord.x;
-	this->y = coord.y; 
+	this->y = coord.y;
 	this->theta = coord.theta;
 }
 
@@ -30,6 +30,10 @@ Coordenadas Coordenadas::mudar_referencia(float x_ref, float y_ref, float theta_
 	return Coordenadas(n_x, n_y, n_theta);
 }
 
-std::ostream &operator<<(std::ostream &os, Coordenadas const &c) { 
+float Coordenadas::calcular_distancia(Coordenadas coord){
+	return std::sqrt(std::pow(x-coord.get_x(),2)+std::pow(y-coord.get_y(),2));
+}
+
+std::ostream &operator<<(std::ostream &os, Coordenadas const &c) {
     return os << "X: " << c.get_x()<< " Y: " << c.get_y()<< " theta: " << c.get_theta();
 }

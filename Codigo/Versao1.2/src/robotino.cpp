@@ -19,17 +19,12 @@ Robotino::Robotino(const char *hostname,
         //cv::namedWindow("Amor");
         //cv::waitKey();
         this->start_connection();
-        odometry.set(250,250,0);
+        odometry.set(250,-250,0);
         //this->setImageServerPort(0);
         //camera.setComId(this->id());
         camera.setStreaming(true);
-        mapa = MapaImage(201.5, 201.5, 0.5);
-        mapa.inserir_retangulo(Coordenadas(0,0), Coordenadas(201.5,1.5),mapa.PAREDE);
-        mapa.inserir_retangulo(Coordenadas(0,0), Coordenadas(1.5,201.5),mapa.PAREDE);
-        mapa.inserir_retangulo(Coordenadas(0,200), Coordenadas(201.5,201.5),mapa.PAREDE);
-        mapa.inserir_retangulo(Coordenadas(200,0), Coordenadas(201.5,201.5),mapa.PAREDE);
-        mapa.inserir_retangulo(Coordenadas(170,2),Coordenadas(172,32),2);
-        mapa.inserir_retangulo(Coordenadas(160,2),Coordenadas(169.5,72),3);
+        mapa = MapaImage(200, 200, 0.5);
+        construir_mapa();
     }
     catch( const rec::robotino::com::ComException& e )
     {
@@ -45,6 +40,37 @@ Robotino::Robotino(const char *hostname,
     }
 }
 
+void Robotino::construir_mapa(){
+    // Paredes da arena
+    mapa.inserir_retangulo(Coordenadas(0,0), Coordenadas(200,1.5),mapa.PAREDE);
+    mapa.inserir_retangulo(Coordenadas(0,0), Coordenadas(1.5,200),mapa.PAREDE);
+    mapa.inserir_retangulo(Coordenadas(0,198.5), Coordenadas(200,200),mapa.PAREDE);
+    mapa.inserir_retangulo(Coordenadas(198.5,0), Coordenadas(200,200),mapa.PAREDE);
+
+    // Area de inicio
+    mapa.inserir_retangulo(Coordenadas(2,2),Coordenadas(48.5,48.5),2);
+
+    // Linhas da area de inicio
+    mapa.inserir_retangulo(Coordenadas(49.5,2),Coordenadas(51.5,51.5),mapa.LINHA);
+    mapa.inserir_retangulo(Coordenadas(2,49.5),Coordenadas(51.5,51.5),mapa.LINHA);
+
+    // Area de deposito
+    mapa.inserir_retangulo(Coordenadas(151,151),Coordenadas(198,198),3);
+
+    // Linhas da area de deposito
+    mapa.inserir_retangulo(Coordenadas(148.5,148.5),Coordenadas(150.5,198),mapa.LINHA);
+    mapa.inserir_retangulo(Coordenadas(148.5,148.5),Coordenadas(198,150.5),mapa.LINHA);
+
+    // Area central
+    mapa.inserir_retangulo(Coordenadas(79,69),Coordenadas(122.5,132.5),4);
+
+    // Linhas da area central
+    mapa.inserir_retangulo(Coordenadas(76.5,66.5),Coordenadas(125,68.5),mapa.LINHA);
+    mapa.inserir_retangulo(Coordenadas(123,66.5),Coordenadas(125,135),mapa.LINHA);
+    mapa.inserir_retangulo(Coordenadas(76.5,66.5),Coordenadas(78.5,135),mapa.LINHA);
+    mapa.inserir_retangulo(Coordenadas(76.5,133),Coordenadas(125,135),mapa.LINHA);
+}
+
 Robotino::~Robotino(){
     this->disconnect();
 }
@@ -54,7 +80,7 @@ bool Robotino::bumper(){
 }
 
 float Robotino::odometryX(){
-    return this->currentSensorState.odometryX;
+    return this->currentSensorState.odometryX*0.9;
 }
 
 float Robotino::odometryY(){
@@ -102,6 +128,11 @@ void Robotino::setImage(cv::Mat image){
     this->cameraImage = image;
 }
 
+void Robotino::setTheta_r(float theta_r){
+
+    this->theta_r = theta_r;
+}
+
 cv::Mat Robotino::getImage(){
     cv::Mat imgTemp = cv::imread("temp.jpg",CV_LOAD_IMAGE_COLOR);//this->cameraImage;
     cv::Mat img (imgTemp,cv::Rect(0,0,imgTemp.cols,imgTemp.rows - 10));
@@ -118,7 +149,7 @@ void Robotino::update(){
             if(this->bumper() == true){
                 this->exit("Bateu");
             }
-            mapa.mostrar_mapa_com_robo(Coordenadas(this->odometryX()/10,this->odometryY()/10,this->odometryPhi()));
+            mapa.mostrar_mapa_com_robo(Coordenadas(this->odometryX()/10,-this->odometryY()/10,-this->odometryPhi()));
             state_machine.update();
             this->waitForUpdate();
             this->currentSensorState = this->sensorState();
@@ -150,6 +181,14 @@ float Robotino::readInductiveSensor(){
 void Robotino::definirDestino(float x, float y){
     this->x_d = x*10;
     this->y_d = y*10;
+}
+
+Coordenadas Robotino::pegar_coordenada_area(int id, Coordenadas p){
+    return mapa.coordenada_area(id,p);
+}
+
+Coordenadas Robotino::pegar_coordenada_area(int id){
+    return mapa.coordenada_area(id);
 }
 
 void Robotino::obstacleDetectionUnit(float & d_obs,float & theta_obs){

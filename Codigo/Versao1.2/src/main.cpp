@@ -31,15 +31,38 @@ int main( int argc, char **argv )
 
 	Robotino robo(hostname.c_str(), AvoidanceControl::instance());
 
-	/*MapaImage mapa(201.5, 201.5, 0.5);
-	mapa.inserir_retangulo(Coordenadas(0,0), Coordenadas(201.5,1.5),mapa.PAREDE);
-	mapa.inserir_retangulo(Coordenadas(0,0), Coordenadas(1.5,201.5),mapa.PAREDE);
-	mapa.inserir_retangulo(Coordenadas(0,200), Coordenadas(201.5,201.5),mapa.PAREDE);
-	mapa.inserir_retangulo(Coordenadas(200,0), Coordenadas(201.5,201.5),mapa.PAREDE);
-	mapa.inserir_retangulo(Coordenadas(170,2),Coordenadas(172,32),2);
-	mapa.inserir_retangulo(Coordenadas(160,2),Coordenadas(169.5,72),3);
+/*	MapaImage mapa(201.5, 201.5, 0.5);
+	    // Paredes da arena
+	    mapa.inserir_retangulo(Coordenadas(0,0), Coordenadas(201.5,1.5),mapa.PAREDE);
+	    mapa.inserir_retangulo(Coordenadas(0,0), Coordenadas(1.5,201.5),mapa.PAREDE);
+	    mapa.inserir_retangulo(Coordenadas(0,200), Coordenadas(201.5,201.5),mapa.PAREDE);
+	    mapa.inserir_retangulo(Coordenadas(200,0), Coordenadas(201.5,201.5),mapa.PAREDE);
+
+	    // Area de inicio
+	    mapa.inserir_retangulo(Coordenadas(2,2),Coordenadas(48.5,48.5),2);
+
+	    // Linhas da area de inicio
+	    mapa.inserir_retangulo(Coordenadas(49.5,2),Coordenadas(51.5,51.5),mapa.LINHA);
+	    mapa.inserir_retangulo(Coordenadas(2,49.5),Coordenadas(51.5,51.5),mapa.LINHA);
+
+	    // Area de deposito
+	    mapa.inserir_retangulo(Coordenadas(152,152),Coordenadas(200,200),3);
+
+	    // Linhas da area de deposito
+	    mapa.inserir_retangulo(Coordenadas(150,150),Coordenadas(152,200),mapa.LINHA);
+	    mapa.inserir_retangulo(Coordenadas(150,150),Coordenadas(200,152),mapa.LINHA);
+
+	    // Area central
+	    mapa.inserir_retangulo(Coordenadas(79,69),Coordenadas(124,134),4);
+
+	    // Linhas da area central
+	    mapa.inserir_retangulo(Coordenadas(76.5,66.5),Coordenadas(126.5,68.5),mapa.LINHA);
+	    mapa.inserir_retangulo(Coordenadas(124.5,66.5),Coordenadas(126.5,136.5),mapa.LINHA);
+	    mapa.inserir_retangulo(Coordenadas(76.5,66.5),Coordenadas(78.5,136.5),mapa.LINHA);
+	    mapa.inserir_retangulo(Coordenadas(76.5,134.5),Coordenadas(126.5,136.5),mapa.LINHA);
 	mapa.mostrar_mapa();
-	cv::waitKey();*/
+	cv::waitKey();
+	std::cout << mapa.coordenada_area(2,Coordenadas(70,5)) << "\n";*/
 	/*while(true){
 		mapa.mostrar_mapa_com_robo(Coordenadas(100,100));
 		cv::waitKey(100);

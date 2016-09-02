@@ -4,6 +4,7 @@
 #include "maquinainferencia.hpp"
 #include "defuzzyficador.hpp"
 #include "irparaponto.hpp"
+#include "Coordenadas.hpp"
 #include <vector>
 #include <cmath>
 #include <opencv2/highgui/highgui.hpp>
@@ -46,15 +47,22 @@ void AvoidanceControl::execute(Robotino *robotino)
     //robotino->change_state(IrParaPonto::instance());
     if (objetivo_completo == 2)
     {
-        robotino->exit("Terminou essa porra!");
+        Coordenadas destino = robotino->pegar_coordenada_area(2,Coordenadas(robotino->odometryX()/10, -robotino->odometryY()/10));
+        robotino->definirDestino(destino.get_x(),-destino.get_y());
+        robotino->change_state(IrParaPonto::instance());
+        objetivo_completo = 3;
     }else if(objetivo_completo == 1){
-        robotino->definirDestino(150,100);
+        Coordenadas destino = robotino->pegar_coordenada_area(3,Coordenadas(robotino->odometryX()/10, -robotino->odometryY()/10));
+        robotino->definirDestino(destino.get_x(),-destino.get_y());
         robotino->change_state(IrParaPonto::instance());
         objetivo_completo = 2;
     }else if(objetivo_completo == 0){
-        robotino->definirDestino(50,50);
+        Coordenadas destino = robotino->pegar_coordenada_area(4,Coordenadas(robotino->odometryX()/10, -robotino->odometryY()/10));
+        robotino->definirDestino(destino.get_x(),-destino.get_y());
         robotino->change_state(IrParaPonto::instance());
         objetivo_completo = 1;
+    }else{
+
     }
 
     //robotino->update();

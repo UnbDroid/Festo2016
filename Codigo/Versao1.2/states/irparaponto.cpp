@@ -3,12 +3,14 @@
 #include "Classificadores.hpp"
 #include "maquinainferencia.hpp"
 #include "defuzzyficador.hpp"
+#include "Coordenadas.hpp"
 #include <vector>
 #include <cmath>
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/opencv.hpp>
 
 #define PI 3.14159265
+#define FATOR_VELOCIDADE  5
 
 //*****************************************************************************************************************
 // IrParaPonto
@@ -57,8 +59,15 @@ void IrParaPonto::execute(Robotino *robotino)
     float Vx = D.centroDeMassa(saidaVx);
     float Vy = D.centroDeMassa(saidaVy);
 
+    // Calculo velocidade utilizando theta
+    Coordenadas velocidades_globais(Vx,Vy);
+    Coordenadas velocidades_robo = velocidades_globais.mudar_referencia(0,0,(robotino->odometryPhi()));
+
+    Vx = velocidades_robo.get_x();
+    Vy = velocidades_robo.get_y();
+
     // Falando para o robo as velocidades que ele deve se mover
-    robotino->setVelocity(7.5*Vx,7.5*Vy,0);
+    robotino->setVelocity(FATOR_VELOCIDADE*Vx,FATOR_VELOCIDADE*Vy,0);
 
     // Se tiver chegado ao alvo, voltar para o estado anterior
     std::cout << "D_E "<<robotino->d_e<<"...\n";

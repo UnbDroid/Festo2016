@@ -21,6 +21,8 @@ public:
 
 	Coordenadas mudar_referencia(float x_ref, float y_ref, float theta_ref);
 
+             float calcular_distancia(Coordenadas);
+
 
 private:
 	float x,y,theta;
