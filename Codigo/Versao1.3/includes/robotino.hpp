@@ -124,6 +124,10 @@ public:
 
     cv::Mat getImage();
 
+    bool carregandoDisco(){return disco;};
+
+    void setCarregando(bool esta){disco = esta;};
+
 private:
     void construir_mapa();
     OmniDrive omniDrive;
@@ -134,6 +138,7 @@ private:
     // Imagem da camera
     cv::Mat cameraImage;
     Mapa mapa;
+    bool disco;
 };
 
 

@@ -12,7 +12,8 @@ Robotino::Robotino(const char *hostname,
     xD(1500),
     yD(-900),
     thetaD(0),
-    camera(this){
+    camera(this),
+    disco(false){
     // Connect
     try{
         this->start_connection();
@@ -153,7 +154,7 @@ void Robotino::update(){
             this->waitForUpdate();
             this->currentSensorState = this->sensorState();
             mapa.mostrar_mapa_com_robo(Coordenadas(this->odometryX()/10,-this->odometryY()/10,-this->odometryPhi()));
-            //cv::imshow("Amor", this->getImage());
+            cv::imshow("Amor", this->getImage());
             cv::waitKey(1);
         }
     }

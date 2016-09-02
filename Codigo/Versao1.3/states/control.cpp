@@ -66,15 +66,17 @@ void Control::execute(Robotino *robotino)
         Coordenadas destino = robotino->pegarCoordenadaArea(Robotino::AREA1,Coordenadas(robotino->odometryX()/10, -robotino->odometryY()/10));
         robotino->definirDestino(destino.get_x(),-destino.get_y());
         robotino->change_state(IrParaPonto::instance());
-        objetivo_completo = 3;
+        objetivo_completo = 6;
     }else if (objetivo_completo == 3){
         robotino->change_state(IdentificarCor::instance());
         objetivo_completo = 4;
     }else if(objetivo_completo == 4){
         robotino->definirObjetoAlvo(Robotino::AZUL);
         robotino->change_state(SeguirCor::instance());
-        objetivo_completo = 1;
-    }
+        objetivo_completo = 2;
+    }//else if(objetivo_completo == 5){
+
+    //}
 
     //robotino->update();
     //std::cout << test << "\n";
