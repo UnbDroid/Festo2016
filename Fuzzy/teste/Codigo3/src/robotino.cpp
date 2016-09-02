@@ -123,6 +123,12 @@ void Robotino::update(){
     }
 }
 
+int Robotino::readColorSensor(){
+    std:cout << "D0: " << this->currentSensorState.dIn[0] << "\n";
+    std:cout << "D1: " << this->currentSensorState.dIn[1] << "\n";
+    return this->currentSensorState.dIn[0];
+}
+
 void Robotino::obstacleDetectionUnit(float & d_obs,float & theta_obs){
     float dist;
     float min_dist = 9999;

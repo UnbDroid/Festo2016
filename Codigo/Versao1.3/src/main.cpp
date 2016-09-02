@@ -16,6 +16,7 @@
 #include "mapa.hpp"
 #include "coordenadas.hpp"
 #include "identificarcor.hpp"
+#include "basestate.hpp"
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/opencv.hpp>
 
@@ -30,8 +31,8 @@ int main( int argc, char **argv )
 		{
 			hostname = argv[1];
 		}
-
-		Robotino robo(hostname.c_str(), AjusteInicial::instance());//AjusteInicial::instance());
+		//Banana
+		Robotino robo(hostname.c_str(), IdentificarCor::instance());//AjusteInicial::instance());
 
 		while(true){
 			try{

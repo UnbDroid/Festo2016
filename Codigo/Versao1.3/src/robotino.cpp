@@ -129,9 +129,14 @@ void Robotino::setThetaR(float thetaR){
 }
 
 cv::Mat Robotino::getImage(){
-    cv::Mat imgTemp = cv::imread("temp.jpg",CV_LOAD_IMAGE_COLOR);//this->cameraImage;
-    cv::Mat img (imgTemp,cv::Rect(0,0,imgTemp.cols,imgTemp.rows - 10));
-    return img;
+    cv::Mat imgTemp = cv::imread("temp.jpg",-1);//this->cameraImage;
+    if(imgTemp.cols == 0 || imgTemp.rows == 0){
+        return cameraImage;
+    }else{
+        cv::Mat img (imgTemp,cv::Rect(0,0,imgTemp.cols,imgTemp.rows - 10));
+        cameraImage = img;
+        return img;
+    }
 }
 
 float Robotino::calcDist(float x1, float x2, float y1, float y2){
@@ -149,7 +154,7 @@ void Robotino::update(){
             this->currentSensorState = this->sensorState();
             mapa.mostrar_mapa_com_robo(Coordenadas(this->odometryX()/10,-this->odometryY()/10,-this->odometryPhi()));
             //cv::imshow("Amor", this->getImage());
-            cv::waitKey(1);
+            //cv::waitKey(1);
         }
     }
     catch( const rec::robotino::com::ComException& e ){
@@ -240,4 +245,50 @@ void Robotino::obstacleDetectionUnit(float & dObs,float & thetaObs){
 
 void Robotino::exit(const char * motive){
     throw motive;
+}
+
+void Robotino::definirObjetoAlvo(int cor){
+
+    int yMax = -1;
+
+    if(cor == VERMELHO){
+
+        for (std::vector<Object>::iterator i = objetosVermelhos.begin(); i != objetosVermelhos.end(); ++i)
+        {
+            if(i->getYPos() > yMax){
+
+                objetoAlvo = *i;
+                yMax = i->getYPos();
+            }
+        }
+        
+    }
+
+    if(cor == AMARELO){
+
+        for (std::vector<Object>::iterator i = objetosAmarelos.begin(); i != objetosAmarelos.end(); ++i)
+        {
+            if(i->getYPos() > yMax){
+
+                objetoAlvo = *i;
+                yMax = i->getYPos();
+            }
+        }
+        
+    }
+
+    if(cor == AZUL){
+
+        for (std::vector<Object>::iterator i = objetosAzuis.begin(); i != objetosAzuis.end(); ++i)
+        {
+            if(i->getYPos() > yMax){
+
+                objetoAlvo = *i;
+                yMax = i->getYPos();
+            }
+        } 
+ 
+    }
+
+
 }

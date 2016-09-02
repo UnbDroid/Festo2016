@@ -51,6 +51,12 @@ public:
         SC_ESQUERDO = 4
     };
 
+    enum CorObjeto: unsigned int {
+        VERMELHO = 0,
+        AMARELO = 1,
+        AZUL = 2
+    };
+
     //void definirEstado();
 
     // Return the bumper state
@@ -106,9 +112,13 @@ public:
 
     //Variaveis cor
 
-     vector <Object> objetosAmarelos;
-     vector <Object> objetosAzuis;
-     vector <Object> objetosVermelhos;
+    vector <Object> objetosAmarelos;
+    vector <Object> objetosAzuis;
+    vector <Object> objetosVermelhos;
+
+    Object objetoAlvo;
+
+    void definirObjetoAlvo(int);
 
     void setImage(cv::Mat image);
 

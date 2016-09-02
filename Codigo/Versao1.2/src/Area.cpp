@@ -1,6 +1,9 @@
 #include "Area.hpp"
 #include <vector>
+#include <cmath>
 #include <iostream>
+
+#define PI 3.14159265f
 
 Area::Area(int id){
     this->id = id;
@@ -17,7 +20,7 @@ void Area::adicionar_coordenada(Coordenadas coord){
 }
 
 Coordenadas Area::pegar_coordenada(Coordenadas coord){
-    float min = 99999,valor;
+    float min = 99999,valor,orientacao;
     Coordenadas resultado;
     for (std::vector<Coordenadas>::iterator i = coordenadas.begin(); i != coordenadas.end(); ++i){
         valor = i->calcular_distancia(coord);
@@ -26,5 +29,7 @@ Coordenadas Area::pegar_coordenada(Coordenadas coord){
             resultado = *i;
         }
     }
+    orientacao = std::atan2(ponto_medio.get_y() - resultado.get_y(), ponto_medio.get_x() - resultado.get_x())*180/PI;
+    resultado.set_theta(orientacao);
     return resultado;
 }

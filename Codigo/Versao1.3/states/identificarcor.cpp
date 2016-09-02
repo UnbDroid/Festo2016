@@ -1,6 +1,7 @@
 #include "identificarcor.hpp"
 #include "robotino.hpp"
 #include "object.hpp"
+#include "seguircor.hpp"
 
 //default capture width and height
 const int FRAME_WIDTH = 640;
@@ -47,16 +48,6 @@ void drawObject(vector<Object> theObjects,Mat &frame, Mat &temp, vector< vector<
     cv::circle(frame,cv::Point(theObjects.at(i).getXPos(),theObjects.at(i).getYPos()),5,theObjects.at(i).getColor());
     cv::putText(frame,intToString(theObjects.at(i).getXPos())+ " , " + intToString(theObjects.at(i).getYPos()),cv::Point(theObjects.at(i).getXPos(),theObjects.at(i).getYPos()+20),1,1,theObjects.at(i).getColor());
     cv::putText(frame,theObjects.at(i).getType(),cv::Point(theObjects.at(i).getXPos(),theObjects.at(i).getYPos()-20),1,2,theObjects.at(i).getColor());
-    }
-}
-
-void drawObject(vector<Object> theObjects,Mat &frame){
-
-    for(int i =0; i<theObjects.size(); i++){
-
-    cv::circle(frame,cv::Point(theObjects.at(i).getXPos(),theObjects.at(i).getYPos()),10,cv::Scalar(0,0,255));
-    cv::putText(frame,intToString(theObjects.at(i).getXPos())+ " , " + intToString(theObjects.at(i).getYPos()),cv::Point(theObjects.at(i).getXPos(),theObjects.at(i).getYPos()+20),1,1,Scalar(0,255,0));
-    cv::putText(frame,theObjects.at(i).getType(),cv::Point(theObjects.at(i).getXPos(),theObjects.at(i).getYPos()-30),1,2,theObjects.at(i).getColor());
     }
 }
 
@@ -119,6 +110,8 @@ bool trackFilteredObject(Object theObject,Mat threshold,Mat HSV, Mat &cameraFeed
                     object.setYPos(moment.m01/area);
                     object.setType(theObject.getType());
                     object.setColor(theObject.getColor());
+                    object.setHSVmin(theObject.getHSVmin());
+                    object.setHSVmax(theObject.getHSVmax());
 
                     objects.push_back(object);
 
@@ -156,6 +149,8 @@ void IdentificarCor::execute(Robotino *robotino)
     static Mat thresholdr2;
     static Mat HSV;
     static Mat src;
+
+    //cv::waitKey();
 
     cameraFeed = robotino->getImage();
     src = cameraFeed;
@@ -201,7 +196,10 @@ void IdentificarCor::execute(Robotino *robotino)
     //image will not appear without this waitKey() command
     //waitKey(1);
 
-    robotino->change_state(robotino->previous_state());
+    robotino->definirObjetoAlvo(Robotino::AZUL);
+
+    robotino->change_state(SeguirCor::instance());
+    //robotino->change_state(robotino->previous_state());
 }
 
 void IdentificarCor::exit(Robotino *robotino) {}

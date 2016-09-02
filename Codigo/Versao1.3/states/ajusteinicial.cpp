@@ -1,8 +1,6 @@
 #include "ajusteinicial.hpp"
 #include "robotino.hpp"
 
-#include "rec/core_lt/Timer.h"
-
 #include <cmath>
 #include "control.hpp"
 
@@ -11,7 +9,7 @@
 #define PI 3.14159265
 #define Kp 5
 #define Ki 1
-//#define dt 0.01
+#define dt 0.01
 //*****************************************************************************************************************
 // AjusteInicial
 //*****************************************************************************************************************
@@ -37,14 +35,6 @@ void AjusteInicial::execute(Robotino *robotino)
     static float cos20 = std::cos(20*PI/180);
     static float K = R*(a-1);
     static float erro_int = 0;
-    static float dt = 0.01;
-    static rec::core_lt::Timer timer;
-    if(timer.isNull()){
-        timer.start();
-    }else{
-        dt = timer.msecsElapsed()/1000;
-        timer.start();
-    }
     float w;
     float e1 = robotino->irDistance(Robotino::IR_ESQUERDO_1);
     float e2 = robotino->irDistance(Robotino::IR_ESQUERDO_2);
@@ -73,7 +63,6 @@ void AjusteInicial::execute(Robotino *robotino)
     std::cout << "Dt: " << dt <<"\n";
     if (std::abs(erro) < limiar){
         erro_int = 0;
-        timer.reset();
         distancia_da_esquerda = ((e1+ref_e1+2*R)*cos20)/2;
         distancia_de_tras= ((te+td+2*R)*cos20)/2;
         std::cout << "Distância da esquerda: " << distancia_da_esquerda << "\n";

@@ -8,6 +8,7 @@
 #include "coordenadas.hpp"
 #include "girar.hpp"
 #include "identificarcor.hpp"
+#include "seguircor.hpp"
 #include <vector>
 #include <cmath>
 #include <opencv2/highgui/highgui.hpp>
@@ -48,7 +49,11 @@ void Control::execute(Robotino *robotino)
     static int objetivo_completo = 0;
     //robotino->definirDestino(0,100);
     //robotino->change_state(IrParaPonto::instance());
-    if (objetivo_completo == 3)
+    if(objetivo_completo == 4){
+        robotino->definirObjetoAlvo(Robotino::AZUL);
+        robotino->change_state(SeguirCor::instance());
+
+    }else if (objetivo_completo == 3)
     {
         robotino->change_state(IdentificarCor::instance());
         objetivo_completo = 4;
@@ -72,9 +77,7 @@ void Control::execute(Robotino *robotino)
         robotino->change_state(IrParaPonto::instance());
         objetivo_completo = 1;
     }else{
-        cout << "Azul: " << robotino->objetosAzuis.size() << endl;
-        cout << "Amarelo: " << robotino->objetosAmarelos.size() << endl;
-        cout << "Vermelho: " << robotino->objetosVermelhos.size() << endl;
+        
     }
 
     //robotino->update();

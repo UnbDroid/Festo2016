@@ -19,6 +19,8 @@ public:
 
 	float get_theta() const{return theta;}
 
+	float set_theta(float n_theta){theta = n_theta;}
+
 	Coordenadas mudar_referencia(float x_ref, float y_ref, float theta_ref);
 
              float calcular_distancia(Coordenadas);

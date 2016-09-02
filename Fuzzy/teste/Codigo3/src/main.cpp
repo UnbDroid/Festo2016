@@ -9,7 +9,7 @@
 #include "rec/core_lt/Timer.h"
 
 #include "robotino.hpp"
-#include "avoidancecontrol.hpp"
+#include "testCor.hpp"
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/opencv.hpp>
 
@@ -25,7 +25,7 @@ int main( int argc, char **argv )
 		hostname = argv[1];
 	}
 
-	Robotino robo(hostname.c_str(), AvoidanceControl::instance());
+	Robotino robo(hostname.c_str(), TestCor::instance());
 
 	while(true){
 		try{

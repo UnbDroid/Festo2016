@@ -41,7 +41,9 @@ public:
         {
         	myfile << jpgData[i];
         }
-        //cv::Mat test = cv::imread("temp.jpg",CV_LOAD_IMAGE_COLOR);
+        //cv::Mat test = cv::imread("temp2.jpg",CV_LOAD_IMAGE_COLOR);
+        //cv::imshow("Cu",test);
+        //cv::waitKey(1);
         //std::cout << test << "\n";
         //std::cout << "\n-------------------------------------\n\n";
 

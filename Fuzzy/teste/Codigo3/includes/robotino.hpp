@@ -51,6 +51,9 @@ public:
     float motorVelocity(unsigned int);
     float motorPosition(unsigned int);
 
+    // Color sensor
+    int readColorSensor();
+
     // IR Sensors
     float ir_distance(unsigned int);
 
