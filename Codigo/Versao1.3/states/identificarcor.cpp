@@ -196,10 +196,10 @@ void IdentificarCor::execute(Robotino *robotino)
     //image will not appear without this waitKey() command
     //waitKey(1);
 
-    robotino->definirObjetoAlvo(Robotino::AZUL);
+    //robotino->definirObjetoAlvo(Robotino::AZUL);
 
-    robotino->change_state(SeguirCor::instance());
-    //robotino->change_state(robotino->previous_state());
+    //robotino->change_state(SeguirCor::instance());
+    robotino->change_state(robotino->previous_state());
 }
 
 void IdentificarCor::exit(Robotino *robotino) {}

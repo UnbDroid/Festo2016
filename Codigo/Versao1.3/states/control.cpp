@@ -49,35 +49,31 @@ void Control::execute(Robotino *robotino)
     static int objetivo_completo = 0;
     //robotino->definirDestino(0,100);
     //robotino->change_state(IrParaPonto::instance());
-    if(objetivo_completo == 4){
-        robotino->definirObjetoAlvo(Robotino::AZUL);
-        robotino->change_state(SeguirCor::instance());
+    
 
-    }else if (objetivo_completo == 3)
-    {
-        robotino->change_state(IdentificarCor::instance());
-        objetivo_completo = 4;
-    }else if (objetivo_completo == 2)
-    {
-        robotino->setOdometry(robotino->xD,robotino->yD,robotino->odometryPhi());
+    if(objetivo_completo == 0){
+        Coordenadas destino = robotino->pegarCoordenadaArea(Robotino::AREA3,Coordenadas(robotino->odometryX()/10, -robotino->odometryY()/10));
+        robotino->setThetaR(-destino.get_theta());
+        robotino->definirDestino(destino.get_x(), -destino.get_y());
+        robotino->change_state(IrParaPonto::instance());
+        objetivo_completo = 3;
+    }else if(objetivo_completo == 1){
+        Coordenadas destino = robotino->pegarCoordenadaArea(Robotino::AREA2);//,Coordenadas(robotino->odometryX()/10, -robotino->odometryY()/10));
+        robotino->definirDestino(destino.get_x(),-destino.get_y());
+        robotino->change_state(IrParaPonto::instance());
+        objetivo_completo = 5;
+    }else if (objetivo_completo == 2){
         Coordenadas destino = robotino->pegarCoordenadaArea(Robotino::AREA1,Coordenadas(robotino->odometryX()/10, -robotino->odometryY()/10));
         robotino->definirDestino(destino.get_x(),-destino.get_y());
         robotino->change_state(IrParaPonto::instance());
         objetivo_completo = 3;
-    }else if(objetivo_completo == 1){
-        robotino->setOdometry(robotino->xD,robotino->yD,robotino->odometryPhi());
-        Coordenadas destino = robotino->pegarCoordenadaArea(Robotino::AREA2,Coordenadas(robotino->odometryX()/10, -robotino->odometryY()/10));
-        robotino->definirDestino(destino.get_x(),-destino.get_y());
-        robotino->change_state(IrParaPonto::instance());
-        objetivo_completo = 2;
-    }else if(objetivo_completo == 0){
-        Coordenadas destino = robotino->pegarCoordenadaArea(Robotino::AREA3,Coordenadas(robotino->odometryX()/10, -robotino->odometryY()/10));
-        robotino->setThetaR(45);
-        robotino->definirDestino(destino.get_x(), -destino.get_y());
-        robotino->change_state(IrParaPonto::instance());
+    }else if (objetivo_completo == 3){
+        robotino->change_state(IdentificarCor::instance());
+        objetivo_completo = 4;
+    }else if(objetivo_completo == 4){
+        robotino->definirObjetoAlvo(Robotino::AZUL);
+        robotino->change_state(SeguirCor::instance());
         objetivo_completo = 1;
-    }else{
-        
     }
 
     //robotino->update();

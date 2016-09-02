@@ -12,12 +12,12 @@ using namespace std;
 class Area
 {
 public:
-    Area(){};
+    Area(){num_elem = 0;};
     Area(int id);
     void adicionar_coordenada(Coordenadas coord);
     Coordenadas pegar_coordenada(Coordenadas);
     Coordenadas pegar_meio(){return ponto_medio;}
-private:
+protected:
     int id;
     int num_elem;
     Coordenadas ponto_medio;
