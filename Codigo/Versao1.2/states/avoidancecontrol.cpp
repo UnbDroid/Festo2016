@@ -5,6 +5,7 @@
 #include "defuzzyficador.hpp"
 #include "irparaponto.hpp"
 #include "Coordenadas.hpp"
+#include "girar.hpp"
 #include <vector>
 #include <cmath>
 #include <opencv2/highgui/highgui.hpp>
@@ -47,17 +48,20 @@ void AvoidanceControl::execute(Robotino *robotino)
     //robotino->change_state(IrParaPonto::instance());
     if (objetivo_completo == 2)
     {
+        robotino->setOdometry(robotino->x_d,robotino->y_d,robotino->odometryPhi());
         Coordenadas destino = robotino->pegar_coordenada_area(2,Coordenadas(robotino->odometryX()/10, -robotino->odometryY()/10));
         robotino->definirDestino(destino.get_x(),-destino.get_y());
         robotino->change_state(IrParaPonto::instance());
         objetivo_completo = 3;
     }else if(objetivo_completo == 1){
+        robotino->setOdometry(robotino->x_d,robotino->y_d,robotino->odometryPhi());
         Coordenadas destino = robotino->pegar_coordenada_area(3,Coordenadas(robotino->odometryX()/10, -robotino->odometryY()/10));
         robotino->definirDestino(destino.get_x(),-destino.get_y());
         robotino->change_state(IrParaPonto::instance());
         objetivo_completo = 2;
     }else if(objetivo_completo == 0){
         Coordenadas destino = robotino->pegar_coordenada_area(4,Coordenadas(robotino->odometryX()/10, -robotino->odometryY()/10));
+        robotino->setTheta_r(-90);
         robotino->definirDestino(destino.get_x(),-destino.get_y());
         robotino->change_state(IrParaPonto::instance());
         objetivo_completo = 1;

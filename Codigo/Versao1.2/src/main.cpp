@@ -11,6 +11,7 @@
 
 #include "robotino.hpp"
 #include "avoidancecontrol.hpp"
+#include "ajusteinicial.hpp"
 #include "irparaponto.hpp"
 #include "MapaImage.hpp"
 #include "Coordenadas.hpp"
@@ -29,9 +30,9 @@ int main( int argc, char **argv )
 		hostname = argv[1];
 	}
 
-	Robotino robo(hostname.c_str(), AvoidanceControl::instance());
+	Robotino robo(hostname.c_str(), AjusteInicial::instance());
 
-/*	MapaImage mapa(201.5, 201.5, 0.5);
+	/*MapaImage mapa(201.5, 201.5, 0.5);
 	    // Paredes da arena
 	    mapa.inserir_retangulo(Coordenadas(0,0), Coordenadas(201.5,1.5),mapa.PAREDE);
 	    mapa.inserir_retangulo(Coordenadas(0,0), Coordenadas(1.5,201.5),mapa.PAREDE);
@@ -62,7 +63,9 @@ int main( int argc, char **argv )
 	    mapa.inserir_retangulo(Coordenadas(76.5,134.5),Coordenadas(126.5,136.5),mapa.LINHA);
 	mapa.mostrar_mapa();
 	cv::waitKey();
-	std::cout << mapa.coordenada_area(2,Coordenadas(70,5)) << "\n";*/
+	std::cout << mapa.coordenada_area(2) << "\n";
+	std::cout << mapa.coordenada_area(3) << "\n";
+	std::cout << mapa.coordenada_area(4) << "\n";
 	/*while(true){
 		mapa.mostrar_mapa_com_robo(Coordenadas(100,100));
 		cv::waitKey(100);

@@ -78,6 +78,8 @@ public:
 
     void setTheta_r(float);
 
+    void setOdometry(float, float, float);
+
     // Calculate distance
     float calc_dist(float x1, float y1, float x2, float y2);
 

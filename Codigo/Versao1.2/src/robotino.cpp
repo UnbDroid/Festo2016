@@ -80,7 +80,7 @@ bool Robotino::bumper(){
 }
 
 float Robotino::odometryX(){
-    return this->currentSensorState.odometryX*0.9;
+    return this->currentSensorState.odometryX;
 }
 
 float Robotino::odometryY(){
@@ -88,7 +88,7 @@ float Robotino::odometryY(){
 }
 
 float Robotino::odometryPhi(){
-    return this->currentSensorState.odometryPhi;
+    return this->currentSensorState.odometryPhi*0.9;
 }
 
 float Robotino::motorVelocity(unsigned int motor){
@@ -181,6 +181,10 @@ float Robotino::readInductiveSensor(){
 void Robotino::definirDestino(float x, float y){
     this->x_d = x*10;
     this->y_d = y*10;
+}
+
+void Robotino::setOdometry(float x, float y, float theta){
+    odometry.set(x,y,theta);
 }
 
 Coordenadas Robotino::pegar_coordenada_area(int id, Coordenadas p){

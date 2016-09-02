@@ -4,6 +4,7 @@
 #include "maquinainferencia.hpp"
 #include "defuzzyficador.hpp"
 #include "Coordenadas.hpp"
+#include "girar.hpp"
 #include <vector>
 #include <cmath>
 #include <opencv2/highgui/highgui.hpp>
@@ -40,7 +41,8 @@ void IrParaPonto::execute(Robotino *robotino)
     Defuzzyficador D;
     MaquinaInferencia MI;
     static std::vector<float> x,y,theta_d,dist_d,vx,vy;
-
+    static bool girei = false;
+    static State<Robotino> * voltar;
     // Calculando a distancia e o angulo para o alvo
     robotino->d_e = robotino->calc_dist(robotino->x_d,robotino->odometryX(),robotino->y_d,robotino->odometryY())/10;
     robotino->theta_e = -atan2(robotino->y_d-robotino->odometryY(),robotino->x_d-robotino->odometryX())*180/PI;
@@ -75,8 +77,15 @@ void IrParaPonto::execute(Robotino *robotino)
     std::cout << "Y_D "<<robotino->y_d<<"...\n";
     std::cout << "X:  "<<robotino->odometryX()<<"...\n";
     std::cout << "Y:  "<<robotino->odometryY()<<"...\n";
-    if(robotino->d_e < 1){
-        robotino->change_state(robotino->previous_state());
+    if(girei){
+        std::cout << "Entrei aqui nessa paradinha dinha dinha\n";
+        robotino->change_state(voltar);
+        girei = false;
+    }else if(robotino->d_e < 1){
+        std::cout << "Entrei aqui nessa paradinha dinha dinha 2\n";
+        voltar = robotino->previous_state();
+        robotino->change_state(Girar::instance());
+        girei = true;
     }
 }
 
