@@ -8,6 +8,7 @@
 #include "coordenadas.hpp"
 #include "girar.hpp"
 #include "identificarcor.hpp"
+#include "procurarcor.hpp"
 #include "seguircor.hpp"
 #include "irparaparede.hpp"
 #include "irparalinha.hpp"
@@ -71,9 +72,13 @@ void Control::execute(Robotino *robotino)
         objetivo_completo = 6;
     }else if (objetivo_completo == 3){
         robotino->change_state(IdentificarCor::instance());
+        objetivo_completo = 11;
+    }else if(objetivo_completo == 11){
+        robotino->definirCorAlvo(Robotino::VERMELHO);
+        robotino->change_state(ProcurarCor::instance());
         objetivo_completo = 4;
     }else if(objetivo_completo == 4){
-        robotino->definirObjetoAlvo(Robotino::AZUL);
+        robotino->definirObjetoAlvo(Robotino::VERMELHO);
         robotino->change_state(SeguirCor::instance());
         objetivo_completo = 5;
     }else if(objetivo_completo == 5){

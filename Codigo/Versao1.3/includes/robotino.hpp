@@ -132,6 +132,8 @@ public:
 
     void definirObjetoAlvo(int);
 
+    void definirCorAlvo(int);
+
     void setImage(cv::Mat image);
 
     cv::Mat getImage();

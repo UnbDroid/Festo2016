@@ -151,12 +151,12 @@ void Robotino::update(){
                 this->exit("Bateu");
             }
             state_machine.update();
-            this->waitForUpdate(0);
+            if(!this->waitForUpdate(0)) std::cout << "Falhou aqui\n";
             this->currentSensorState = this->sensorState();
             mapa.mostrar_mapa_com_robo(Coordenadas(this->odometryX()/10,-this->odometryY()/10,-this->odometryPhi()));
             cv::imshow("Amor", this->getImage());
             cvMoveWindow("Amor",0,500);
-            std::cout << "Odometria : " << odometryPhi() << std::endl;
+            //std::cout << "Odometria : " << odometryPhi() << std::endl;
             cv::waitKey(1);
         }
     }
@@ -292,6 +292,22 @@ void Robotino::definirObjetoAlvo(int cor){
         }
 
     }
+
+}
+
+void Robotino::definirCorAlvo(int cor){
+
+    string nome;
+
+    if(cor ==   VERMELHO)
+        nome = "red";
+    if(cor ==   AMARELO)
+        nome = "yellow";
+    if(cor ==   AZUL)
+        nome = "blue";            
+
+    Object objetoAux(nome);
+    objetoAlvo = objetoAux;
 
 }
 
