@@ -4,6 +4,7 @@
 #include "maquinainferencia.hpp"
 #include "defuzzyficador.hpp"
 #include "irparaponto.hpp"
+#include "controleposicao.hpp"
 #include "Coordenadas.hpp"
 #include "girar.hpp"
 #include <vector>
@@ -61,8 +62,8 @@ void AvoidanceControl::execute(Robotino *robotino)
         objetivo_completo = 2;
     }else if(objetivo_completo == 0){
         Coordenadas destino = robotino->pegar_coordenada_area(4,Coordenadas(robotino->odometryX()/10, -robotino->odometryY()/10));
-        robotino->setTheta_r(-90);
-        robotino->definirDestino(destino.get_x(),-destino.get_y());
+        robotino->setTheta_r(45);
+        robotino->definirDestino(destino.get_x(), -destino.get_y());
         robotino->change_state(IrParaPonto::instance());
         objetivo_completo = 1;
     }else{
