@@ -153,6 +153,7 @@ void Robotino::update(){
             this->waitForUpdate();
             this->currentSensorState = this->sensorState();
             mapa.mostrar_mapa_com_robo(Coordenadas(this->odometryX()/10,-this->odometryY()/10,-this->odometryPhi()));
+            //cv::imshow("Amor", this->getImage());
             cv::waitKey(1);
         }
     }

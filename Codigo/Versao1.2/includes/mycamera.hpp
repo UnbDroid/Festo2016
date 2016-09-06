@@ -28,7 +28,7 @@ public:
         //unsigned char *data=new unsigned char[jpgDataSize];
         //strcpy((char *)data,(const char *)jpgData);
         //this->resolution(&width,&height);
-        std::cout << "Imagem recebida\n";
+        //std::cout << "Imagem recebida\n";
         //cv::Mat rawData  =  cv::Mat( 1, jpgDataSize, CV_8UC3, data );
 		//cv::Mat decodedImage  =  cv::imdecode(rawData ,CV_LOAD_IMAGE_COLOR);
   		//cv::Mat img = cv::Mat(,CV_8UC3,data);

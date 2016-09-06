@@ -7,6 +7,7 @@
 #include "controleposicao.hpp"
 #include "Coordenadas.hpp"
 #include "girar.hpp"
+#include "identificarcor.hpp"
 #include <vector>
 #include <cmath>
 #include <opencv2/highgui/highgui.hpp>
@@ -47,7 +48,11 @@ void AvoidanceControl::execute(Robotino *robotino)
     static int objetivo_completo = 0;
     //robotino->definirDestino(0,100);
     //robotino->change_state(IrParaPonto::instance());
-    if (objetivo_completo == 2)
+    if (objetivo_completo == 3)
+    {
+        robotino->change_state(IdentificarCor::instance());
+        objetivo_completo = 4;
+    }else if (objetivo_completo == 2)
     {
         robotino->setOdometry(robotino->x_d,robotino->y_d,robotino->odometryPhi());
         Coordenadas destino = robotino->pegar_coordenada_area(2,Coordenadas(robotino->odometryX()/10, -robotino->odometryY()/10));
@@ -67,7 +72,9 @@ void AvoidanceControl::execute(Robotino *robotino)
         robotino->change_state(IrParaPonto::instance());
         objetivo_completo = 1;
     }else{
-
+        cout << "Azul: " << robotino->objetosAzuis.size() << endl;
+        cout << "Amarelo: " << robotino->objetosAmarelos.size() << endl;
+        cout << "Vermelho: " << robotino->objetosVermelhos.size() << endl;
     }
 
     //robotino->update();

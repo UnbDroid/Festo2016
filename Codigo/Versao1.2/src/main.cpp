@@ -15,6 +15,7 @@
 #include "irparaponto.hpp"
 #include "MapaImage.hpp"
 #include "Coordenadas.hpp"
+#include "identificarcor.hpp"
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/opencv.hpp>
 

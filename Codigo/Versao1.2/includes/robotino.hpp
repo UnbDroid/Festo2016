@@ -6,6 +6,7 @@
 #include "basecom.hpp"
 #include "robotbase.hpp"
 #include "MapaImage.hpp"
+#include "Object.h"
 #include <opencv2/opencv.hpp>
 
 
@@ -95,6 +96,12 @@ public:
     float d_e;
     float theta_e;
     float theta_r;
+
+    //Variaveis cor
+
+     vector <Object> objetosAmarelos;
+     vector <Object> objetosAzuis;
+     vector <Object> objetosVermelhos;
 
     void setImage(cv::Mat image);
 
