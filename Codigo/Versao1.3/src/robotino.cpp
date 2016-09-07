@@ -296,6 +296,41 @@ void Robotino::definirObjetoAlvo(int cor){
 
     }
 
+    if(cor == TODAS){
+        int yMaxR = 999999, yMaxY = 999999, yMaxB = 999999;
+        Object alvoAzul, alvoVermelho, alvoAmarelo;
+        for (std::vector<Object>::iterator i = objetosAzuis.begin(); i != objetosAzuis.end(); ++i)
+        {
+            if(i->getYPos() > yMax){
+
+                alvoAzul = *i;
+                yMaxB = i->getYPos();
+            }
+        }        
+        for (std::vector<Object>::iterator i = objetosAmarelos.begin(); i != objetosAmarelos.end(); ++i)
+        {
+            if(i->getYPos() > yMax){
+
+                alvoAmarelo = *i;
+                yMaxY = i->getYPos();
+            }
+        }
+        for (std::vector<Object>::iterator i = objetosVermelhos.begin(); i != objetosVermelhos.end(); ++i)
+        {
+            if(i->getYPos() > yMax){
+
+                alvoVermelho = *i;
+                yMaxR = i->getYPos();
+            }
+        }
+        if(yMaxR >= yMaxB && yMaxR>= yMaxY){
+            objetoAlvo = alvoVermelho;
+        }else if(yMaxB >= yMaxY){
+            objetoAlvo = alvoAzul;
+        }else if(yMaxY > yMaxB){
+            objetoAlvo = alvoAmarelo;
+        }
+    }
 }
 
 void Robotino::definirCorAlvo(int cor){
@@ -308,6 +343,8 @@ void Robotino::definirCorAlvo(int cor){
         nome = "yellow";
     if(cor ==   AZUL)
         nome = "blue";
+    if(cor == TODAS)
+        nome = "all";
 
     Object objetoAux(nome);
     objetoAlvo = objetoAux;

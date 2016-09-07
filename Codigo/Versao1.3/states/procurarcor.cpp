@@ -86,6 +86,21 @@ void ProcurarCor::execute(Robotino *robotino)
 	}
 	
 
+	if(robotino->objetoAlvo.getType() == "all"){
+
+		if(robotino->objetosVermelhos.size() == 0 && robotino->objetosAmarelos.size() == 0 && robotino->objetosAzuis.size() == 0){
+
+			robotino->setVelocity(0,0,w);
+			procurei = 1;
+			robotino->change_state(IdentificarCor::instance());
+
+		}else{
+
+			robotino->setVelocity(0,0,0);
+			robotino->change_state(voltar);
+		}
+
+	}
 
 
 }

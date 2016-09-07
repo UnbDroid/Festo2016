@@ -61,7 +61,8 @@ public:
     enum CorObjeto: unsigned int {
         VERMELHO = 0,
         AMARELO = 1,
-        AZUL = 2
+        AZUL = 2,
+        TODAS = 3
     };
 
     enum DirecaoLinha: unsigned int {

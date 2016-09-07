@@ -31,7 +31,10 @@ void IrParaLinha::execute(Robotino *robotino)
         if(robotino->linhaAlvo() == Robotino::HORIZONTAL){
             robotino->setOdometry(robotino->valorLinha(), robotino->odometryY(), robotino->odometryPhi());
         }else if(robotino->linhaAlvo() == Robotino::VERTICAL){
+            cout << "OI\n";
+            cout << robotino->valorLinha() << "\n";
             robotino->setOdometry(robotino->odometryX(), robotino->valorLinha(), robotino->odometryPhi());
+            cout << robotino->odometryY() << "\n";
         }
         preto = false;
     }else{

@@ -9,7 +9,7 @@
 #define KpY 2.5
 #define KiY 0.2*0
 
-#define limiarAprox 11
+#define limiarAprox 12
 #define limiarAprox2 7
 #define limiarAprox3 9
 #define limiarAproxLim 20
@@ -159,7 +159,7 @@ void SeguirCor::execute(Robotino *robotino)
     static Mat HSV;
     static Mat src;
     static int etapasAprox = 0;
-    float yAlvo = 192;
+    float yAlvo = 195;
     float xAlvo = 166;
 
     bool alvo;
@@ -185,8 +185,8 @@ void SeguirCor::execute(Robotino *robotino)
     alvo = SCtrackFilteredObject(robotino->objetoAlvo,threshold,HSV,cameraFeed, robotino);
 
     // Descomentar essa parte para mostrar o que está sendo seguido
-    //imshow(windowName,cameraFeed);
-    //waitKey(1);
+    imshow(windowName,cameraFeed);
+    waitKey(1);
 
     // Calculo dos erros em X (Horizontal) e Y (Vertical)
     float w,Vx,
@@ -214,7 +214,7 @@ void SeguirCor::execute(Robotino *robotino)
     	etapasAprox = 2;
     }if(robotino->irDistance(Robotino::IR_FRONTAL) > limiarAprox3 &&  etapasAprox == 2){
     	etapasAprox = 3;
-    }if(robotino->irDistance(Robotino::IR_FRONTAL) > limiarAproxLim && etapasAprox == 2){
+    }if(robotino->irDistance(Robotino::IR_FRONTAL) > limiarAproxLim){ //&& etapasAprox == 2){
     	etapasAprox = 0;
     }
 
@@ -234,7 +234,7 @@ void SeguirCor::execute(Robotino *robotino)
 
 
    	std::cout << "Etapa: " << etapasAprox << "\n";
-    //std::cout << "W: " << w << "\n";
+    std::cout << "W: " << w << "\n";
 
 	std::cout << "Distancia: " << robotino->irDistance(Robotino::IR_FRONTAL) << "\n";    
 

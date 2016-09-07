@@ -55,6 +55,8 @@ void IrParaParede::execute(Robotino *robotino)
     float ref_e1 = e2*a+K;
     float d1 = robotino->irDistance(Robotino::IR_DIREITO_1);
     float d2 = robotino->irDistance(Robotino::IR_DIREITO_2);
+    float te = robotino->irDistance(Robotino::IR_T_ESQUERDO);
+    float td = robotino->irDistance(Robotino::IR_T_DIREITO);
     float ref_d1 = 1.15*(d2*a+K);
     float distancia_da_esquerda, distancia_da_direita;
     float erro;
@@ -67,7 +69,15 @@ void IrParaParede::execute(Robotino *robotino)
         erro_intDist += erroDist*dt;
         Vy = Kpy*erroDist+Kiy*erro_intDist;
         std::cout << "Erro: " << erroDist <<endl;
-        robotino->setVelocity(0,Vy,0);
+        
+
+        if(td < 10 || te <10){
+            std::cout << "Desviando" << erroDist <<endl;    
+            robotino->setVelocity(10,Vy,0);    
+        }else{
+            std::cout << "Nao desviando" << erroDist <<endl;
+            robotino->setVelocity(0,Vy,0);
+        }
 
         if (std::abs(erroDist) < limiar) {
             ajuste = true;
@@ -79,8 +89,14 @@ void IrParaParede::execute(Robotino *robotino)
         erro_intDist += erroDist*dt;
         Vy = -Kpy*erroDist-Kiy*erro_intDist;
         std::cout << "Erro: " << erroDist <<endl;
-        robotino->setVelocity(0,Vy,0);
-
+        
+        if(td < 10 || te <10){
+            std::cout << "Desviando" << erroDist <<endl;
+            robotino->setVelocity(10,Vy,0);    
+        }else{
+            std::cout << "Nao desviando" << erroDist <<endl;
+            robotino->setVelocity(0,Vy,0);
+        }
         if (std::abs(erroDist) < limiar) {
             ajuste = true;
             robotino->setVelocity(0,0,0);
