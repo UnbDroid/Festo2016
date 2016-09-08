@@ -73,6 +73,7 @@ void AjusteInicial::execute(Robotino *robotino)
     std::cout << "Dt: " << dt <<"\n";
     if (std::abs(erro) < limiar){
         erro_int = 0;
+        timer.reset();
         distancia_da_esquerda = ((e1+ref_e1+2*R)*cos20)/2;
         distancia_de_tras= ((te+td+2*R)*cos20)/2;
         std::cout << "Distância da esquerda: " << distancia_da_esquerda << "\n";
