@@ -17,6 +17,7 @@
 #include "coordenadas.hpp"
 #include "identificarcor.hpp"
 #include "basestate.hpp"
+#include "irparaparede.hpp"
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/opencv.hpp>
 
@@ -32,7 +33,7 @@ int main( int argc, char **argv )
 			hostname = argv[1];
 		}
 		//Banana
-		Robotino robo(hostname.c_str(), AjusteInicial::instance());//AjusteInicial::instance());
+		Robotino robo(hostname.c_str(), IrParaParede::instance());//AjusteInicial::instance());
 
 		while(true){
 			try{

@@ -14,6 +14,7 @@
 #define Kix 10
 #define refDist 9
 #define limiar 5
+#define limiar2 45
 #define dt 0.01
 //*****************************************************************************************************************
 // Girar
@@ -36,20 +37,21 @@ void Girar::execute(Robotino *robotino){
     // Fazer o controlador para o robô se manter no thetaR
     float Vx, w, erro = (robotino->odometryPhi() - robotino->thetaR);
     static float erro_int = 0, erro_intDist = 0;
-    
+
     if(robotino->carregandoDisco()){
         std::cout << "Phi: " << robotino->odometryPhi() << "\n";
         std::cout << "Referencia: "<< robotino->thetaR << "\n";
         std::cout << "Erro: " << erro << "\n";
         std::cout << "Dt: " << dt <<"\n";
         float erroDist = robotino->irDistance(Robotino::IR_FRONTAL) - refDist;
+        std::cout << "Erro dist: " << erroDist <<"\n";
         erro_int += erro*dt;
         erro_intDist += erroDist*dt;
         w = -Kp2*erro-Ki2*erro_int;
         Vx = -Kpx*erroDist-Kix*erro_intDist;
         robotino->setVelocity(Vx,0,w);
 
-        if (std::abs(erro) < limiar){
+        if (std::abs(erro) < limiar2){
                  erro_int = 0;
                  erro_intDist = 0;
                  robotino->change_state(robotino->previous_state());

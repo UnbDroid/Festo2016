@@ -46,6 +46,13 @@ public:
         AREA4 = 5
     };
 
+    enum IndParede: unsigned int {
+        NORTE  = 0,
+        SUL       = 1,
+        LESTE   = 2,
+        OESTE  = 3
+    };
+
     enum SensorCor: unsigned int {
         SC_DIREITO = 0,
         SC_ESQUERDO = 4
@@ -128,6 +135,10 @@ public:
 
     void setCarregando(bool esta){disco = esta;};
 
+    void definirParedeAlvo (int parede){this->parede = parede;};
+
+    int paredeAlvo () {return parede;};
+
 private:
     void construir_mapa();
     OmniDrive omniDrive;
@@ -139,6 +150,7 @@ private:
     cv::Mat cameraImage;
     Mapa mapa;
     bool disco;
+    int parede;
 };
 
 
