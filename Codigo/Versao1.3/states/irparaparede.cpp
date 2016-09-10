@@ -2,7 +2,6 @@
 #include "girar.hpp"
 #include "robotino.hpp"
 
-#define refDist 10
 #define Kpy 10
 #define Kiy 0
 #define dt 0.01
@@ -34,6 +33,7 @@ void IrParaParede::enter(Robotino *robotino)
 
 void IrParaParede::execute(Robotino *robotino)
 {
+    float refDist = robotino->getRefDistParede();
 
     float   Vy = 0;
     float direcao = 0;
@@ -64,7 +64,7 @@ void IrParaParede::execute(Robotino *robotino)
 
     // Anda até a parede desejada
 
-    if ((paredeAlvo == Robotino::NORTE  || paredeAlvo == Robotino::OESTE) && girei && !ajuste ) {
+    if ((paredeAlvo == Robotino::NORTEN90  || paredeAlvo == Robotino::OESTE0 || paredeAlvo == Robotino::SUL90 || paredeAlvo == Robotino::LESTE180) && girei && !ajuste ) {
         erroDist = e1 - refDist;
         erro_intDist += erroDist*dt;
         Vy = Kpy*erroDist+Kiy*erro_intDist;
@@ -73,7 +73,7 @@ void IrParaParede::execute(Robotino *robotino)
 
         if(td < 10 || te <10){
             std::cout << "Desviando" << erroDist <<endl;    
-            robotino->setVelocity(10,Vy,0);    
+            robotino->setVelocity(100,Vy,0);    
         }else{
             std::cout << "Nao desviando" << erroDist <<endl;
             robotino->setVelocity(0,Vy,0);
@@ -84,7 +84,7 @@ void IrParaParede::execute(Robotino *robotino)
             robotino->setVelocity(0,0,0);
         }
 
-    } else if ((paredeAlvo == Robotino::SUL  || paredeAlvo == Robotino::LESTE) && girei && !ajuste) {
+    } else if ((paredeAlvo == Robotino::SULN90  || paredeAlvo == Robotino::LESTE0 || paredeAlvo == Robotino::NORTE90  || paredeAlvo == Robotino::OESTE180) && girei && !ajuste) {
         erroDist = d1 - refDist;
         erro_intDist += erroDist*dt;
         Vy = -Kpy*erroDist-Kiy*erro_intDist;
@@ -92,7 +92,7 @@ void IrParaParede::execute(Robotino *robotino)
         
         if(td < 10 || te <10){
             std::cout << "Desviando" << erroDist <<endl;
-            robotino->setVelocity(10,Vy,0);    
+            robotino->setVelocity(100,Vy,0);    
         }else{
             std::cout << "Nao desviando" << erroDist <<endl;
             robotino->setVelocity(0,Vy,0);
@@ -106,29 +106,53 @@ void IrParaParede::execute(Robotino *robotino)
 
     // Gira para ficar paralelo à parede desejada
 
-    if (paredeAlvo == Robotino::NORTE && !girei){
+    if (paredeAlvo == Robotino::NORTEN90 && !girei){
         direcao = -90;
         robotino->setThetaR(direcao);
         voltar = robotino->previous_state();
         girei = true;
         robotino->change_state(Girar::instance());
 
-    }else if(paredeAlvo == Robotino::SUL && !girei){
+    }else if(paredeAlvo == Robotino::NORTE90 && !girei){
+        direcao = 90;
+        robotino->setThetaR(direcao);
+        voltar = robotino->previous_state();
+        girei = true;
+        robotino->change_state(Girar::instance());
+    }else if(paredeAlvo == Robotino::SULN90 && !girei){
         direcao = -90;
         robotino->setThetaR(direcao);
         voltar = robotino->previous_state();
         girei = true;
         robotino->change_state(Girar::instance());
 
-    }else if (paredeAlvo == Robotino::OESTE && !girei){
+    }else if(paredeAlvo == Robotino::SUL90 && !girei){
+        direcao = 90;
+        robotino->setThetaR(direcao);
+        voltar = robotino->previous_state();
+        girei = true;
+        robotino->change_state(Girar::instance());
+    }else if (paredeAlvo == Robotino::OESTE0 && !girei){
         direcao = 0;
         robotino->setThetaR(direcao);
         voltar = robotino->previous_state();
         girei = true;
         robotino->change_state(Girar::instance());
 
-    }else if (paredeAlvo == Robotino::LESTE && !girei){
+    }else if(paredeAlvo == Robotino::OESTE180 && !girei){
+        direcao = 179;
+        robotino->setThetaR(direcao);
+        voltar = robotino->previous_state();
+        girei = true;
+        robotino->change_state(Girar::instance());
+    }else if (paredeAlvo == Robotino::LESTE0 && !girei){
         direcao = 0;
+        robotino->setThetaR(direcao);
+        voltar = robotino->previous_state();
+        girei = true;
+        robotino->change_state(Girar::instance());
+    }else if(paredeAlvo == Robotino::LESTE180 && !girei){
+        direcao = 179;
         robotino->setThetaR(direcao);
         voltar = robotino->previous_state();
         girei = true;
@@ -138,7 +162,7 @@ void IrParaParede::execute(Robotino *robotino)
 
     // Se alinha na parede desejada
 
-    if ((paredeAlvo == Robotino::NORTE  || paredeAlvo == Robotino::OESTE) && ajuste ){
+    if ((paredeAlvo == Robotino::NORTEN90  || paredeAlvo == Robotino::OESTE0 || paredeAlvo == Robotino::SUL90 || paredeAlvo == Robotino::LESTE180) && ajuste ){
 
         erro = (e1-ref_e1);
         erro_int += erro*dt;
@@ -154,17 +178,23 @@ void IrParaParede::execute(Robotino *robotino)
             robotino->setVelocity(0,0,0);
             distancia_da_esquerda = ((e1+ref_e1+2*R)*cos20)/2;
             std::cout << "Distância da esquerda: " << distancia_da_esquerda << "\n";
-            if (paredeAlvo == Robotino::OESTE) {
+            if (paredeAlvo == Robotino::OESTE0) {
                 robotino->setOdometry(robotino->odometryX(),-(distancia_da_esquerda*10+15),0);
             }
-            if (paredeAlvo == Robotino::NORTE) {
+            if (paredeAlvo == Robotino::NORTEN90) {
                 robotino->setOdometry((robotino->getAlturaMapa())*10 -(distancia_da_esquerda*10+15),robotino->odometryY(),-90);
+            }
+             if (paredeAlvo == Robotino::SUL90) {
+                robotino->setOdometry((distancia_da_esquerda*10+15),robotino->odometryY(),90);
+            }
+             if (paredeAlvo == Robotino::LESTE180) {
+                robotino->setOdometry(robotino->odometryX(),-((robotino->getLarguraMapa())*10 -(distancia_da_esquerda*10+15)),180);
             }
             robotino->change_state(voltar);
 
         }
 
-    } else if ((paredeAlvo == Robotino::SUL  || paredeAlvo == Robotino::LESTE) && ajuste ) {
+    } else if ((paredeAlvo == Robotino::SULN90  || paredeAlvo == Robotino::LESTE0 || paredeAlvo == Robotino::NORTE90  || paredeAlvo == Robotino::OESTE180) && ajuste ) {
 
         erro = (d1-ref_d1);
         erro_int += erro*dt;
@@ -185,11 +215,17 @@ void IrParaParede::execute(Robotino *robotino)
             robotino->setVelocity(0,0,0);
             distancia_da_direita = ((d1+ref_d1+2*R)*cos20)/2;
             std::cout << "Distância da direita: " << distancia_da_direita << "\n";
-            if (paredeAlvo == Robotino::SUL) {
+            if (paredeAlvo == Robotino::SULN90) {
                 robotino->setOdometry((distancia_da_direita*10+15),robotino->odometryY(),-90);
             }
-            if (paredeAlvo == Robotino::LESTE) {
+            if (paredeAlvo == Robotino::LESTE0) {
                 robotino->setOdometry(robotino->odometryX(),-((robotino->getLarguraMapa()) * 10-(distancia_da_direita*10+15)),0);
+            }
+            if (paredeAlvo == Robotino::NORTE90) {
+                robotino->setOdometry((robotino->getAlturaMapa() - (distancia_da_direita*10+15)),robotino->odometryY(),90);
+            }
+            if (paredeAlvo == Robotino::OESTE180) {
+                robotino->setOdometry(robotino->odometryX(),-((distancia_da_direita*10+15)),180);
             }
 
             robotino->change_state(voltar);

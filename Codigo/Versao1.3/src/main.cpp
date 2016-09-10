@@ -19,6 +19,7 @@
 #include "procurarcor.hpp"
 #include "basestate.hpp"
 #include "irparaparede.hpp"
+#include "modulo1.hpp"
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/opencv.hpp>
 
@@ -34,7 +35,7 @@ int main( int argc, char **argv )
 			hostname = argv[1];
 		}
 		//Banana
-		Robotino robo(hostname.c_str(), Control::instance());
+		Robotino robo(hostname.c_str(), Modulo1::instance());
 
 		while(true){
 			try{

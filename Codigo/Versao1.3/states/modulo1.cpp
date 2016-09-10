@@ -19,6 +19,7 @@
 #include <opencv2/opencv.hpp>
 
 #define PI 3.14159265
+#define VELBUSCA 20
 //*****************************************************************************************************************
 // Modulo1
 //*****************************************************************************************************************
@@ -51,7 +52,6 @@ void Modulo1::execute(Robotino *robotino)
     if(objetivo_completo == 0){
     
         Coordenadas destino = robotino->pegarCoordenadaArea(Robotino::AREA3,Coordenadas(robotino->odometryX()/10, -robotino->odometryY()/10));
-        robotino->setThetaR(-destino.get_theta());
         robotino->definirDestino(destino.get_x(), -destino.get_y());
         robotino->change_state(IrParaPonto::instance());
         objetivo_completo = 1;
@@ -62,7 +62,24 @@ void Modulo1::execute(Robotino *robotino)
         objetivo_completo = 2;
     
     }else if(objetivo_completo == 2){
+
+        Coordenadas destino = robotino->pegarCoordenadaArea(Robotino::AREA3,Coordenadas(robotino->odometryX()/10, -robotino->odometryY()/10));
+
+        float erro = robotino->odometryPhi() + destino.get_theta();
+
+        float w;
+
+        std::cout << "ESSE ERRO AQUI: " << erro << "\n";
+
+        if((erro > 0 && erro < 180) || (erro < -180)){
+            w = -VELBUSCA;
+        }
+        if((erro < 0 && erro > -180) || (erro > 180)){
+            w = VELBUSCA;
+        }
+     
     
+        robotino->setVelocidadeBusca(w);
         robotino->definirCorAlvo(Robotino::VERMELHO);
         robotino->change_state(ProcurarCor::instance());
         objetivo_completo = 4;
@@ -76,7 +93,8 @@ void Modulo1::execute(Robotino *robotino)
     }else if(objetivo_completo == 5){
         
         std::cout << "Indo para Sul" << std::endl;
-        robotino->definirParedeAlvo (Robotino::SUL);
+        robotino->definirParedeAlvo (Robotino::SULN90);
+        robotino->setDistParede(10);
         robotino->change_state(IrParaParede::instance());
         if(robotino->irDistance(Robotino::IR_FRONTAL) > 20){
             objetivo_completo = 2;
@@ -87,7 +105,8 @@ void Modulo1::execute(Robotino *robotino)
     }else if(objetivo_completo == 6){
     
         std::cout << "Indo para Leste" << std::endl;
-        robotino->definirParedeAlvo (Robotino::LESTE);
+        robotino->setDistParede(10);
+        robotino->definirParedeAlvo (Robotino::LESTE0);
         robotino->change_state(IrParaParede::instance());
         objetivo_completo = 7;
 
@@ -101,13 +120,15 @@ void Modulo1::execute(Robotino *robotino)
 
     }else if(objetivo_completo == 8){
 
-        if(robotino->odometryX() > 1200){
+        if(robotino->odometryX() > 1400){
              robotino->setVelocity(-100,0,0);
         }else{
             robotino->setVelocity(0,0,0);
-            if(discos_entregues == 1){
+            if(discos_entregues == 2){
                 objetivo_completo = 9;
             }else{
+                robotino->setThetaR(90);
+                robotino->change_state(Girar::instance());
                 objetivo_completo = 0;
             }
         }
@@ -115,32 +136,27 @@ void Modulo1::execute(Robotino *robotino)
     }else if(objetivo_completo == 9){
    
         std::cout << "Indo para casa" << std::endl;
-        robotino->definirParedeAlvo (Robotino::SUL);
+        robotino->setDistParede(6);
+        robotino->definirParedeAlvo (Robotino::SUL90);
         robotino->change_state(IrParaParede::instance());
         objetivo_completo = 10;
 
     }else if(objetivo_completo == 10){
-        std::cout << "Girando para casa" << std::endl;
-        robotino->setThetaR(89);
-        robotino->change_state(Girar::instance());
-        objetivo_completo = 11;
-
-    }else if(objetivo_completo == 11){
 
         robotino->definirLinhaAlvo(-49.5, Robotino::VERTICAL);
         robotino->change_state(IrParaLinha::instance());
-        objetivo_completo = 12;        
+        objetivo_completo = 11;        
 
-    }else if(objetivo_completo == 12){
+    }else if(objetivo_completo == 11){
         std::cout << "Y: " << robotino->odometryY() << "\n";
-        if(robotino->odometryY() < -250){
+        if(robotino->odometryY() < -200){
              robotino->setVelocity(100,0,0);
         }else{
             robotino->setVelocity(0,0,0);
-            objetivo_completo = 13;
+            objetivo_completo = 12;
         }     
 
-    }else if(objetivo_completo == 13){
+    }else if(objetivo_completo == 12){
         robotino->exit("Terminei");
     }
     std::cout << "Discos entregues: " << discos_entregues << "\n";

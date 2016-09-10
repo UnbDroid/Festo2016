@@ -26,7 +26,7 @@ void ProcurarCor::enter(Robotino *robotino)
 void ProcurarCor::execute(Robotino *robotino)
 {
 
-	float w;
+	float w = robotino->getVelocidadeBusca();
 	static State<Robotino> * voltar;
 	static bool procurei = 0;
 
@@ -34,8 +34,6 @@ void ProcurarCor::execute(Robotino *robotino)
 
 		voltar = robotino->previous_state(); 
 	} 
-
-	w = 10.0;
 
 	if(robotino->objetoAlvo.getType() == "blue"){
 

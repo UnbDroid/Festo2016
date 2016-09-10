@@ -128,7 +128,7 @@ void Robotino::setImage(cv::Mat image){
 }
 
 void Robotino::setThetaR(float thetaR){
-
+    this->girar = true;
     this->thetaR = thetaR;
 }
 

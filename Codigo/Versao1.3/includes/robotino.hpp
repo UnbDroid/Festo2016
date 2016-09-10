@@ -47,10 +47,14 @@ public:
     };
 
     enum IndParede: unsigned int {
-        NORTE  = 0,
-        SUL       = 1,
-        LESTE   = 2,
-        OESTE  = 3
+        NORTE90  = 0,
+        NORTEN90 = 1,
+        SUL90    = 2,
+        SULN90   = 3,
+        LESTE0   = 4,
+        LESTE180 = 5,
+        OESTE0   = 6,
+        OESTE180 = 7
     };
 
     enum SensorCor: unsigned int {
@@ -157,6 +161,18 @@ public:
 
     void definirLinhaAlvo(float, int);
 
+    float getRefDistParede(){return refDistParede;};
+
+    void setDistParede(float dist){refDistParede = dist;}
+
+    float getVelocidadeBusca(){return velocidadeBusca;};
+
+    void setVelocidadeBusca(float vel){velocidadeBusca = vel;}
+
+    void girei(){girar = false;}
+
+    bool deveGirar(){return girar;}
+
 private:
     void construir_mapa();
     OmniDrive omniDrive;
@@ -168,9 +184,13 @@ private:
     cv::Mat cameraImage;
     Mapa mapa;
     bool disco;
+    bool girar; // Se gira ou nao ao ir para o ponto
     int parede;
     float vLinha;
     int lAlvo;
+    float refDistParede; // distancia da parede
+    float velocidadeBusca;
+
 };
 
 
