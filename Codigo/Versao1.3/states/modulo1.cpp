@@ -162,9 +162,9 @@ void Modulo1::execute(Robotino *robotino)
     std::cout << "Discos entregues: " << discos_entregues << "\n";
     //robotino->update();
     //std::cout << test << "\n";
-    //std::cout << "Vendo na direita: " <<robotino->readColorSensor(Robotino::SC_DIREITO) << "\n";
-    //std::cout << "Vendo na esquerda: " <<robotino->readColorSensor(Robotino::SC_ESQUERDO) << "\n";
-    //std::cout << "Vendo no indutivo: " <<robotino->readInductiveSensor() << "\n";
+    std::cout << "Vendo na direita: " <<robotino->readColorSensor(Robotino::SC_DIREITO) << "\n";
+    std::cout << "Vendo na esquerda: " <<robotino->readColorSensor(Robotino::SC_ESQUERDO) << "\n";
+    std::cout << "Vendo no indutivo: " <<robotino->readInductiveSensor() << "\n";
     //cv::Mat img = robotino->getImage();
     //cv::Mat teste (img,cv::Rect(0,0,img.cols,img.rows - 10));
     //std::cout << img;
