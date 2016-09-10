@@ -42,6 +42,10 @@ public:
 
 	Coordenadas coordenada_area(int);
 
+	float getAlturaMapa() {return altura;};
+
+	float getLarguraMapa() {return largura;};
+
 	static const int LINHA = 0, PAREDE = 1;
 
 private:

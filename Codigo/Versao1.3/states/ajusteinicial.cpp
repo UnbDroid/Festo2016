@@ -33,12 +33,14 @@ void AjusteInicial::execute(Robotino *robotino)
 {
     static float a = std::sin(60*PI/180)/std::sin(80*PI/180);
     static float cos20 = std::cos(20*PI/180);
+    static float cos30 = std::cos(30*PI/180);
+    static float cos10 = std::cos(10*PI/180);
     static float K = R*(a-1);
     static float erro_int = 0;
     float w;
     float e1 = robotino->irDistance(Robotino::IR_ESQUERDO_1);
     float e2 = robotino->irDistance(Robotino::IR_ESQUERDO_2);
-    float ref_e1 = e2*a+K;
+    float ref_e1 = 0.95*(e2*a+K);
     float te = robotino->irDistance(Robotino::IR_T_ESQUERDO);
     float td = robotino->irDistance(Robotino::IR_T_DIREITO);
     float distancia_da_esquerda, distancia_de_tras;
@@ -63,7 +65,7 @@ void AjusteInicial::execute(Robotino *robotino)
     std::cout << "Dt: " << dt <<"\n";
     if (std::abs(erro) < limiar){
         erro_int = 0;
-        distancia_da_esquerda = ((e1+ref_e1+2*R)*cos20)/2;
+        distancia_da_esquerda = (e1*cos10+e2*cos30+R*(cos20+cos30))/2;
         distancia_de_tras= ((te+td+2*R)*cos20)/2;
         std::cout << "Distância da esquerda: " << distancia_da_esquerda << "\n";
         std::cout << "Distância de tras: " << distancia_de_tras << "\n";

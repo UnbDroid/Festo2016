@@ -64,6 +64,11 @@ public:
         AZUL = 2
     };
 
+    enum DirecaoLinha: unsigned int {
+        HORIZONTAL = 0,
+        VERTICAL = 1,
+        AMOR = 2
+    };
     //void definirEstado();
 
     // Return the bumper state
@@ -139,6 +144,16 @@ public:
 
     int paredeAlvo () {return parede;};
 
+    float getAlturaMapa () {return mapa.getAlturaMapa();};
+
+    float getLarguraMapa () {return mapa.getLarguraMapa();};
+
+    float valorLinha(){return vLinha;};
+
+    int linhaAlvo(){return lAlvo;};
+
+    void definirLinhaAlvo(float, int);
+
 private:
     void construir_mapa();
     OmniDrive omniDrive;
@@ -151,6 +166,8 @@ private:
     Mapa mapa;
     bool disco;
     int parede;
+    float vLinha;
+    int lAlvo;
 };
 
 

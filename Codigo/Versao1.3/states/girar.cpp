@@ -13,8 +13,8 @@
 #define Kpx 75
 #define Kix 10
 #define refDist 9
-#define limiar 5
-#define limiar2 45
+#define limiar 0.5
+#define limiar2 2
 #define dt 0.01
 //*****************************************************************************************************************
 // Girar
@@ -35,8 +35,8 @@ void Girar::enter(Robotino *robotino){
 
 void Girar::execute(Robotino *robotino){
     // Fazer o controlador para o robô se manter no thetaR
-    float Vx, w, erro = (robotino->odometryPhi() - robotino->thetaR);
-    static float erro_int = 0, erro_intDist = 0;
+    float Vx, w, erro;
+    static float erro_int = 0, erro_intDist = 0, limiar3;
 
     if(robotino->carregandoDisco()){
         std::cout << "Phi: " << robotino->odometryPhi() << "\n";
@@ -45,6 +45,21 @@ void Girar::execute(Robotino *robotino){
         std::cout << "Dt: " << dt <<"\n";
         float erroDist = robotino->irDistance(Robotino::IR_FRONTAL) - refDist;
         std::cout << "Erro dist: " << erroDist <<"\n";
+
+        if(erro > 0){
+            if(robotino->thetaR != 0){
+                erro = (robotino->odometryPhi() - robotino->thetaR*1.3);
+            }else{
+                erro = (robotino->odometryPhi() - (robotino->thetaR+15));
+            }
+        }else{
+            if(robotino->thetaR != 0){
+                erro = (robotino->odometryPhi() - robotino->thetaR*1.2);
+            }else{
+                erro = (robotino->odometryPhi() - (robotino->thetaR+15));
+            }
+        }
+
         erro_int += erro*dt;
         erro_intDist += erroDist*dt;
         w = -Kp2*erro-Ki2*erro_int;
@@ -61,9 +76,25 @@ void Girar::execute(Robotino *robotino){
         std::cout << "Referencia: "<< robotino->thetaR << "\n";
         std::cout << "Erro: " << erro << "\n";
         std::cout << "Dt: " << dt <<"\n";
+        std::cout << "Erro int: " << erro_int <<"\n";
+
+        if(erro > 0){
+            if(robotino->thetaR != 0){
+                erro = (robotino->odometryPhi() - robotino->thetaR);
+            }else{
+                erro = (robotino->odometryPhi() - (robotino->thetaR+15));
+            }
+        }else{
+            if(robotino->thetaR != 0){
+                erro = (robotino->odometryPhi() - robotino->thetaR);
+            }else{
+                erro = (robotino->odometryPhi() - (robotino->thetaR+15));
+            }
+        }
         erro_int += erro*dt;
         w = -Kp*erro-Ki*erro_int;
         robotino->setVelocity(0,0,w);
+
 
         if (std::abs(erro) < limiar){
                  erro_int = 0;

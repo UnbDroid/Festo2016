@@ -84,7 +84,7 @@ float Robotino::odometryY(){
 }
 
 float Robotino::odometryPhi(){
-    return this->currentSensorState.odometryPhi*0.9;
+    return this->currentSensorState.odometryPhi*0.7;
 }
 
 float Robotino::motorVelocity(unsigned int motor){
@@ -156,6 +156,7 @@ void Robotino::update(){
             mapa.mostrar_mapa_com_robo(Coordenadas(this->odometryX()/10,-this->odometryY()/10,-this->odometryPhi()));
             cv::imshow("Amor", this->getImage());
             cvMoveWindow("Amor",0,500);
+            std::cout << "Odometria : " << odometryPhi() << std::endl;
             cv::waitKey(1);
         }
     }
@@ -292,5 +293,9 @@ void Robotino::definirObjetoAlvo(int cor){
 
     }
 
+}
 
+void Robotino::definirLinhaAlvo(float valor, int direcao){
+    vLinha = valor*10;
+    lAlvo = direcao;
 }
