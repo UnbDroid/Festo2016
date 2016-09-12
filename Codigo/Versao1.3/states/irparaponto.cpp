@@ -43,7 +43,11 @@ void IrParaPonto::execute(Robotino *robotino)
     static State<Robotino> * voltar;
     static bool girei = false;
 
+    float te = robotino->irDistance(Robotino::IR_T_ESQUERDO);
+    float td = robotino->irDistance(Robotino::IR_T_DIREITO);
+
     std::cout << "Running IrParaPonto...\n";
+
 
     if(robotino->carregandoDisco()){
         if(processoCarregamento == 0){

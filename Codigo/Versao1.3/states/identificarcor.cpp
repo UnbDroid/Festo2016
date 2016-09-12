@@ -64,6 +64,9 @@ void morphOps(Mat &thresh){
 
     dilate(thresh,thresh,dilateElement);
     dilate(thresh,thresh,dilateElement);
+
+    imshow("morph",thresh);
+    waitKey(1);
 }
 
 
@@ -161,8 +164,8 @@ void IdentificarCor::execute(Robotino *robotino)
 
     //create some temp fruit objects so that
     //we can use their member functions/information
-    Object blue("blue"), yellow("yellow"), red("red");
-    bool azul, amarelo, vermelho;
+    Object blue("blue"), yellow("yellow"), red("red"), black("black");
+    bool azul, amarelo, vermelho, preto;
 
     //first find blue objects
     cvtColor(cameraFeed,HSV,COLOR_BGR2HSV);
@@ -182,19 +185,28 @@ void IdentificarCor::execute(Robotino *robotino)
     morphOps(threshold);
     vermelho = trackFilteredObject(red,threshold,HSV,cameraFeed, robotino);
 
+    //then blacks
+    cvtColor(cameraFeed,HSV,COLOR_BGR2HSV);
+    inRange(HSV,black.getHSVmin(),black.getHSVmax(),thresholdr1);
+    morphOps(threshold);
+    preto = trackFilteredObject(black,threshold,HSV,cameraFeed, robotino);
+
+
     if (azul)
         cout << "Azul: " << robotino->objetosAzuis.size() << endl;
      if (amarelo)
         cout << "Amarelo: " << robotino->objetosAmarelos.size() << endl;
      if (vermelho)
         cout << "Vermelho: " << robotino->objetosVermelhos.size() << endl;
+    if (preto)
+        cout << "Preto: " << robotino->objetosPretos.size() << endl;
 
-    //imshow(windowName,cameraFeed);
+    imshow(windowName,cameraFeed);
     //imshow(windowName1,HSV);
 
     //delay 30ms so that screen can refresh.
     //image will not appear without this waitKey() command
-    //waitKey(1);
+    waitKey(1);
 
     //robotino->definirObjetoAlvo(Robotino::AZUL);
 

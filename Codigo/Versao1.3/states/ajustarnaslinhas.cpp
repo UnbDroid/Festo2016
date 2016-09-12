@@ -13,7 +13,7 @@
 #define yRef 180
 #define xRef 150
 #define N 6
-#define limiarParada 10
+#define limiarParada 12
 //*****************************************************************************************************************
 // AjustarNasLinhas
 //*****************************************************************************************************************
@@ -93,8 +93,6 @@ void AjustarNasLinhas::execute(Robotino *robotino)
     }
     n++;
 
-
-
     std::cout << "Angulo médio das linhas "<< angLinhas <<"\n";
     std::cout << "Y maior "<< yMaior <<"\n";
     std::cout << "X medio "<< xMedio <<"\n";
@@ -114,9 +112,6 @@ void AjustarNasLinhas::execute(Robotino *robotino)
     Vx = Kpx*erro_x;
     Vy = Kpy*erro_y;
     w = KpW*erro_theta;
-
-
-
 
     erros = abs(erro_x)+abs(erro_y)+abs(erro_theta);
 

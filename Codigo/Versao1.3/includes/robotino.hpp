@@ -137,6 +137,7 @@ public:
     vector <Object> objetosAmarelos;
     vector <Object> objetosAzuis;
     vector <Object> objetosVermelhos;
+    vector <Object> objetosPretos;
 
     Object objetoAlvo;
 

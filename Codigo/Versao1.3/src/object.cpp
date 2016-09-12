@@ -60,6 +60,18 @@ Object::Object(string name){
 		setColor(Scalar(0,0,255));
 
 	}
+	if(name =="black"){
+
+		//TODO: use "calibration mode" to find HSV min
+		//and HSV max values
+
+		setHSVmin(Scalar(0,0,0));
+		setHSVmax(Scalar(179,50,100));
+
+		//BGR value for Red:
+		setColor(Scalar(0,0,0));
+
+	}
 }
 
 Object::~Object(void)

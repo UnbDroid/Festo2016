@@ -13,6 +13,8 @@
 #include "irparaparede.hpp"
 #include "irparalinha.hpp"
 #include "modulo2.hpp"
+#include "ajustarnaslinhas.hpp"
+#include "andarpelaparedeatelinha.hpp"
 #include <unistd.h>
 #include <vector>
 #include <cmath>
@@ -44,15 +46,30 @@ void Modulo2::enter(Robotino *robotino)
 
 void Modulo2::execute(Robotino *robotino)
 {
-    static int objetivo_completo = 0;
+    static int objetivo_completo = 5;
 
     if(objetivo_completo == 0){
         Coordenadas destino = robotino->pegarCoordenadaArea(Robotino::AREA4);//,Coordenadas(robotino->odometryX()/10, -robotino->odometryY()/10));
         std::cout <<"Resultado"<<destino<<"\n";
-        robotino->definirDestino(destino.get_x()+40, -(destino.get_y()));
-        robotino->setThetaR(170);
+        robotino->definirDestino(destino.get_x()+70, -(destino.get_y()));
+        robotino->setThetaR(160);
         robotino->change_state(IrParaPonto::instance());
         objetivo_completo = 1;
+    }else if(objetivo_completo ==1){
+        robotino->change_state(AjustarNasLinhas::instance());
+        objetivo_completo =2;
+    }else if(objetivo_completo == 3){
+        robotino->definirParedeAlvo(Robotino::LESTE180);
+        robotino->setDistParede(6);
+        robotino->change_state(IrParaParede::instance());
+        objetivo_completo = 4;
+    }else if(objetivo_completo == 4){
+        robotino->definirParedeAlvo(Robotino::LESTE180);
+        robotino->setDistParede(6);
+        robotino->change_state(AndarPelaParedeAteLinha::instance());
+        objetivo_completo = 40;        
+    }else if(objetivo_completo == 5){
+        robotino->change_state(IdentificarCor::instance());
     }
 
  /*   static bool viMetal = false;
