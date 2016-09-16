@@ -5,6 +5,9 @@
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/opencv.hpp>
 
+#include <ctime>
+
+
 Robotino::Robotino(const char *hostname,
     State<Robotino> *initial_state):
     BaseCom(hostname),
@@ -84,7 +87,7 @@ float Robotino::odometryY(){
 }
 
 float Robotino::odometryPhi(){
-    return this->currentSensorState.odometryPhi*0.7;
+    return this->currentSensorState.odometryPhi;
 }
 
 float Robotino::motorVelocity(unsigned int motor){
@@ -304,7 +307,7 @@ void Robotino::definirCorAlvo(int cor){
     if(cor ==   AMARELO)
         nome = "yellow";
     if(cor ==   AZUL)
-        nome = "blue";            
+        nome = "blue";
 
     Object objetoAux(nome);
     objetoAlvo = objetoAux;

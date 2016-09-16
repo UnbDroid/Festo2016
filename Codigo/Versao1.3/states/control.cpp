@@ -82,7 +82,7 @@ void Control::execute(Robotino *robotino)
         robotino->change_state(SeguirCor::instance());
         objetivo_completo = 5;
     }else if(objetivo_completo == 5){
-        std::cout << "Indo para Norte" << std::endl;
+        std::cout << "Indo para SUL" << std::endl;
         robotino->definirParedeAlvo (Robotino::SUL);
         robotino->change_state(IrParaParede::instance());
         objetivo_completo = 6;
@@ -92,17 +92,30 @@ void Control::execute(Robotino *robotino)
         robotino->change_state(IrParaParede::instance());
         objetivo_completo = 9;
     }else if(objetivo_completo == 7){
-        robotino->setThetaR(-90);
+        robotino->setThetaR(90);
         robotino->change_state(Girar::instance());
         objetivo_completo = 8;
     }else if(objetivo_completo == 8){
+        robotino->setThetaR(-90);
+        robotino->change_state(Girar::instance());
+        objetivo_completo = 8001;
+    }else if(objetivo_completo == 81){
+        robotino->setThetaR(45);
+        robotino->change_state(Girar::instance());
+        objetivo_completo = 82;
+    }else if(objetivo_completo == 82){
         robotino->setThetaR(0);
         robotino->change_state(Girar::instance());
-        objetivo_completo = 7;
+        objetivo_completo = 320;
     }else if(objetivo_completo == 9){
         robotino->definirLinhaAlvo(149.5, Robotino::HORIZONTAL);
         robotino->change_state(IrParaLinha::instance());
         objetivo_completo = 10;
+    }else if(objetivo_completo == 12){
+        //robotino->setCarregando(true);
+        robotino->setThetaR(90);
+        robotino->change_state(Girar::instance());
+        objetivo_completo = 90;
     }else if(objetivo_completo == 10){
         if(robotino->odometryX() > 1000){
              robotino->setVelocity(-100,0,0);

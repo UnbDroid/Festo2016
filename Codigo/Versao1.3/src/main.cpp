@@ -34,7 +34,7 @@ int main( int argc, char **argv )
 			hostname = argv[1];
 		}
 		//Banana
-		Robotino robo(hostname.c_str(), AjusteInicial::instance());
+		Robotino robo(hostname.c_str(), Control::instance());
 
 		while(true){
 			try{
