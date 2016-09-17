@@ -36,7 +36,7 @@ void Girar::enter(Robotino *robotino){
 void Girar::execute(Robotino *robotino){
     // Fazer o controlador para o robô se manter no thetaR
     float Vx, w;
-    static float erro = 0 , erro_int = 0, erro_intDist = 0, limiar3;
+    static float erro = 0 , erro_int = 0, erro_intDist = 0, limiar3, fatorM = 1, fatorAdd = 0;
 
     if(robotino->carregandoDisco()){
         std::cout << "Phi: " << robotino->odometryPhi() << "\n";
@@ -84,27 +84,96 @@ void Girar::execute(Robotino *robotino){
         }
     }else{
         std::cout << "Erro do sinal: " << erro << "\n";
+        bool mudarDir = false;
         if(erro == 0){
             erro = robotino->odometryPhi() - robotino->thetaR;
-        }
-        if(erro > 0){
-            if(robotino->thetaR != 0){
-                erro = (robotino->odometryPhi() - robotino->thetaR*1.2);
-            }else{
-                erro = (robotino->odometryPhi() - (robotino->thetaR-12));
+            if (erro >180) {
+                erro -= 360;
+                mudarDir = true;
+            }else if (erro < -180){
+                erro += 360;
+                mudarDir = true;
             }
-        }else{
+            if(erro > 0){
+                if(robotino->odometryPhi() > 0){
+                    if(robotino->thetaR > 0){
+                        fatorM = 0.8;
+                    }else if(robotino->thetaR < 0){
+                        fatorM = 1.2;
+                    }else{
+                        fatorAdd = -12;
+                    }
+                }else if(robotino->odometryPhi() < 0){
+                    if(robotino->thetaR > 0){
+                        fatorM = 0.8;
+                    }else if(robotino->thetaR < 0){
+                        fatorM = 1.2;
+                    }else{
+                        fatorAdd = 6;
+                    }
+                }else{
+                    if(robotino->thetaR > 0){
+                        fatorM = 1.2;
+                    }else if(robotino->thetaR < 0){
+                        fatorM = 1.2;
+                    }else{
+                        fatorAdd = 0;
+                    }
+                }
+            }else if(erro < 0){
+                if(robotino->odometryPhi() > 0){
+                    if(robotino->thetaR > 0){
+                        fatorM = 1.2;
+                    }else if(robotino->thetaR < 0){
+                        fatorM = 0.8;
+                    }else{
+                        fatorAdd = -12;
+                    }
+                }else if(robotino->odometryPhi() < 0){
+                    if(robotino->thetaR > 0){
+                        fatorM = 1.2;
+                    }else if(robotino->thetaR < 0){
+                        fatorM = 0.8;
+                    }else{
+                        fatorAdd = 6;
+                    }
+                }else{
+                    if(robotino->thetaR > 0){
+                        fatorM = 1.2;
+                    }else if(robotino->thetaR < 0){
+                        fatorM = 1.2;
+                    }else{
+                        fatorAdd = 0;
+                    }
+                }
+            }
+            std::cout << "------------("<<robotino->thetaR<<")"<<robotino->odometryPhi()<<"-------------("<<erro<<")-------------------------------"<<fatorM<<"\n";
+        }
+
+        if(erro != 0){
             if(robotino->thetaR != 0){
-                erro = (robotino->odometryPhi() - robotino->thetaR*1.2);
+                erro = (robotino->odometryPhi() - robotino->thetaR*fatorM);
             }else{
-                erro = (robotino->odometryPhi() - (robotino->thetaR+6));
+                erro = (robotino->odometryPhi() - (robotino->thetaR+fatorAdd));
             }
         }
+
+        if(std::abs(robotino->odometryPhi() - robotino->thetaR) >= 180){
+            mudarDir = true;
+        }
+
         if (erro >180 ) {
             erro -= 360;
+            mudarDir = false;
         }else if (erro < -180){
             erro += 360;
+            mudarDir = false;
         }
+
+        if(mudarDir){
+            erro *= -1;
+        }
+
         erro_int += erro*dt;
         w = -Kp*erro-Ki*erro_int;
         robotino->setVelocity(0,0,w);
