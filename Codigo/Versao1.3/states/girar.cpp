@@ -39,7 +39,7 @@ void Girar::execute(Robotino *robotino){
     if(robotino->deveGirar()){
         float Vx, w;
         static float erro = 0 , erro_int = 0, erro_intDist = 0, limiar3, fatorM = 1, fatorAdd = 0;
-        
+
         if(robotino->carregandoDisco()){
             std::cout << "Phi: " << robotino->odometryPhi() << "\n";
             std::cout << "Referencia: "<< robotino->thetaR << "\n";

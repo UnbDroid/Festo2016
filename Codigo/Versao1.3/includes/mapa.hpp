@@ -61,7 +61,7 @@ private:
 	void inserir_linha(Coordenadas);
 	void inserir_marcador(Coordenadas,int);
 	void definir_cores();
-	Scalar cores[6];
+	Scalar cores[10];
 
 };
 

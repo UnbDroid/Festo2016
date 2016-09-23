@@ -23,6 +23,8 @@
 #include "modulo2.hpp"
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/opencv.hpp>
+#include "fabricademapas.hpp"
+#include "acharlinhas.hpp"
 
 using namespace rec::robotino::com;
 
@@ -36,7 +38,7 @@ int main( int argc, char **argv )
 			hostname = argv[1];
 		}
 		//Banana
-		Robotino robo(hostname.c_str(), Modulo2::instance());
+		Robotino robo(hostname.c_str(), AcharLinhas::instance(), Coordenadas(173.5,-173.5,90));
 
 		while(true){
 			try{

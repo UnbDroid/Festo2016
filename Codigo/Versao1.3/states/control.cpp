@@ -84,12 +84,12 @@ void Control::execute(Robotino *robotino)
         objetivo_completo = 5;
     }else if(objetivo_completo == 5){
         std::cout << "Indo para SUL" << std::endl;
-        robotino->definirParedeAlvo (Robotino::SUL);
+        robotino->definirParedeAlvo (Robotino::SULN90);
         robotino->change_state(IrParaParede::instance());
         objetivo_completo = 6;
     }else if(objetivo_completo == 6){
         std::cout << "Indo para oeste" << std::endl;
-        robotino->definirParedeAlvo (Robotino::LESTE);
+        robotino->definirParedeAlvo (Robotino::LESTE0);
         robotino->change_state(IrParaParede::instance());
         objetivo_completo = 9;
     }else if(objetivo_completo == 7){

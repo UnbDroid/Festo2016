@@ -24,9 +24,13 @@ Coordenadas Area::pegar_coordenada(Coordenadas coord){
     Coordenadas resultado;
     for (std::vector<Coordenadas>::iterator i = coordenadas.begin(); i != coordenadas.end(); ++i){
         valor = i->calcular_distancia(coord);
+        //std::cout << "Valor = " << valor <<"\n";
         if(valor < min){
+            //std::cout << "Menor? = " << valor <<"\n";
             min = valor;
             resultado = *i;
+            //std::cout << "Ponto de origem = " << coord <<"\n";
+            //std::cout << "Menor resultado = " << resultado <<"\n";
         }
     }
     orientacao = std::atan2(ponto_medio.get_y() - resultado.get_y(), ponto_medio.get_x() - resultado.get_x())*180/PI;

@@ -13,6 +13,7 @@
 #include "irparaparede.hpp"
 #include "irparalinha.hpp"
 #include "modulo2.hpp"
+#include <unistd.h>
 #include <vector>
 #include <cmath>
 #include <opencv2/highgui/highgui.hpp>
@@ -43,7 +44,18 @@ void Modulo2::enter(Robotino *robotino)
 
 void Modulo2::execute(Robotino *robotino)
 {
-    static bool viMetal = false;
+    static int objetivo_completo = 0;
+
+    if(objetivo_completo == 0){
+        Coordenadas destino = robotino->pegarCoordenadaArea(Robotino::AREA4);//,Coordenadas(robotino->odometryX()/10, -robotino->odometryY()/10));
+        std::cout <<"Resultado"<<destino<<"\n";
+        robotino->definirDestino(destino.get_x()+40, -(destino.get_y()));
+        robotino->setThetaR(170);
+        robotino->change_state(IrParaPonto::instance());
+        objetivo_completo = 1;
+    }
+
+ /*   static bool viMetal = false;
     std::cout << viMetal<<"\n";
     std::cout << robotino->readInductiveSensor()<<"\n--------------\n";
     if((robotino->readInductiveSensor() > 9.9 && !viMetal) || !robotino->readInductiveSensor()){
@@ -51,7 +63,7 @@ void Modulo2::execute(Robotino *robotino)
     }else{
         robotino->setVelocity(0,0,0);
         viMetal = true;
-    }
+    }*/
 }
 
 void Modulo2::exit(Robotino *robotino) {

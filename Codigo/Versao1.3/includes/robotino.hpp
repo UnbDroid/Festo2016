@@ -7,6 +7,7 @@
 #include "robotbase.hpp"
 #include "mapa.hpp"
 #include "object.hpp"
+#include "coordenadas.hpp"
 #include <opencv2/opencv.hpp>
 
 
@@ -14,7 +15,7 @@ class Robotino: public BaseCom, public RobotBase<Robotino>{
 public:
 
     Robotino(const char *hostname,
-                State<Robotino> *initial_state);
+                State<Robotino> *initial_state, Coordenadas pontoInicial);
 
     ~Robotino();
 
@@ -43,7 +44,11 @@ public:
         AREA1 = 2,
         AREA2 = 3,
         AREA3 = 4,
-        AREA4 = 5
+        AREA4 = 5,
+        AREA5 = 6,
+        AREA6 = 7,
+        AREA7 = 8,
+        AREA8 = 9
     };
 
     enum IndParede: unsigned int {

@@ -1,5 +1,6 @@
 #include "robotino.hpp"
 #include "coordenadas.hpp"
+#include "fabricademapas.hpp"
 #include <iostream>
 #include <cmath>
 #include <opencv2/highgui/highgui.hpp>
@@ -9,20 +10,20 @@
 
 
 Robotino::Robotino(const char *hostname,
-    State<Robotino> *initial_state):
+    State<Robotino> *initial_state, Coordenadas pontoInicial):
     BaseCom(hostname),
     RobotBase<Robotino>(this, initial_state),
     xD(1500),
     yD(-900),
     thetaD(0),
     camera(this),
+    girar(false),
     disco(false){
     // Connect
     try{
         this->start_connection();
-        odometry.set(250,-250,0);
+        odometry.set(pontoInicial.get_x()*10,pontoInicial.get_y()*10,pontoInicial.get_theta());
         camera.setStreaming(true);
-        mapa = Mapa(200, 200, 0.5);
         construir_mapa();
     }
     catch( const rec::robotino::com::ComException& e ){
@@ -40,34 +41,8 @@ Robotino::Robotino(const char *hostname,
 }
 
 void Robotino::construir_mapa(){
-    // Paredes da arena
-    mapa.inserir_retangulo(Coordenadas(0,0), Coordenadas(200,1.5),mapa.PAREDE);
-    mapa.inserir_retangulo(Coordenadas(0,0), Coordenadas(1.5,200),mapa.PAREDE);
-    mapa.inserir_retangulo(Coordenadas(0,198.5), Coordenadas(200,200),mapa.PAREDE);
-    mapa.inserir_retangulo(Coordenadas(198.5,0), Coordenadas(200,200),mapa.PAREDE);
-
-    // Area de inicio
-    mapa.inserir_retangulo(Coordenadas(2,2),Coordenadas(48.5,48.5),2);
-
-    // Linhas da area de inicio
-    mapa.inserir_retangulo(Coordenadas(49.5,2),Coordenadas(51.5,51.5),mapa.LINHA);
-    mapa.inserir_retangulo(Coordenadas(2,49.5),Coordenadas(51.5,51.5),mapa.LINHA);
-
-    // Area de deposito
-    mapa.inserir_retangulo(Coordenadas(151,151),Coordenadas(198,198),3);
-
-    // Linhas da area de deposito
-    mapa.inserir_retangulo(Coordenadas(148.5,148.5),Coordenadas(150.5,198),mapa.LINHA);
-    mapa.inserir_retangulo(Coordenadas(148.5,148.5),Coordenadas(198,150.5),mapa.LINHA);
-
-    // Area central
-    mapa.inserir_retangulo(Coordenadas(79,69),Coordenadas(122.5,132.5),4);
-
-    // Linhas da area central
-    mapa.inserir_retangulo(Coordenadas(76.5,66.5),Coordenadas(125,68.5),mapa.LINHA);
-    mapa.inserir_retangulo(Coordenadas(123,66.5),Coordenadas(125,135),mapa.LINHA);
-    mapa.inserir_retangulo(Coordenadas(76.5,66.5),Coordenadas(78.5,135),mapa.LINHA);
-    mapa.inserir_retangulo(Coordenadas(76.5,133),Coordenadas(125,135),mapa.LINHA);
+    FabricaDeMapas criador;
+    criador.criarMapa("Modulo2Teste",mapa);
 }
 
 Robotino::~Robotino(){
@@ -306,7 +281,7 @@ void Robotino::definirObjetoAlvo(int cor){
                 alvoAzul = *i;
                 yMaxB = i->getYPos();
             }
-        }        
+        }
         for (std::vector<Object>::iterator i = objetosAmarelos.begin(); i != objetosAmarelos.end(); ++i)
         {
             if(i->getYPos() > yMax){
