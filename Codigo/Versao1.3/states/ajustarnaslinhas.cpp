@@ -1,4 +1,4 @@
-#include "acharlinhas.hpp"
+#include "ajustarnaslinhas.hpp"
 #include "robotino.hpp"
 
 #include <cmath>
@@ -15,25 +15,25 @@
 #define N 6
 #define limiarParada 10
 //*****************************************************************************************************************
-// AcharLinhas
+// AjustarNasLinhas
 //*****************************************************************************************************************
 
-AcharLinhas  *AcharLinhas::instance()
+AjustarNasLinhas  *AjustarNasLinhas::instance()
 {
-    static AcharLinhas  AcharLinhasStateInstance;
-    return &AcharLinhasStateInstance;
+    static AjustarNasLinhas  AjustarNasLinhasStateInstance;
+    return &AjustarNasLinhasStateInstance;
 }
 
-AcharLinhas::AcharLinhas() {}
+AjustarNasLinhas::AjustarNasLinhas() {}
 
-AcharLinhas::~AcharLinhas() {}
+AjustarNasLinhas::~AjustarNasLinhas() {}
 
-void AcharLinhas::enter(Robotino *robotino)
+void AjustarNasLinhas::enter(Robotino *robotino)
 {
-    std::cout << "Entrando no estado AcharLinhas...\n";
+    std::cout << "Entrando no estado AjustarNasLinhas...\n";
 }
 
-void AcharLinhas::execute(Robotino *robotino)
+void AjustarNasLinhas::execute(Robotino *robotino)
 {
 
     Mat img, cdst;
@@ -131,4 +131,4 @@ void AcharLinhas::execute(Robotino *robotino)
     cv::waitKey(1);
 }
 
-void AcharLinhas::exit(Robotino *robotino) {}
+void AjustarNasLinhas::exit(Robotino *robotino) {}
