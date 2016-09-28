@@ -17,9 +17,13 @@
 #define limiar 2
 #define limiar2 2
 #define dt 0.01
-#define Aumento 0.95
-#define Diminui 1.2
-#define Soma -5
+#define AumentoDisco 1.0
+#define DiminuiDisco 1.0
+#define SomaDisco 0
+#define Aumento 0.90
+#define Diminui 1.1
+#define Soma 4
+
 //*****************************************************************************************************************
 // Girar
 //*****************************************************************************************************************
@@ -66,53 +70,53 @@ void Girar::execute(Robotino *robotino){
                 if(erro > 0){
                     if(robotino->odometryPhi() > 0){
                         if(robotino->thetaR > 0){
-                            fatorM = Diminui;
+                            fatorM = DiminuiDisco;
                         }else if(robotino->thetaR < 0){
-                            fatorM = Aumento;
+                            fatorM = AumentoDisco;
                         }else{
-                            fatorAdd = -Soma;
+                            fatorAdd = -SomaDisco;
                         }
                     }else if(robotino->odometryPhi() < 0){
                         if(robotino->thetaR > 0){
-                            fatorM = Diminui;
+                            fatorM = DiminuiDisco;
                         }else if(robotino->thetaR < 0){
-                            fatorM = Aumento;
+                            fatorM = AumentoDisco;
                         }else{
-                            fatorAdd = Soma;
+                            fatorAdd = SomaDisco;
                         }
                     }else{
                         if(robotino->thetaR > 0){
-                            fatorM = Aumento;
+                            fatorM = AumentoDisco;
                         }else if(robotino->thetaR < 0){
-                            fatorM = Aumento;
+                            fatorM = AumentoDisco;
                         }else{
-                            fatorAdd = Soma;
+                            fatorAdd = SomaDisco;
                         }
                     }
                 }else if(erro < 0){
                     if(robotino->odometryPhi() > 0){
                         if(robotino->thetaR > 0){
-                            fatorM = Aumento;
+                            fatorM = AumentoDisco;
                         }else if(robotino->thetaR < 0){
-                            fatorM = Diminui;
+                            fatorM = DiminuiDisco;
                         }else{
-                            fatorAdd = -Soma;
+                            fatorAdd = -SomaDisco;
                         }
                     }else if(robotino->odometryPhi() < 0){
                         if(robotino->thetaR > 0){
-                            fatorM = Aumento;
+                            fatorM = AumentoDisco;
                         }else if(robotino->thetaR < 0){
-                            fatorM = Diminui;
+                            fatorM = DiminuiDisco;
                         }else{
-                            fatorAdd = Soma;
+                            fatorAdd = SomaDisco;
                         }
                     }else{
                         if(robotino->thetaR > 0){
-                            fatorM = Aumento;
+                            fatorM = AumentoDisco;
                         }else if(robotino->thetaR < 0){
-                            fatorM = Aumento;
+                            fatorM = AumentoDisco;
                         }else{
-                            fatorAdd = Soma;
+                            fatorAdd = SomaDisco;
                         }
                     }
                 }

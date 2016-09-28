@@ -65,7 +65,7 @@ void AlinharTraseiro::execute(Robotino *robotino)
 
     std::cout << "Soma erros alinhartraseiro:  " << erro+erroDistTras << std::endl;
 
-    if (std::abs(erroDistTras)+abs(erro) < limiar) {
+    if (/*std::abs(erroDistTras)+*/std::abs(erro) < limiar) {
         std::cout << "Alinhei o bumbum na parede" << std::endl;
         robotino->setVelocity(0,0,0);
         robotino->change_state(robotino->previous_state());

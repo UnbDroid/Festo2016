@@ -50,7 +50,7 @@ float corrigirAngulo(float Angulo){
 
 void Control::execute(Robotino *robotino)
 {
-    static int objetivo_completo = 8;
+    static int objetivo_completo = 7;
     //robotino->definirDestino(0,100);
     //robotino->change_state(IrParaPonto::instance());
 
@@ -94,6 +94,7 @@ void Control::execute(Robotino *robotino)
         robotino->change_state(IrParaParede::instance());
         objetivo_completo = 9;
     }else if(objetivo_completo == 7){
+        robotino->setCarregando(true);
         robotino->setThetaR(-90);
         robotino->change_state(Girar::instance());
         objetivo_completo = 8;

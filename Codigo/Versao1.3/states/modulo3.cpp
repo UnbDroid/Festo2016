@@ -42,7 +42,7 @@
 #define AREA_D5 24
 #define AREA_D6 25
 #define AREA_INTERMEDIARIA 34
-#define VOLTARINICIO 80
+#define VOLTARINICIO 50
 
 //*****************************************************************************************************************
 // Modulo3
@@ -82,6 +82,9 @@ void Modulo3::enter(Robotino *robotino)
 
 
 int definirOndePegar (NoBusca& melhorResultado, int numPassosFazer, int &numPassosFeitos){
+
+    if (numPassosFazer == 0)
+        return VOLTARINICIO;
 
     if(numPassosFeitos <= numPassosFazer){
 
@@ -151,14 +154,14 @@ int definirOndeDeixar(NoBusca& melhorResultado,int area, int &numPassosFeitos,in
 void Modulo3::execute(Robotino *robotino)
 {
 
-    static int objetivo_completo = 18;
+    static int objetivo_completo = 0;
     static int discos_entregues = 0;
     static int numPassosFazer = 0;
     static int numPassosFeitos = 0;
     static int deixarDiscos = 0;
     static bool deixando = false;
 
-    static vector<int> ordemAtualDiscos = {R,Y,B};//{INDEFINIDO, INDEFINIDO, INDEFINIDO}; //mudar para 6
+    static vector<int> ordemAtualDiscos = {B,R,Y};//{INDEFINIDO, INDEFINIDO, INDEFINIDO}; //mudar para 6
     static vector<int> ordemCorreta = {B,R,Y};
 
     static NoBusca noFinal(ordemCorreta,0);
@@ -167,17 +170,20 @@ void Modulo3::execute(Robotino *robotino)
 
     std::cout << "objetivo_completo:  " << objetivo_completo << std::endl;
 
+
+// Saindo da area de inicio e indo para a area de deposito 3------------------------------------------------------------------------------------------
+
     if(objetivo_completo == 0){
 
         robotino->definirParedeAlvo(Robotino::LESTE180);
-        robotino->setDistParede(6);
+        robotino->setDistParede(10);
         robotino->change_state(IrParaParede::instance());
         objetivo_completo = 1;
 
     }else if(objetivo_completo == 1){
 
         robotino->definirParedeAlvo(Robotino::LESTE180);
-        robotino->setDistParede(6);
+        robotino->setDistParede(10);
         robotino->change_state(AndarPelaParedeAteLinha::instance());
         objetivo_completo = 2;
 
@@ -204,6 +210,7 @@ void Modulo3::execute(Robotino *robotino)
         std::cout << ordemAtualDiscos[2] << std::endl;
 
     }
+
     // Indo para a area de deposito 2 identificar a cor -----------------------------------------------------------------------------------------------------------------------
 
     else if (objetivo_completo == 6) {
@@ -243,7 +250,9 @@ void Modulo3::execute(Robotino *robotino)
         std::cout << ordemAtualDiscos[1] << std::endl;
 
     }
-     // Indo para a area de deposito 1 identificar a cor ------------------------------------------------------------------------------------------------------------------------------
+
+ // Indo para a area de deposito 1 identificar a cor ------------------------------------------------------------------------------------------------------------------------------
+
     else if (objetivo_completo == 12) {
 
         robotino->definirDestino((robotino->odometryX())/10+40, robotino->odometryY()/10);
@@ -277,11 +286,14 @@ void Modulo3::execute(Robotino *robotino)
     }else if (objetivo_completo == 17){
 
         ordemAtualDiscos[0] = identificarCorArea(robotino);
-        objetivo_completo = 18;
         std::cout << ordemAtualDiscos[0] << std::endl;
+        robotino->definirDestino(robotino->odometryX()/10 + 50, robotino->odometryY()/10);
+        robotino->change_state(IrParaPonto::instance());
+        objetivo_completo = 18;
 
     }
-    // Planeja como organizar os discos ------------------------------------------------------------------------------------------------------------------------
+
+// Planeja como organizar os discos ------------------------------------------------------------------------------------------------------------------------
 
     else if (objetivo_completo == 18){
          NoBusca noInicial(ordemAtualDiscos);
@@ -295,7 +307,9 @@ void Modulo3::execute(Robotino *robotino)
         objetivo_completo = definirOndePegar(melhorResultado, numPassosFazer, numPassosFeitos);
     }
 
-    // Ir para area 1  -------------------------------------------------------------------------------------------------------------------------------------------------------
+// Indo para áreas -----------------------------------------------------------------------------------------------------------------------------------------------------
+
+// Ir para area 1  ---------------------------------------------------------------------
 
     else if (objetivo_completo == 20){
 
@@ -306,11 +320,11 @@ void Modulo3::execute(Robotino *robotino)
         if (!deixando){
             objetivo_completo = 26;
         }else{
-            objetivo_completo = 43;
+            objetivo_completo = 44;
         }
 
     }
-    // Indo para area 2 ----------------------------------------------------------------------------------------------------------------------------------------------------
+    // Indo para area 2 ---------------------------------------------------------------
     else if (objetivo_completo == 21){
 
         robotino->setDepositoAtual(robotino->getDepositoDestino());
@@ -320,11 +334,11 @@ void Modulo3::execute(Robotino *robotino)
         if (!deixando){
             objetivo_completo = 26;
         }else{
-            objetivo_completo = 43;
+            objetivo_completo = 44;
         }
 
     }
-    // Indo para area  3 -------------------------------------------------------------------------------------------------------------------------------------------------------
+    // Indo para area  3 --------------------------------------------------------------
     else if (objetivo_completo == 22){
 
         robotino->setDepositoAtual(robotino->getDepositoDestino());
@@ -334,11 +348,11 @@ void Modulo3::execute(Robotino *robotino)
         if (!deixando){
             objetivo_completo = 26;
         }else{
-            objetivo_completo = 43;
+            objetivo_completo = 44;
         }
 
     }
-    // Ir para area 4  --------------------------------------------------------------------------------------------------------------------------------------------------------
+    // Ir para area 4  ------------------------------------------------------------------
 
     else if (objetivo_completo == 23){
 
@@ -349,12 +363,12 @@ void Modulo3::execute(Robotino *robotino)
         if (!deixando){
             objetivo_completo = 26;
         }else{
-            objetivo_completo = 43;
+            objetivo_completo = 44;
         }
 
 
     }
-    // Indo para area  5 -----------------------------------------------------------------------------------------------------------------------------------------------------
+    // Indo para area  5 --------------------------------------------------------------
     else if (objetivo_completo == 24){
 
         robotino->setDepositoAtual(robotino->getDepositoDestino());
@@ -364,11 +378,11 @@ void Modulo3::execute(Robotino *robotino)
         if (!deixando){
             objetivo_completo = 26;
         }else{
-            objetivo_completo = 43;
+            objetivo_completo = 44;
         }
 
     }
-    // Indo para area  6 -----------------------------------------------------------------------------------------------------------------------------------------------------
+    // Indo para area  6 --------------------------------------------------------------
     else if (objetivo_completo == 25){
 
         robotino->setDepositoAtual(robotino->getDepositoDestino());
@@ -378,11 +392,13 @@ void Modulo3::execute(Robotino *robotino)
         if (!deixando){
             objetivo_completo = 26;
         }else{
-            objetivo_completo = 43;
+            objetivo_completo = 44;
         }
 
     }
-    // Rotina pra ir coletar o disco -----------------------------------------------------------------------------------------------------------------------------------------
+
+ // Rotina pra ir coletar o disco -------------------------------------------------------------------------------------------------------------------------------
+
     else if (objetivo_completo == 26){
 
         robotino->setAreaDeposito(666);
@@ -398,7 +414,7 @@ void Modulo3::execute(Robotino *robotino)
 
          identificarCorArea(robotino);
          robotino->change_state(SeguirCor::instance());
-         robotino->setCarregando(true);
+         //robotino->setCarregando(true);
          objetivo_completo = 29;
 
     }else if (objetivo_completo == 29) {
@@ -421,11 +437,15 @@ void Modulo3::execute(Robotino *robotino)
         robotino->change_state(AlinharTraseiro::instance());
         objetivo_completo = 32;
 
-    }else if (objetivo_completo == 32){
+    }
+    // Decide o destino do disco e difere entre deposito e area intermediaria ------------------------
+
+    else if (objetivo_completo == 32){
 
         robotino->definirDestino(robotino->odometryX()/10 + 90, robotino->odometryY()/10);
         robotino->change_state(IrParaPonto::instance());
         objetivo_completo = definirOndeDeixar(melhorResultado, robotino->getDepositoDestino(),numPassosFeitos, numPassosFazer);
+        deixando = true;
 
         if (objetivo_completo != AREA_INTERMEDIARIA) {
             deixarDiscos = objetivo_completo;
@@ -433,7 +453,8 @@ void Modulo3::execute(Robotino *robotino)
         }
     }
 
-    // Ir para area Intermediária (deixar o disco) ------------------------------------------------------------------------------------------------------------------------------
+// Ir para area Intermediária ------------------------------------------------------------------------------------------------------------------------------------------
+
     else if (objetivo_completo == 34) {
 
         robotino->definirParedeAlvo(Robotino::OESTE0);
@@ -441,19 +462,30 @@ void Modulo3::execute(Robotino *robotino)
         robotino->change_state(IrParaParede::instance());
         objetivo_completo = 35;
 
-    }else if (objetivo_completo == 35) {
+    }
+    // Decide se vai deixar ou pegar o disco na area intermediaria -------------------------------------------
+
+    else if (objetivo_completo == 35) {
         robotino->definirLinhaAlvo(150, Robotino::HORIZONTAL);
         robotino->change_state(IrParaLinha::instance());
         robotino->setCarregando(false);
-        objetivo_completo = 36;
+
+        if(!deixando){
+            objetivo_completo = 47;
+        }else{
+            objetivo_completo = 36;
+        }
 
     }else if (objetivo_completo == 36){
+        robotino->setCarregando(false);
         robotino->definirDestino(robotino->odometryX()/10 - 30, robotino->odometryY()/10);
         robotino->change_state(IrParaPonto::instance());
+        deixando = false;
         objetivo_completo = 37;
     }
 
-    // Voltar da area intermediaria ----------------------------------------------------------------------------------------------------------------------------------------------
+// Voltar da area intermediaria ----------------------------------------------------------------------------------------------------------------------------------------------
+
     else if (objetivo_completo == 37) {
         robotino->setThetaR(-90);
         robotino->change_state(Girar::instance());
@@ -473,27 +505,130 @@ void Modulo3::execute(Robotino *robotino)
 
     }else if (objetivo_completo == 40) {
          robotino->change_state(AjustarNasLinhas::instance());
-         objetivo_completo = 19;
+         if(!deixando){
+             objetivo_completo = 19;
+         }else{
+            objetivo_completo = 49;
+         }
+
     }
 
-    // Depositar Discos ----------------------------------------------------------------------------------------------------------------------------------------------------------------
+ // Deixar Discos a partir do deposito ----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-     // Comeca a se arrumar pra deixar os discos // ----------------------------------------------------
+     // Comeca a se arrumar pra deixar os discos ----------------------------------------------------
 
     else if (objetivo_completo == 41) {
 
-        robotino->setThetaR(180);
+        robotino->setThetaR(-90);
         robotino->change_state(Girar::instance());
         objetivo_completo = 42;
 
-    }else if (objetivo_completo == 42){
+    }else if (objetivo_completo == 42) {
+
+        robotino->setThetaR(180);
+        robotino->change_state(Girar::instance());
+        objetivo_completo = 43;
+
+    }else if (objetivo_completo == 43){
 
         robotino->change_state(AjustarNasLinhas::instance());
         robotino->setCarregando(false);
         deixando = true;
-        objetivo_completo = deixarDiscos;    // Vai para a área que deve deixar o disco
+        objetivo_completo = deixarDiscos;    // Vai para a área que deve deixar o disco //
     }
 
+    // Indo deixar o disco ------------------------------------------------------------------------------------
+
+     else if (objetivo_completo == 44){   //Chamada depois de ir para area correta//
+
+        robotino->setAreaDeposito(666);
+        robotino->change_state(ContarLinhas::instance());
+        objetivo_completo = 45;
+
+    }else if(objetivo_completo == 45){
+
+        robotino->definirLinhaAlvo(61, Robotino::HORIZONTAL);
+        robotino->change_state(IrParaLinha::instance());
+        objetivo_completo = 451;
+
+    }else if (objetivo_completo == 451){
+        robotino->setCarregando(false);
+        robotino->definirDestino(robotino->odometryX()/10-10, robotino->odometryY()/10);
+        robotino->change_state(IrParaPonto::instance());
+        deixando = false;
+        objetivo_completo = 46;  // Ve em qual area ele pega o proximo//
+
+    }else if (objetivo_completo == 46){
+        robotino->setCarregando(false);
+        robotino->definirDestino(robotino->odometryX()/10+70, robotino->odometryY()/10);
+        robotino->change_state(IrParaPonto::instance());
+        deixando = false;
+        objetivo_completo = 19;  // Ve em qual area ele pega o proximo//
+
+    }
+
+// Coletar disco na area intermediaria ----------------------------------------------------------------------------------------------------------------------------
+
+    else if (objetivo_completo == 47){
+
+        robotino->change_state(IdentificarCor::instance());
+        objetivo_completo = 48;
+
+    }else if (objetivo_completo == 48) {
+
+         identificarCorArea(robotino);
+         robotino->change_state(SeguirCor::instance());
+         deixando = true;
+         //robotino->setCarregando(true);
+         objetivo_completo = 37;
+
+    }
+    else if (objetivo_completo == 49){
+
+        objetivo_completo = definirOndeDeixar(melhorResultado, robotino->getDepositoDestino(),numPassosFeitos, numPassosFazer);
+
+        if (objetivo_completo != AREA_INTERMEDIARIA) {
+            deixarDiscos = objetivo_completo;
+            objetivo_completo = 41;
+        }
+    }
+
+// Voltar para o Inicio -----------------------------------------------------------------------------------------------------------------------------------------------------
+
+    else if (objetivo_completo == 50) {
+
+        robotino->definirParedeAlvo(Robotino::LESTE180);
+        robotino->setDistParede(6);
+        robotino->change_state(IrParaParede::instance());
+        objetivo_completo = 51;
+
+    } else if (objetivo_completo == 51) {
+
+        robotino->definirParedeAlvo(Robotino::NORTE90);
+        robotino->setDistParede(6);
+        robotino->change_state(IrParaParede::instance());
+        objetivo_completo = 52;
+
+    }else if (objetivo_completo == 52) {
+        robotino->definirLinhaAlvo(-150, Robotino::VERTICAL);
+        robotino->change_state(IrParaLinha::instance());
+        robotino->setCarregando(false);
+        objetivo_completo = 53;
+
+    }else if(objetivo_completo == 53){
+        std::cout << "Y: " << robotino->odometryY() << "\n";
+        if(robotino->odometryY() < -970){
+             robotino->setVelocity(100,0,0);
+        }else{
+            robotino->setVelocity(0,0,0);
+            objetivo_completo = 54;
+        }
+
+    }else if(objetivo_completo == 54){
+        robotino->exit("Terminei");
+    }
+
+//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 }
 
 void Modulo3::exit(Robotino *robotino) {}

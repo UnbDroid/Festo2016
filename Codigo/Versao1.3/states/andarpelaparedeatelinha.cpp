@@ -69,9 +69,14 @@ void AndarPelaParedeAteLinha::execute(Robotino *robotino)
         w = Kp*erro+Ki*erro_int;
 
         distancia_da_esquerda = ((e1+ref_e1+2*R)*cos20)/2;
-        erroDist = distancia_da_esquerda - distParede;
+        erroDist = (distancia_da_esquerda) - distParede;
         Vy = Kpy*erroDist;
 
+        std::cout << "erro dist: " << erroDist << "\n";
+
+        std::cout<< "Esquerda 1: " << e1 << std::endl;
+        std::cout<< "RefEsquerda 1: " << ref_e1 << std::endl;
+        std::cout<< "Esquerda 2: " << e2 << std::endl;
 
         std::cout << "Distância da esquerda: " << distancia_da_esquerda << "\n";
 
@@ -97,7 +102,7 @@ void AndarPelaParedeAteLinha::execute(Robotino *robotino)
         w = -Kp*erro-Ki*erro_int;
 
         distancia_da_direita = ((d1+ref_d1+2*R)*cos20)/2;
-        erroDist = distParede - distancia_da_direita;
+        erroDist = distParede - ( distancia_da_direita );
         Vy = Kpy*erroDist;
 
         std::cout<< "Direita 1: " << d1 << std::endl;

@@ -67,6 +67,7 @@ void NavegarEntreAreas::execute(Robotino *robotino)
             if  (!chegueiPonto){
                 Coordenadas destino = robotino->pegarCoordenadaArea(depositoAtual-contador);
                 robotino->definirDestino(robotino->odometryX()/10, -(destino.get_y()));
+                robotino->setCarregando(false);
                 robotino->change_state(IrParaPonto::instance());
                 chegueiPonto = true;
             }else {

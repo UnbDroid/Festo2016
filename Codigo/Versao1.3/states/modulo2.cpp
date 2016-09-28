@@ -475,11 +475,17 @@ void Modulo2::execute(Robotino *robotino)
 
         robotino->definirLinhaAlvo(61, Robotino::HORIZONTAL);
         robotino->change_state(IrParaLinha::instance());
-        objetivo_completo = 46;
+        objetivo_completo = 451;
+
+    }else if (objetivo_completo == 451){
+        robotino->setCarregando(false);
+        robotino->definirDestino(robotino->odometryX()/10-10, robotino->odometryY()/10);
+        robotino->change_state(IrParaPonto::instance());
+        objetivo_completo = 46;  // Ve em qual area ele pega o proximo//
 
     }else if (objetivo_completo == 46){
         robotino->setCarregando(false);
-        robotino->definirDestino(robotino->odometryX()/10+30, robotino->odometryY()/10);
+        robotino->definirDestino(robotino->odometryX()/10+40, robotino->odometryY()/10);
         robotino->change_state(IrParaPonto::instance());
         objetivo_completo = 47;
 
@@ -569,12 +575,18 @@ void Modulo2::execute(Robotino *robotino)
 
         robotino->definirLinhaAlvo(61, Robotino::HORIZONTAL);
         robotino->change_state(IrParaLinha::instance());
-        objetivo_completo = 60;
+        objetivo_completo = 591;
+
+    }else if (objetivo_completo == 591){
+        robotino->setCarregando(false);
+        robotino->definirDestino(robotino->odometryX()/10-10, robotino->odometryY()/10);
+        robotino->change_state(IrParaPonto::instance());
+        objetivo_completo = 60;  // Ve em qual area ele pega o proximo//
 
     }else if (objetivo_completo == 60){
 
         robotino->setCarregando(false);
-        robotino->definirDestino(robotino->odometryX()/10+30, robotino->odometryY()/10);
+        robotino->definirDestino(robotino->odometryX()/10+40, robotino->odometryY()/10);
         robotino->change_state(IrParaPonto::instance());
         objetivo_completo = 61;
 

@@ -6,7 +6,7 @@
 #define Kiy 0
 #define dt 0.01
 #define limiar 2
-#define limiar2 0.5
+#define limiar2 0.3
 #define R 20
 #define PI 3.14159265
 #define Kp 5
@@ -153,7 +153,7 @@ void IrParaParede::execute(Robotino *robotino)
         robotino->change_state(Girar::instance());
 
     }else if(paredeAlvo == Robotino::OESTE180 && !girei){
-        direcao = 179;
+        direcao = 180;
         robotino->setThetaR(direcao);
         voltar = robotino->previous_state();
         girei = true;
@@ -165,7 +165,7 @@ void IrParaParede::execute(Robotino *robotino)
         girei = true;
         robotino->change_state(Girar::instance());
     }else if(paredeAlvo == Robotino::LESTE180 && !girei){
-        direcao = 179;
+        direcao = 180;
         robotino->setThetaR(direcao);
         voltar = robotino->previous_state();
         girei = true;

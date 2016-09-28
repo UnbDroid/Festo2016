@@ -37,7 +37,7 @@ Modulo1::~Modulo1() {}
 void Modulo1::enter(Robotino *robotino)
 {
     //if(!c_Modulo101) throw std::invalid_argument("Modulo1 must have an owner to enter.");
-    std::cout << "Entrando no avoidance control...\n";
+    std::cout << "Entrando no Modulo1...\n";
     //robotino->omniDrive.setVelocity(-100, 0 , 0 );
 }
 
@@ -45,22 +45,23 @@ void Modulo1::execute(Robotino *robotino)
 {
     static int objetivo_completo = 0;
     static int discos_entregues = 0;
+
     //robotino->definirDestino(0,100);
     //robotino->change_state(IrParaPonto::instance());
 
 
     if(objetivo_completo == 0){
-    
+
         Coordenadas destino = robotino->pegarCoordenadaArea(Robotino::AREA3,Coordenadas(robotino->odometryX()/10, -robotino->odometryY()/10));
         robotino->definirDestino(destino.get_x(), -destino.get_y());
         robotino->change_state(IrParaPonto::instance());
         objetivo_completo = 1;
-    
+
     }else if (objetivo_completo == 1){
-    
+
         robotino->change_state(IdentificarCor::instance());
         objetivo_completo = 2;
-    
+
     }else if(objetivo_completo == 2){
 
         Coordenadas destino = robotino->pegarCoordenadaArea(Robotino::AREA3,Coordenadas(robotino->odometryX()/10, -robotino->odometryY()/10));
@@ -77,21 +78,21 @@ void Modulo1::execute(Robotino *robotino)
         if((erro < 0 && erro > -180) || (erro > 180)){
             w = VELBUSCA;
         }
-     
-    
+
+
         robotino->setVelocidadeBusca(w);
         robotino->definirCorAlvo(Robotino::VERMELHO);
         robotino->change_state(ProcurarCor::instance());
         objetivo_completo = 4;
-    
+
     }else if(objetivo_completo == 4){
-        
+
         robotino->definirObjetoAlvo(Robotino::VERMELHO);
         robotino->change_state(SeguirCor::instance());
         objetivo_completo = 5;
-    
+
     }else if(objetivo_completo == 5){
-        
+
         std::cout << "Indo para Sul" << std::endl;
         robotino->definirParedeAlvo (Robotino::SULN90);
         robotino->setDistParede(10);
@@ -99,11 +100,11 @@ void Modulo1::execute(Robotino *robotino)
         if(robotino->irDistance(Robotino::IR_FRONTAL) > 20){
             objetivo_completo = 2;
         }else{
-            objetivo_completo = 6;            
+            objetivo_completo = 6;
         }
 
     }else if(objetivo_completo == 6){
-    
+
         std::cout << "Indo para Leste" << std::endl;
         robotino->setDistParede(10);
         robotino->definirParedeAlvo (Robotino::LESTE0);
@@ -132,9 +133,9 @@ void Modulo1::execute(Robotino *robotino)
                 objetivo_completo = 0;
             }
         }
-   
+
     }else if(objetivo_completo == 9){
-   
+
         std::cout << "Indo para casa" << std::endl;
         robotino->setDistParede(6);
         robotino->definirParedeAlvo (Robotino::SUL90);
@@ -145,7 +146,7 @@ void Modulo1::execute(Robotino *robotino)
 
         robotino->definirLinhaAlvo(-49.5, Robotino::VERTICAL);
         robotino->change_state(IrParaLinha::instance());
-        objetivo_completo = 11;        
+        objetivo_completo = 11;
 
     }else if(objetivo_completo == 11){
         std::cout << "Y: " << robotino->odometryY() << "\n";
@@ -154,7 +155,7 @@ void Modulo1::execute(Robotino *robotino)
         }else{
             robotino->setVelocity(0,0,0);
             objetivo_completo = 12;
-        }     
+        }
 
     }else if(objetivo_completo == 12){
         robotino->exit("Terminei");
