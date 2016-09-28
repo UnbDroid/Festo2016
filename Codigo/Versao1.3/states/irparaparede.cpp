@@ -6,7 +6,7 @@
 #define Kiy 0
 #define dt 0.01
 #define limiar 2
-#define limiar2 0.1
+#define limiar2 0.5
 #define R 20
 #define PI 3.14159265
 #define Kp 5
@@ -65,34 +65,47 @@ void IrParaParede::execute(Robotino *robotino)
     // Anda até a parede desejada
 
     if ((paredeAlvo == Robotino::NORTEN90  || paredeAlvo == Robotino::OESTE0 || paredeAlvo == Robotino::SUL90 || paredeAlvo == Robotino::LESTE180) && girei && !ajuste ) {
-        erroDist = e1 - refDist;
+
+        distancia_da_esquerda = ((e1+ref_e1+2*R)*cos20)/2;
+
+        erroDist = (distancia_da_esquerda-20) - refDist;
         erro_intDist += erroDist*dt;
         Vy = Kpy*erroDist+Kiy*erro_intDist;
+
+        std::cout << "Distancia da esquerda: " << distancia_da_esquerda << std::endl;
+        std::cout << "e1: " << e1 << std::endl;
+        std::cout << "e2: " << e2 << std::endl;
+        std::cout << "refDist:  " << refDist << std::endl;
+        std::cout << "Vy: " << Vy << std::endl;
+
         std::cout << "Erro: " << erroDist <<endl;
-        
 
         if(td < 10 || te <10){
-            std::cout << "Desviando" << erroDist <<endl;    
-            robotino->setVelocity(100,Vy,0);    
+            std::cout << "Desviando" << erroDist <<endl;
+            robotino->setVelocity(100,Vy,0);
         }else{
             std::cout << "Nao desviando" << erroDist <<endl;
             robotino->setVelocity(0,Vy,0);
         }
 
         if (std::abs(erroDist) < limiar) {
+            std::cout << "Andei ate a parede" << std::endl;
             ajuste = true;
             robotino->setVelocity(0,0,0);
         }
 
     } else if ((paredeAlvo == Robotino::SULN90  || paredeAlvo == Robotino::LESTE0 || paredeAlvo == Robotino::NORTE90  || paredeAlvo == Robotino::OESTE180) && girei && !ajuste) {
-        erroDist = d1 - refDist;
+         distancia_da_direita = ((d1+ref_d1+2*R)*cos20)/2;
+
+        erroDist = (distancia_da_direita-20) - refDist;
         erro_intDist += erroDist*dt;
         Vy = -Kpy*erroDist-Kiy*erro_intDist;
         std::cout << "Erro: " << erroDist <<endl;
-        
+
+
         if(td < 10 || te <10){
             std::cout << "Desviando" << erroDist <<endl;
-            robotino->setVelocity(100,Vy,0);    
+            robotino->setVelocity(100,Vy,0);
         }else{
             std::cout << "Nao desviando" << erroDist <<endl;
             robotino->setVelocity(0,Vy,0);
@@ -169,7 +182,12 @@ void IrParaParede::execute(Robotino *robotino)
         w = Kp*erro+Ki*erro_int;
         robotino->setVelocity(0,0,w);
 
+        std::cout<< "Esquerda 1: " << e1 << std::endl;
+        std::cout<< "RefEsquerda 1: " << ref_e1 << std::endl;
+        std::cout<< "Esquerda 2: " << e2 << std::endl;
+
         if (std::abs(erro) < limiar2){
+              std::cout << "Alhinhei na parede" << std::endl;
             girei = false;
             ajuste = false;
             pronto = false;

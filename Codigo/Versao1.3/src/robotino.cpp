@@ -8,6 +8,10 @@
 
 #include <ctime>
 
+#define VXMAX 200
+#define VYMAX  200
+#define OMEGAMAX 40
+
 
 Robotino::Robotino(const char *hostname,
     State<Robotino> *initial_state, Coordenadas pontoInicial):
@@ -94,6 +98,24 @@ void Robotino::setMotorVelocity(unsigned int motor, float rpm){
 }
 
 void Robotino::setVelocity(float vx, float vy, float omega){
+    //std::cout << "Velocidade em X: " << vx <<"\n";
+    //std::cout << "Velocidade em Y: " << vy <<"\n";
+    //std::cout << "Velocidade angular: " << omega <<"\n";
+    if(vx > VXMAX){
+        vx = VXMAX;
+    }else if(vx < -VXMAX){
+        vx = -VXMAX;
+    }
+    if(vy > VYMAX){
+        vy = VYMAX;
+    }else if(vy < -VYMAX){
+        vy = -VYMAX;
+    }
+    if(omega > OMEGAMAX){
+        omega = OMEGAMAX;
+    }else if(omega < -OMEGAMAX){
+        omega = -OMEGAMAX;
+    }
     this->omniDrive.setVelocity(vx,vy,omega);
 }
 
@@ -329,4 +351,22 @@ void Robotino::definirCorAlvo(int cor){
 void Robotino::definirLinhaAlvo(float valor, int direcao){
     vLinha = valor*10;
     lAlvo = direcao;
+}
+
+void Robotino::setCorDiscoDeposito (Object obj1, Object obj2) {
+
+    if (areaDeposito == AREA2){
+        area1disco1 = obj1;
+        area1disco2 = obj2;
+
+    }else if (areaDeposito == AREA3){
+        area2disco1 = obj1;
+        area2disco2 = obj2;
+
+    }else if (areaDeposito == AREA4){
+        area3disco1 = obj1;
+        area3disco2 = obj2;
+
+    }
+
 }

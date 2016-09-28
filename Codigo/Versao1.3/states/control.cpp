@@ -50,10 +50,11 @@ float corrigirAngulo(float Angulo){
 
 void Control::execute(Robotino *robotino)
 {
-    static int objetivo_completo = 7;
+    static int objetivo_completo = 8;
     //robotino->definirDestino(0,100);
     //robotino->change_state(IrParaPonto::instance());
 
+    //robotino->setVelocity(0,-300,0);
 
     if(objetivo_completo == 0){
         Coordenadas destino = robotino->pegarCoordenadaArea(Robotino::AREA3,Coordenadas(robotino->odometryX()/10, -robotino->odometryY()/10));
@@ -97,11 +98,12 @@ void Control::execute(Robotino *robotino)
         robotino->change_state(Girar::instance());
         objetivo_completo = 8;
     }else if(objetivo_completo == 8){
-        robotino->setThetaR(91);
+
+        robotino->setThetaR(0);
         robotino->change_state(Girar::instance());
         objetivo_completo = 81;
     }else if(objetivo_completo == 81){
-        robotino->setThetaR(-90);
+        robotino->setThetaR(90);
         robotino->change_state(Girar::instance());
         objetivo_completo = 82;
     }else if(objetivo_completo == 82){
@@ -137,7 +139,7 @@ void Control::execute(Robotino *robotino)
     //std::cout << img;
     //cv::imshow("Amor",img);
     //cv::waitKey(1);
-    //std::cout << robotino->getImage();
+    //std::cout << robotino->getImage();*/
 }
 
 void Control::exit(Robotino *robotino) {

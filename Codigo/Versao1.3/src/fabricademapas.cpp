@@ -130,6 +130,53 @@ void FabricaDeMapas::mapaModulo2Teste(Mapa & mapa){
 
 void FabricaDeMapas::mapaModulo3Teste(Mapa & mapa){
 
+    mapa = Mapa(200, 200, 0.5);
+    // Paredes da arena
+    mapa.inserir_retangulo(Coordenadas(0,0), Coordenadas(200,1.5),mapa.PAREDE);
+    mapa.inserir_retangulo(Coordenadas(0,0), Coordenadas(1.5,200),mapa.PAREDE);
+    mapa.inserir_retangulo(Coordenadas(0,198.5), Coordenadas(200,200),mapa.PAREDE);
+    mapa.inserir_retangulo(Coordenadas(198.5,0), Coordenadas(200,200),mapa.PAREDE);
+
+    // Area de inicio
+     mapa.inserir_retangulo(Coordenadas(151,77.5),Coordenadas(198,122.5),2);
+
+    // Linhas da area de inicio
+    mapa.inserir_retangulo(Coordenadas(148.5,75),Coordenadas(198,77),mapa.LINHA);
+    mapa.inserir_retangulo(Coordenadas(148.5,75),Coordenadas(150.5,125),mapa.LINHA);
+    mapa.inserir_retangulo(Coordenadas(148.5,123),Coordenadas(198,125),mapa.LINHA);
+
+    // Area de deposito 1
+    mapa.inserir_retangulo(Coordenadas(2,2),Coordenadas(41.5,66.5),3);
+
+    // Linhas da area de deposito 1
+    mapa.inserir_retangulo(Coordenadas(42,2),Coordenadas(44,198),mapa.LINHA);
+    mapa.inserir_retangulo(Coordenadas(2,67),Coordenadas(41.5,69),mapa.LINHA);
+
+    // Area de deposito 2
+    mapa.inserir_retangulo(Coordenadas(2,69.5),Coordenadas(41.5,132),4);
+
+    // Linhas da area de deposito 2
+    mapa.inserir_retangulo(Coordenadas(2,132.5),Coordenadas(41.5,134.5),mapa.LINHA);
+
+    // Area de deposito 3
+    mapa.inserir_retangulo(Coordenadas(2,135),Coordenadas(41.5,198),5);
+
+     // Area intermediaria 1
+     mapa.inserir_retangulo(Coordenadas(151,2),Coordenadas(198,49),6);
+
+    // Linhas da area intermediaria 1
+    mapa.inserir_retangulo(Coordenadas(148.5,2),Coordenadas(150.5,51.5),mapa.LINHA);
+    mapa.inserir_retangulo(Coordenadas(148.5,49.5),Coordenadas(198,51.5),mapa.LINHA);
+
+    // Area intermediaria 2
+    mapa.inserir_retangulo(Coordenadas(151,151),Coordenadas(198,198),7);
+
+    // Linhas da area intermediaria 2
+    mapa.inserir_retangulo(Coordenadas(148.5,148.5),Coordenadas(150.5,198),mapa.LINHA);
+    mapa.inserir_retangulo(Coordenadas(148.5,148.5),Coordenadas(198,150.5),mapa.LINHA);
+
+
+
 }
 
 void FabricaDeMapas::mapaModulo1(Mapa & mapa){

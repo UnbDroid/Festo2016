@@ -65,10 +65,27 @@ void morphOps(Mat &thresh){
     dilate(thresh,thresh,dilateElement);
     dilate(thresh,thresh,dilateElement);
 
-    imshow("morph",thresh);
-    waitKey(1);
+   // imshow("morph2",thresh);
+   // waitKey(1);
 }
 
+void morphOpsBlack(Mat &thresh){
+
+    //create structuring element that will be used to "dilate" and "erode" image.
+    //the element chosen here is a 3px by 3px rectangle
+    Mat erodeElement = getStructuringElement( MORPH_RECT,Size(3,3));
+    //dilate with larger element so make sure object is nicely visible
+    Mat dilateElement = getStructuringElement( MORPH_RECT,Size(7,7));
+
+    erode(thresh,thresh,erodeElement);
+    erode(thresh,thresh,erodeElement);
+
+    dilate(thresh,thresh,dilateElement);
+    dilate(thresh,thresh,dilateElement);
+
+   // imshow("morph2",thresh);
+   // waitKey(1);
+}
 
 bool trackFilteredObject(Object theObject,Mat threshold,Mat HSV, Mat &cameraFeed, Robotino* robotino){
 
@@ -186,10 +203,10 @@ void IdentificarCor::execute(Robotino *robotino)
     vermelho = trackFilteredObject(red,threshold,HSV,cameraFeed, robotino);
 
     //then blacks
-    cvtColor(cameraFeed,HSV,COLOR_BGR2HSV);
-    inRange(HSV,black.getHSVmin(),black.getHSVmax(),thresholdr1);
-    morphOps(threshold);
-    preto = trackFilteredObject(black,threshold,HSV,cameraFeed, robotino);
+    // cvtColor(cameraFeed,HSV,COLOR_BGR2HSV);
+    // inRange(HSV,black.getHSVmin(),black.getHSVmax(),threshold);
+    // morphOpsBlack(threshold);
+    // preto = trackFilteredObject(black,threshold,HSV,cameraFeed, robotino);
 
 
     if (azul)
@@ -198,8 +215,8 @@ void IdentificarCor::execute(Robotino *robotino)
         cout << "Amarelo: " << robotino->objetosAmarelos.size() << endl;
      if (vermelho)
         cout << "Vermelho: " << robotino->objetosVermelhos.size() << endl;
-    if (preto)
-        cout << "Preto: " << robotino->objetosPretos.size() << endl;
+    //if (preto)
+       // cout << "Preto: " << robotino->objetosPretos.size() << endl;
 
     imshow(windowName,cameraFeed);
     //imshow(windowName1,HSV);

@@ -79,6 +79,7 @@ public:
         VERTICAL = 1,
         AMOR = 2
     };
+
     //void definirEstado();
 
     // Return the bumper state
@@ -141,6 +142,18 @@ public:
 
     Object objetoAlvo;
 
+    Object area1disco1;
+    Object area1disco2;
+    Object area1discoFaltando;
+
+    Object area2disco1;
+    Object area2disco2;
+    Object area2discoFaltando;
+
+    Object area3disco1;
+    Object area3disco2;
+    Object area3discoFaltando;
+
     void definirObjetoAlvo(int);
 
     void definirCorAlvo(int);
@@ -171,9 +184,31 @@ public:
 
     void setDistParede(float dist){refDistParede = dist;}
 
+     float getRefDistTrasParede(){return refDistTrasParede;};
+
+    void setDistTrasParede(float dist){refDistTrasParede = dist;}
+
     float getVelocidadeBusca(){return velocidadeBusca;};
 
     void setVelocidadeBusca(float vel){velocidadeBusca = vel;}
+
+    void setDepositoAtual (int area) {depositoAtual = area;}
+
+    int getDepositoAtual() {return depositoAtual;}
+
+    void setDepositoDestino (int area) {depositoDestino = area;}
+
+    int getDepositoDestino() {return depositoDestino;}
+
+    // Modulo 2 -----------------------------------------------------
+
+    void setAreaDeposito (int area) {areaDeposito = area;}
+
+    int getAreaDeposito () {return areaDeposito;}
+
+    void setCorDiscoDeposito (Object, Object);
+
+    // -------------------------------------------------------------------
 
     void girei(){girar = false;}
 
@@ -194,8 +229,12 @@ private:
     int parede;
     float vLinha;
     int lAlvo;
+    int  depositoAtual;
+    int  depositoDestino;
     float refDistParede; // distancia da parede
+    float refDistTrasParede;
     float velocidadeBusca;
+    int areaDeposito;
 
 };
 

@@ -1,8 +1,8 @@
 #include "ajustarnaslinhas.hpp"
 #include "robotino.hpp"
 
+#include <unistd.h>
 #include <cmath>
-#include <queue>
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/opencv.hpp>
 
@@ -10,8 +10,8 @@
 #define Kpx 2
 #define Kpy 1.5
 #define KpW 4
-#define yRef 180
-#define xRef 150
+#define yRef 220
+#define xRef 160
 #define N 6
 #define limiarParada 12
 //*****************************************************************************************************************
@@ -37,8 +37,8 @@ void AjustarNasLinhas::execute(Robotino *robotino)
 {
 
     Mat img, cdst;
-    int min_Hough = 100, dist_Hough = 50;
-    int min_canny =250 , max_canny = 3*min_canny;
+    int min_Hough = 70, dist_Hough = 50;
+    int min_canny =150 , max_canny = 3*min_canny;
     float angLinhas = 0;
     float xMedio = 0;
     float  mediaX = 0;
@@ -57,8 +57,8 @@ void AjustarNasLinhas::execute(Robotino *robotino)
     Canny( cdst, cdst, (double)min_canny, (double)max_canny, 3 );
     convertScaleAbs(cdst, cdst);
 
-    cv::imshow("Canny",cdst);
-    cv::waitKey(1);
+    //cv::imshow("Canny",cdst);
+    //cv::waitKey(1);
 
     threshold(cdst, cdst, (double)5, (double)255, CV_THRESH_BINARY);
 
@@ -68,7 +68,8 @@ void AjustarNasLinhas::execute(Robotino *robotino)
 
     for( size_t i = 0; i < lines.size(); i++ ){
       Vec4i l = lines[i];
-      angLinhas += atan2((l[3] - l[1]),(l[2]-l[0]))*180/PI;
+      if (abs(atan2((l[3] - l[1]),(l[2]-l[0]))*180/PI) < 60)
+        angLinhas += atan2((l[3] - l[1]),(l[2]-l[0]))*180/PI;
       xMedio += (l[2]+l[0])/2;
       if(l[3] > yMaior){
         yMaior = l[3];
@@ -116,8 +117,13 @@ void AjustarNasLinhas::execute(Robotino *robotino)
     erros = abs(erro_x)+abs(erro_y)+abs(erro_theta);
 
     std::cout<<"Soma dos erros: " << erros <<std::endl;
+
     if(erros < limiarParada){
         robotino->setVelocity(0,0,0);
+        usleep(500000);
+        n = 0;
+
+        robotino->change_state(robotino->previous_state());
     }else{
         robotino->setVelocity(Vx,Vy,w);
     }
@@ -126,4 +132,6 @@ void AjustarNasLinhas::execute(Robotino *robotino)
     cv::waitKey(1);
 }
 
-void AjustarNasLinhas::exit(Robotino *robotino) {}
+void AjustarNasLinhas::exit(Robotino *robotino) {
+    std::cout << "Saindo do estado AjustarNasLinhas...\n";
+}

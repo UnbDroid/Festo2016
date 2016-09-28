@@ -21,16 +21,32 @@
 #include "irparaparede.hpp"
 #include "modulo1.hpp"
 #include "modulo2.hpp"
+#include "modulo3.hpp"
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/opencv.hpp>
 #include "fabricademapas.hpp"
 #include "ajustarnaslinhas.hpp"
+#include "contarlinhas.hpp"
 
 using namespace rec::robotino::com;
+
+#define R 0
+#define Y 1
+#define B 2
+#define INDEFINIDO -1
+#define VAZIO 4
+#define N 6
+#define TOTALEXPANSAOCOMPETICAO 60
 
 
 int main( int argc, char **argv )
 {
+
+	/*FabricaDeMapas fab;
+	Mapa mapa;
+	fab.criarMapa("Modulo3Teste",mapa);
+	mapa.mostrar_mapa();
+	waitKey();*/
 	try{
 		std::string hostname = "172.26.201.1";
 		if( argc > 1 )
@@ -38,7 +54,7 @@ int main( int argc, char **argv )
 			hostname = argv[1];
 		}
 		//Banana
-		Robotino robo(hostname.c_str(), Modulo2::instance(), Coordenadas(173.5,-173.5,90));
+		Robotino robo(hostname.c_str(), Modulo3::instance(), Coordenadas(173.5,-100,180)); // Coordenadas(173.5,-173.5,90)); : modulo 2
 
 		while(true){
 			try{
@@ -52,5 +68,5 @@ int main( int argc, char **argv )
 		std::cerr << erro << std::endl;
 	}
 	//std::cout << "Press any key to exit..." << std::endl;
-	//rec::core_lt::waitForKey();
+	//rec::core_lt::waitForKey();*/
 }

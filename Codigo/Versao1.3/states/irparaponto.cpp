@@ -9,12 +9,13 @@
 #include <cmath>
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/opencv.hpp>
+#include <unistd.h>
 
 #define PI 3.14159265
 #define FATOR_VELOCIDADE  5
 #define limiarAfastamento 7
 #define limiarIdeal 9
-#define Kpir 100
+#define Kpir 10
 
 //*****************************************************************************************************************
 // IrParaPonto
@@ -110,6 +111,8 @@ void IrParaPonto::execute(Robotino *robotino)
         std::cout << "Y_D "<<robotino->yD<<"...\n";
         std::cout << "X:  "<<robotino->odometryX()<<"...\n";
         std::cout << "Y:  "<<robotino->odometryY()<<"...\n";
+        std::cout << "Vx:  "<<FATOR_VELOCIDADE*Vx<<"...\n";
+        std::cout << "Vy:  "<<FATOR_VELOCIDADE*Vy<<"...\n";
         if(girei && robotino->dE < 1){
             robotino->change_state(voltar);
             girei = false;
@@ -133,4 +136,5 @@ void IrParaPonto::execute(Robotino *robotino)
 void IrParaPonto::exit(Robotino *robotino) {
     std::cout << "Cheguei no ponto...\n";
     robotino->setVelocity(0,0,0);
+    usleep(500000);
 }

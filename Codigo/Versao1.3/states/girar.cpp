@@ -7,7 +7,7 @@
 #include <cmath>
 #include <unistd.h>
 
-#define Kp 1.91 // girar sem disco
+#define Kp 0.95//1.91 // girar sem disco
 #define Ki 1
 #define Kp2 0.4 //0.2 //girar com disco
 #define Ki2 0.1
@@ -17,6 +17,9 @@
 #define limiar 2
 #define limiar2 2
 #define dt 0.01
+#define Aumento 0.95
+#define Diminui 1.2
+#define Soma -5
 //*****************************************************************************************************************
 // Girar
 //*****************************************************************************************************************
@@ -41,6 +44,7 @@ void Girar::execute(Robotino *robotino){
         static float erro = 0 , erro_int = 0, erro_intDist = 0, limiar3, fatorM = 1, fatorAdd = 0;
 
         if(robotino->carregandoDisco()){
+
             std::cout << "Phi: " << robotino->odometryPhi() << "\n";
             std::cout << "Referencia: "<< robotino->thetaR << "\n";
             std::cout << "Erro: " << erro << "\n";
@@ -55,60 +59,60 @@ void Girar::execute(Robotino *robotino){
                 if (erro >180) {
                     erro -= 360;
                     mudarDir = true;
-                }else if (erro < -180){
+                }else if (erro <= -180){
                     erro += 360;
                     mudarDir = true;
                 }
                 if(erro > 0){
                     if(robotino->odometryPhi() > 0){
                         if(robotino->thetaR > 0){
-                            fatorM = 0.8;
+                            fatorM = Diminui;
                         }else if(robotino->thetaR < 0){
-                            fatorM = 1.2;
+                            fatorM = Aumento;
                         }else{
-                            fatorAdd = -12;
+                            fatorAdd = -Soma;
                         }
                     }else if(robotino->odometryPhi() < 0){
                         if(robotino->thetaR > 0){
-                            fatorM = 0.8;
+                            fatorM = Diminui;
                         }else if(robotino->thetaR < 0){
-                            fatorM = 1.2;
+                            fatorM = Aumento;
                         }else{
-                            fatorAdd = 12;
+                            fatorAdd = Soma;
                         }
                     }else{
                         if(robotino->thetaR > 0){
-                            fatorM = 1.2;
+                            fatorM = Aumento;
                         }else if(robotino->thetaR < 0){
-                            fatorM = 1.2;
+                            fatorM = Aumento;
                         }else{
-                            fatorAdd = 0;
+                            fatorAdd = Soma;
                         }
                     }
                 }else if(erro < 0){
                     if(robotino->odometryPhi() > 0){
                         if(robotino->thetaR > 0){
-                            fatorM = 1.2;
+                            fatorM = Aumento;
                         }else if(robotino->thetaR < 0){
-                            fatorM = 0.8;
+                            fatorM = Diminui;
                         }else{
-                            fatorAdd = -12;
+                            fatorAdd = -Soma;
                         }
                     }else if(robotino->odometryPhi() < 0){
                         if(robotino->thetaR > 0){
-                            fatorM = 1.2;
+                            fatorM = Aumento;
                         }else if(robotino->thetaR < 0){
-                            fatorM = 0.8;
+                            fatorM = Diminui;
                         }else{
-                            fatorAdd = 12;
+                            fatorAdd = Soma;
                         }
                     }else{
                         if(robotino->thetaR > 0){
-                            fatorM = 1.2;
+                            fatorM = Aumento;
                         }else if(robotino->thetaR < 0){
-                            fatorM = 1.2;
+                            fatorM = Aumento;
                         }else{
-                            fatorAdd = 0;
+                            fatorAdd = Soma;
                         }
                     }
                 }
@@ -130,7 +134,7 @@ void Girar::execute(Robotino *robotino){
             if (erro >180 ) {
                 erro -= 360;
                 mudarDir = false;
-            }else if (erro < -180){
+            }else if (erro <= -180){
                 erro += 360;
                 mudarDir = false;
             }
@@ -162,32 +166,32 @@ void Girar::execute(Robotino *robotino){
                 if (erro >180) {
                     erro -= 360;
                     mudarDir = true;
-                }else if (erro < -180){
+                }else if (erro <= -180){
                     erro += 360;
                     mudarDir = true;
                 }
                 if(erro > 0){
                     if(robotino->odometryPhi() > 0){
                         if(robotino->thetaR > 0){
-                            fatorM = 0.8;
+                            fatorM = Diminui;
                         }else if(robotino->thetaR < 0){
-                            fatorM = 1.2;
+                            fatorM = Aumento;
                         }else{
-                            fatorAdd = -12;
+                            fatorAdd = -Soma;
                         }
                     }else if(robotino->odometryPhi() < 0){
                         if(robotino->thetaR > 0){
-                            fatorM = 0.8;
+                            fatorM = Diminui;
                         }else if(robotino->thetaR < 0){
-                            fatorM = 1.2;
+                            fatorM = Aumento;
                         }else{
                             fatorAdd = 6;
                         }
                     }else{
                         if(robotino->thetaR > 0){
-                            fatorM = 1.2;
+                            fatorM = Aumento;
                         }else if(robotino->thetaR < 0){
-                            fatorM = 1.2;
+                            fatorM = Aumento;
                         }else{
                             fatorAdd = 0;
                         }
@@ -195,25 +199,25 @@ void Girar::execute(Robotino *robotino){
                 }else if(erro < 0){
                     if(robotino->odometryPhi() > 0){
                         if(robotino->thetaR > 0){
-                            fatorM = 1.2;
+                            fatorM = Aumento;
                         }else if(robotino->thetaR < 0){
-                            fatorM = 0.8;
+                            fatorM = Diminui;
                         }else{
-                            fatorAdd = -12;
+                            fatorAdd = -Soma;
                         }
                     }else if(robotino->odometryPhi() < 0){
                         if(robotino->thetaR > 0){
-                            fatorM = 1.2;
+                            fatorM = Aumento;
                         }else if(robotino->thetaR < 0){
-                            fatorM = 0.8;
+                            fatorM = Diminui;
                         }else{
                             fatorAdd = 6;
                         }
                     }else{
                         if(robotino->thetaR > 0){
-                            fatorM = 1.2;
+                            fatorM = Aumento;
                         }else if(robotino->thetaR < 0){
-                            fatorM = 1.2;
+                            fatorM = Aumento;
                         }else{
                             fatorAdd = 0;
                         }
@@ -237,7 +241,7 @@ void Girar::execute(Robotino *robotino){
             if (erro >180 ) {
                 erro -= 360;
                 mudarDir = false;
-            }else if (erro < -180){
+            }else if (erro <= -180){
                 erro += 360;
                 mudarDir = false;
             }
