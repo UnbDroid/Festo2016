@@ -56,7 +56,7 @@ void IrParaPonto::execute(Robotino *robotino)
             robotino->setThetaR(direcao);
             voltar = robotino->previous_state();
             girei = true;
-            robotino->change_state(Girar::instance());
+            //robotino->change_state(Girar::instance());
             processoCarregamento = 1;
         }else if(processoCarregamento == 1){
             if(robotino->irDistance(Robotino::IR_FRONTAL) < limiarAfastamento){

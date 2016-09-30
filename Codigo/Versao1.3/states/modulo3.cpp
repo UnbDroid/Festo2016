@@ -20,7 +20,7 @@
 #include "percorrerprocurandodiscos.hpp"
 #include "irparedepelaparede.hpp"
 #include "nobusca.hpp"
-#include "navegarentreareas.hpp"
+#include "navegarentreareas2.hpp"
 #include "alinhartraseiro.hpp"
 #include <unistd.h>
 #include <vector>
@@ -161,7 +161,7 @@ void Modulo3::execute(Robotino *robotino)
     static int deixarDiscos = 0;
     static bool deixando = false;
 
-    static vector<int> ordemAtualDiscos = {B,R,Y};//{INDEFINIDO, INDEFINIDO, INDEFINIDO}; //mudar para 6
+    static vector<int> ordemAtualDiscos = {INDEFINIDO, INDEFINIDO, INDEFINIDO}; //mudar para 6
     static vector<int> ordemCorreta = {B,R,Y};
 
     static NoBusca noFinal(ordemCorreta,0);
@@ -189,7 +189,7 @@ void Modulo3::execute(Robotino *robotino)
 
     }else if (objetivo_completo == 2){
 
-        robotino->change_state(AjustarNasLinhas::instance());
+        robotino->change_state(AjustarNasLinhasOrtogonais::instance());
         objetivo_completo = 3;
 
     }else if (objetivo_completo == 3){
@@ -229,7 +229,7 @@ void Modulo3::execute(Robotino *robotino)
 
     }else if (objetivo_completo == 8){
 
-        robotino->change_state(AjustarNasLinhas::instance());
+        robotino->change_state(AjustarNasLinhasOrtogonais::instance());
         objetivo_completo = 9;
 
     }else if (objetivo_completo == 9){
@@ -269,7 +269,7 @@ void Modulo3::execute(Robotino *robotino)
 
     }else if (objetivo_completo == 14){
 
-        robotino->change_state(AjustarNasLinhas::instance());
+        robotino->change_state(AjustarNasLinhasOrtogonais::instance());
         objetivo_completo = 15;
 
     }else if (objetivo_completo == 15){
@@ -287,7 +287,7 @@ void Modulo3::execute(Robotino *robotino)
 
         ordemAtualDiscos[0] = identificarCorArea(robotino);
         std::cout << ordemAtualDiscos[0] << std::endl;
-        robotino->definirDestino(robotino->odometryX()/10 + 50, robotino->odometryY()/10);
+        robotino->definirDestino(robotino->odometryX()/10, robotino->odometryY()/10);
         robotino->change_state(IrParaPonto::instance());
         objetivo_completo = 18;
 
@@ -315,7 +315,7 @@ void Modulo3::execute(Robotino *robotino)
 
         robotino->setDepositoAtual(robotino->getDepositoDestino());
         robotino->setDepositoDestino(Robotino::AREA2);
-        robotino->change_state(NavegarEntreAreas::instance());
+        robotino->change_state(NavegarEntreAreas2::instance());
 
         if (!deixando){
             objetivo_completo = 26;
@@ -329,7 +329,7 @@ void Modulo3::execute(Robotino *robotino)
 
         robotino->setDepositoAtual(robotino->getDepositoDestino());
         robotino->setDepositoDestino(Robotino::AREA3);
-        robotino->change_state(NavegarEntreAreas::instance());
+        robotino->change_state(NavegarEntreAreas2::instance());
 
         if (!deixando){
             objetivo_completo = 26;
@@ -343,7 +343,7 @@ void Modulo3::execute(Robotino *robotino)
 
         robotino->setDepositoAtual(robotino->getDepositoDestino());
         robotino->setDepositoDestino(Robotino::AREA4);
-        robotino->change_state(NavegarEntreAreas::instance());
+        robotino->change_state(NavegarEntreAreas2::instance());
 
         if (!deixando){
             objetivo_completo = 26;
@@ -358,7 +358,7 @@ void Modulo3::execute(Robotino *robotino)
 
         robotino->setDepositoAtual(robotino->getDepositoDestino());
         robotino->setDepositoDestino(Robotino::AREA5);
-        robotino->change_state(NavegarEntreAreas::instance());
+        robotino->change_state(NavegarEntreAreas2::instance());
 
         if (!deixando){
             objetivo_completo = 26;
@@ -373,7 +373,7 @@ void Modulo3::execute(Robotino *robotino)
 
         robotino->setDepositoAtual(robotino->getDepositoDestino());
         robotino->setDepositoDestino(Robotino::AREA6);
-        robotino->change_state(NavegarEntreAreas::instance());
+        robotino->change_state(NavegarEntreAreas2::instance());
 
         if (!deixando){
             objetivo_completo = 26;
@@ -387,7 +387,7 @@ void Modulo3::execute(Robotino *robotino)
 
         robotino->setDepositoAtual(robotino->getDepositoDestino());
         robotino->setDepositoDestino(Robotino::AREA7);
-        robotino->change_state(NavegarEntreAreas::instance());
+        robotino->change_state(NavegarEntreAreas2::instance());
 
         if (!deixando){
             objetivo_completo = 26;
@@ -435,6 +435,21 @@ void Modulo3::execute(Robotino *robotino)
         robotino->definirParedeAlvo(Robotino::SUL90);
         robotino->setDistTrasParede(20);
         robotino->change_state(AlinharTraseiro::instance());
+        objetivo_completo = 311;
+
+    }else if (objetivo_completo == 311){
+
+        Coordenadas destino = robotino->pegarCoordenadaArea(robotino->getDepositoDestino());
+        robotino->definirDestino(robotino->odometryX()/10, -(destino.get_y()));
+        robotino->change_state(IrParaPonto::instance());
+
+        objetivo_completo = 312;
+
+    }else if (objetivo_completo == 312){
+
+        robotino->definirParedeAlvo(Robotino::SUL90);
+        robotino->setDistTrasParede(20);
+        robotino->change_state(AlinharTraseiro::instance());
         objetivo_completo = 32;
 
     }
@@ -442,7 +457,7 @@ void Modulo3::execute(Robotino *robotino)
 
     else if (objetivo_completo == 32){
 
-        robotino->definirDestino(robotino->odometryX()/10 + 90, robotino->odometryY()/10);
+        robotino->definirDestino(robotino->odometryX()/10 + 50, robotino->odometryY()/10);
         robotino->change_state(IrParaPonto::instance());
         objetivo_completo = definirOndeDeixar(melhorResultado, robotino->getDepositoDestino(),numPassosFeitos, numPassosFazer);
         deixando = true;
@@ -455,7 +470,14 @@ void Modulo3::execute(Robotino *robotino)
 
 // Ir para area Intermediária ------------------------------------------------------------------------------------------------------------------------------------------
 
-    else if (objetivo_completo == 34) {
+    else if (objetivo_completo == 34){
+
+        robotino->setDepositoDestino(Robotino::AREA2);
+        robotino->definirDestino(robotino->odometryX()/10 + 20, robotino->odometryY()/10);
+        robotino->change_state(IrParaPonto::instance());
+        objetivo_completo = 341;
+
+    }else if (objetivo_completo == 341) {
 
         robotino->definirParedeAlvo(Robotino::OESTE0);
         robotino->setDistParede(10);
@@ -505,11 +527,17 @@ void Modulo3::execute(Robotino *robotino)
 
     }else if (objetivo_completo == 40) {
          robotino->change_state(AjustarNasLinhas::instance());
-         if(!deixando){
+         objetivo_completo = 401;
+
+    }else if (objetivo_completo == 401){   //Chamada depois de ir para area correta//
+
+        robotino->setAreaDeposito(666);
+        robotino->change_state(ContarLinhas::instance());
+        if(!deixando){
              objetivo_completo = 19;
-         }else{
+        }else{
             objetivo_completo = 49;
-         }
+        }
 
     }
 
@@ -533,6 +561,12 @@ void Modulo3::execute(Robotino *robotino)
 
         robotino->change_state(AjustarNasLinhas::instance());
         robotino->setCarregando(false);
+        objetivo_completo = 431;
+
+    }else if (objetivo_completo == 431){
+
+        robotino->setAreaDeposito(666);
+        robotino->change_state(ContarLinhas::instance());
         deixando = true;
         objetivo_completo = deixarDiscos;    // Vai para a área que deve deixar o disco //
     }
@@ -560,7 +594,7 @@ void Modulo3::execute(Robotino *robotino)
 
     }else if (objetivo_completo == 46){
         robotino->setCarregando(false);
-        robotino->definirDestino(robotino->odometryX()/10+70, robotino->odometryY()/10);
+        robotino->definirDestino(robotino->odometryX()/10+50, robotino->odometryY()/10);
         robotino->change_state(IrParaPonto::instance());
         deixando = false;
         objetivo_completo = 19;  // Ve em qual area ele pega o proximo//
@@ -587,10 +621,6 @@ void Modulo3::execute(Robotino *robotino)
 
         objetivo_completo = definirOndeDeixar(melhorResultado, robotino->getDepositoDestino(),numPassosFeitos, numPassosFazer);
 
-        if (objetivo_completo != AREA_INTERMEDIARIA) {
-            deixarDiscos = objetivo_completo;
-            objetivo_completo = 41;
-        }
     }
 
 // Voltar para o Inicio -----------------------------------------------------------------------------------------------------------------------------------------------------

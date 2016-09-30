@@ -50,7 +50,7 @@ float corrigirAngulo(float Angulo){
 
 void Control::execute(Robotino *robotino)
 {
-    static int objetivo_completo = 7;
+    static int objetivo_completo = 15;
     //robotino->definirDestino(0,100);
     //robotino->change_state(IrParaPonto::instance());
 
@@ -128,6 +128,11 @@ void Control::execute(Robotino *robotino)
             objetivo_completo = 0;
         }
         robotino->setCarregando(false);
+    }else if (objetivo_completo == 15) {
+        std::cout << "Sensor frente esquerda: " << robotino->irDistance(Robotino::IR_F_ESQUERDO) << std::endl;
+        std::cout << "Sensor frente direito: " << robotino->irDistance(Robotino::IR_F_DIREITO) << std::endl;
+        objetivo_completo = 15;
+
     }
 
     //robotino->update();

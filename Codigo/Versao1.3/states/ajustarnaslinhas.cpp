@@ -49,6 +49,7 @@ void AjustarNasLinhas::execute(Robotino *robotino)
     vector<Vec4i> lines;
     Vec4i l, l2;
     static int  n = 0;
+    int num_linha = 0;
 
     img = robotino->getImage();
 
@@ -68,9 +69,12 @@ void AjustarNasLinhas::execute(Robotino *robotino)
 
     for( size_t i = 0; i < lines.size(); i++ ){
       Vec4i l = lines[i];
-      if (abs(atan2((l[3] - l[1]),(l[2]-l[0]))*180/PI) < 60)
+      if (abs(atan2((l[3] - l[1]),(l[2]-l[0]))*180/PI) < 30){
         angLinhas += atan2((l[3] - l[1]),(l[2]-l[0]))*180/PI;
-      xMedio += (l[2]+l[0])/2;
+        xMedio += (l[2]+l[0])/2;
+        num_linha++;
+      }
+
       if(l[3] > yMaior){
         yMaior = l[3];
       }
@@ -79,7 +83,7 @@ void AjustarNasLinhas::execute(Robotino *robotino)
       }
     }
     angLinhas = angLinhas/lines.size();
-    xMedio = xMedio/lines.size();
+    xMedio = xMedio/num_linha;
 
     valoresX[n%N] = xMedio;
     if(n<N){

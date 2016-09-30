@@ -36,11 +36,10 @@ void AjustarNasLinhasOrtogonais::enter(Robotino *robotino)
 void AjustarNasLinhasOrtogonais::execute(Robotino *robotino)
 {
 
-    Mat img, cdst;
+   Mat img, cdst;
     int min_Hough = 70, dist_Hough = 50;
     int min_canny =150 , max_canny = 3*min_canny;
     float angLinhas = 0;
-    float angulo = 0;
     float xMedio = 0;
     float  mediaX = 0;
     float yMaior = -1;
@@ -50,6 +49,7 @@ void AjustarNasLinhasOrtogonais::execute(Robotino *robotino)
     vector<Vec4i> lines;
     Vec4i l, l2;
     static int  n = 0;
+    int num_linha = 0;
 
     img = robotino->getImage();
 
@@ -69,19 +69,18 @@ void AjustarNasLinhasOrtogonais::execute(Robotino *robotino)
 
     for( size_t i = 0; i < lines.size(); i++ ){
       Vec4i l = lines[i];
-      angulo = atan2((l[3] - l[1]),(l[2]-l[0]))*180/PI;
-      xMedio += (l[2]+l[0])/2;
-      if(l[3] > yMaior  && abs(angulo) > 60){
-        yMaior = l[3];
-        angLinhas = atan2((l[3] - l[1]),(l[2]-l[0]))*180/PI;
+      if (abs(atan2((l[3] - l[1]),(l[2]-l[0]))*180/PI) < 30){
+        angLinhas += atan2((l[3] - l[1]),(l[2]-l[0]))*180/PI;
       }
-      if(l[1] > yMaior && abs(angulo) > 60){
+      xMedio += (l[2]+l[0])/2;
+      if(l[3] > yMaior){
+        yMaior = l[3];
+      }
+      if(l[1] > yMaior){
         yMaior = l[1];
-        angLinhas = atan2((l[3] - l[1]),(l[2]-l[0]))*180/PI;
       }
     }
-
-    //angLinhas = angLinhas/lines.size();
+    angLinhas = angLinhas/lines.size();
     xMedio = xMedio/lines.size();
 
     valoresX[n%N] = xMedio;
@@ -111,20 +110,11 @@ void AjustarNasLinhasOrtogonais::execute(Robotino *robotino)
 
     float erro_x = yRef - yMaior,
     erro_y = xRef-mediaX,
-    erro_theta = 90 - abs(angLinhas);
-
-    if(angLinhas < 0)
-        erro_theta = -erro_theta;
-
-    std::cout<<"Erro theta: " << erro_theta <<std::endl;
+    erro_theta = -angLinhas;
 
     Vx = Kpx*erro_x;
     Vy = Kpy*erro_y;
     w = KpW*erro_theta;
-
-    std::cout<<"Vx: " << Vx <<std::endl;
-    std::cout<<"Vy: " << Vy <<std::endl;
-    std::cout<<"w: " << w <<std::endl;
 
     erros = abs(erro_x)+abs(erro_y)+abs(erro_theta);
 
@@ -133,6 +123,7 @@ void AjustarNasLinhasOrtogonais::execute(Robotino *robotino)
     if(erros < limiarParada){
         robotino->setVelocity(0,0,0);
         usleep(500000);
+        n = 0;
 
         robotino->change_state(robotino->previous_state());
     }else{

@@ -145,7 +145,11 @@ void AndarPelaParedeAteLinha::execute(Robotino *robotino)
 
     cvtColor( cdst, cdst, CV_GRAY2BGR );
 
-    robotino->setVelocity(Vx,Vy,w);
+    if(distParede > 99){
+        robotino->setVelocity(Vx,0,0);
+    }else{
+        robotino->setVelocity(Vx,Vy,w);
+    }
 
     if (lines.size() > numeroLinhasMin){
         robotino->setVelocity(0,0,0);

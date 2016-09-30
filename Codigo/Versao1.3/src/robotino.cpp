@@ -151,6 +151,7 @@ void Robotino::update(){
                 this->exit("Bateu");
             }
             state_machine.update();
+
             if(!this->waitForUpdate(0)) std::cout << "Falhou aqui\n";
             this->currentSensorState = this->sensorState();
             mapa.mostrar_mapa_com_robo(Coordenadas(this->odometryX()/10,-this->odometryY()/10,-this->odometryPhi()));

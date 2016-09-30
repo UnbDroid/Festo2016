@@ -26,6 +26,7 @@
 #include <opencv2/opencv.hpp>
 #include "fabricademapas.hpp"
 #include "ajustarnaslinhas.hpp"
+#include "navegarentreareas2.hpp"
 #include "contarlinhas.hpp"
 
 using namespace rec::robotino::com;
