@@ -2,7 +2,7 @@
 #include "robotino.hpp"
 
 #define Kpx 2
-#define limiar 6
+#define limiar 0.5
 #define R 20
 #define PI 3.14159265
 #define Kp 5

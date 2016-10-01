@@ -64,7 +64,6 @@ void NavegarEntreAreas2::execute(Robotino *robotino)
 
 
     }else if(objetivoCompleto == 1){
-
         if (movimento < 0){
             robotino->setThetaR(-90);
             robotino->change_state(Girar::instance());
@@ -115,10 +114,10 @@ void NavegarEntreAreas2::execute(Robotino *robotino)
     }else if(objetivoCompleto == 6){
 
         if (movimento < 0){
-            robotino->definirDestino(robotino->odometryX()/10, robotino->odometryY()/10 - 15);
+            robotino->definirDestino(robotino->odometryX()/10, robotino->odometryY()/10 - 10);
 
         }else if(movimento > 0){
-            robotino->definirDestino(robotino->odometryX()/10, robotino->odometryY()/10 + 15);
+            robotino->definirDestino(robotino->odometryX()/10, robotino->odometryY()/10 + 10);
         }
 
         robotino->change_state(IrParaPonto::instance());

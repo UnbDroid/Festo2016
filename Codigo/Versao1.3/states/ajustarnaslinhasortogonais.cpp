@@ -10,8 +10,8 @@
 #define Kpx 2
 #define Kpy 1.5
 #define KpW 2
-#define yRef 180
-#define xRef 150
+#define yRef 220
+#define xRef 160
 #define N 6
 #define limiarParada 12
 //*****************************************************************************************************************

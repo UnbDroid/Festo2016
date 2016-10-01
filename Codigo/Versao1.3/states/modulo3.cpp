@@ -159,10 +159,11 @@ void Modulo3::execute(Robotino *robotino)
     static int numPassosFazer = 0;
     static int numPassosFeitos = 0;
     static int deixarDiscos = 0;
+    static int pegar = 0;
     static bool deixando = false;
 
     static vector<int> ordemAtualDiscos = {INDEFINIDO, INDEFINIDO, INDEFINIDO}; //mudar para 6
-    static vector<int> ordemCorreta = {B,R,Y};
+    static vector<int> ordemCorreta = {Y,R,R};
 
     static NoBusca noFinal(ordemCorreta,0);
 
@@ -213,26 +214,34 @@ void Modulo3::execute(Robotino *robotino)
 
     // Indo para a area de deposito 2 identificar a cor -----------------------------------------------------------------------------------------------------------------------
 
-    else if (objetivo_completo == 6) {
+    // else if (objetivo_completo == 6) {
 
-        robotino->definirDestino((robotino->odometryX())/10+40, robotino->odometryY()/10);
-        robotino->change_state(IrParaPonto::instance());
-        objetivo_completo = 7;
+    //     robotino->definirDestino((robotino->odometryX())/10+40, robotino->odometryY()/10);
+    //     robotino->change_state(IrParaPonto::instance());
+    //     objetivo_completo = 7;
 
-    }else if (objetivo_completo == 7){
+    // }else if (objetivo_completo == 7){
 
-        Coordenadas destino = robotino->pegarCoordenadaArea(Robotino::AREA3);
-        robotino->definirDestino(robotino->odometryX()/10, -(destino.get_y()));
-        std::cout << "Destino: " << destino << std::endl;
-        robotino->change_state(IrParaPonto::instance());
-        objetivo_completo = 8;
+    //     Coordenadas destino = robotino->pegarCoordenadaArea(Robotino::AREA3);
+    //     robotino->definirDestino(robotino->odometryX()/10, -(destino.get_y()));
+    //     std::cout << "Destino: " << destino << std::endl;
+    //     robotino->change_state(IrParaPonto::instance());
+    //     objetivo_completo = 8;
 
-    }else if (objetivo_completo == 8){
+    // }else if (objetivo_completo == 8){
 
-        robotino->change_state(AjustarNasLinhasOrtogonais::instance());
-        objetivo_completo = 9;
+    //     robotino->change_state(AjustarNasLinhasOrtogonais::instance());
+    //     objetivo_completo = 9;
 
-    }else if (objetivo_completo == 9){
+    // }
+
+        else if (objetivo_completo == 6) {
+            robotino->setDepositoAtual(Robotino::AREA4);
+            robotino->setDepositoDestino(Robotino::AREA3);
+            robotino->change_state(NavegarEntreAreas2::instance());
+            objetivo_completo = 9;
+        }
+        else if (objetivo_completo == 9){
 
         robotino->setAreaDeposito(9999); // Para que ele nao faca nada e o vá ate o METAL! \,,/!!
         robotino->change_state(ContarLinhas::instance());
@@ -253,26 +262,35 @@ void Modulo3::execute(Robotino *robotino)
 
  // Indo para a area de deposito 1 identificar a cor ------------------------------------------------------------------------------------------------------------------------------
 
+    // else if (objetivo_completo == 12) {
+
+    //     robotino->definirDestino((robotino->odometryX())/10+40, robotino->odometryY()/10);
+    //     robotino->change_state(IrParaPonto::instance());
+    //     objetivo_completo = 13;
+
+    // }else if (objetivo_completo == 13){
+
+    //    Coordenadas destino = robotino->pegarCoordenadaArea(Robotino::AREA2);
+    //     robotino->definirDestino(robotino->odometryX()/10, -(destino.get_y()));
+    //     std::cout << "Destino: " << destino << std::endl;
+    //     robotino->change_state(IrParaPonto::instance());
+    //     objetivo_completo = 14;
+
+    // }else if (objetivo_completo == 14){
+
+    //     robotino->change_state(AjustarNasLinhasOrtogonais::instance());
+    //     objetivo_completo = 15;
+
+    // }
+
     else if (objetivo_completo == 12) {
-
-        robotino->definirDestino((robotino->odometryX())/10+40, robotino->odometryY()/10);
-        robotino->change_state(IrParaPonto::instance());
-        objetivo_completo = 13;
-
-    }else if (objetivo_completo == 13){
-
-       Coordenadas destino = robotino->pegarCoordenadaArea(Robotino::AREA2);
-        robotino->definirDestino(robotino->odometryX()/10, -(destino.get_y()));
-        std::cout << "Destino: " << destino << std::endl;
-        robotino->change_state(IrParaPonto::instance());
-        objetivo_completo = 14;
-
-    }else if (objetivo_completo == 14){
-
-        robotino->change_state(AjustarNasLinhasOrtogonais::instance());
+        robotino->setDepositoAtual(Robotino::AREA3);
+        robotino->setDepositoDestino(Robotino::AREA2);
+        robotino->change_state(NavegarEntreAreas2::instance());
         objetivo_completo = 15;
+    }
 
-    }else if (objetivo_completo == 15){
+    else if (objetivo_completo == 15){
 
         robotino->setAreaDeposito(9999); // Para que ele nao faca nada e o vá ate o METAL! \,,/!!
         robotino->change_state(ContarLinhas::instance());
@@ -287,8 +305,6 @@ void Modulo3::execute(Robotino *robotino)
 
         ordemAtualDiscos[0] = identificarCorArea(robotino);
         std::cout << ordemAtualDiscos[0] << std::endl;
-        robotino->definirDestino(robotino->odometryX()/10, robotino->odometryY()/10);
-        robotino->change_state(IrParaPonto::instance());
         objetivo_completo = 18;
 
     }
@@ -305,6 +321,22 @@ void Modulo3::execute(Robotino *robotino)
     }else if (objetivo_completo == 19){
 
         objetivo_completo = definirOndePegar(melhorResultado, numPassosFazer, numPassosFeitos);
+
+    }else if (objetivo_completo == 191){
+
+        objetivo_completo = definirOndePegar(melhorResultado, numPassosFazer, numPassosFeitos);
+
+        if (objetivo_completo != VOLTARINICIO && objetivo_completo!= AREA_INTERMEDIARIA){
+            pegar =  objetivo_completo;
+            objetivo_completo = 192;
+        }
+
+    }else if (objetivo_completo == 192){
+
+        robotino->setAreaDeposito(9999); // Para que ele nao faca nada e o vá ate o METAL! \,,/!!
+        robotino->change_state(ContarLinhas::instance());
+        objetivo_completo= pegar;
+
     }
 
 // Indo para áreas -----------------------------------------------------------------------------------------------------------------------------------------------------
@@ -401,9 +433,13 @@ void Modulo3::execute(Robotino *robotino)
 
     else if (objetivo_completo == 26){
 
-        robotino->setAreaDeposito(666);
-        robotino->change_state(ContarLinhas::instance());
-        objetivo_completo = 27;
+        if (numPassosFeitos == 0 && robotino->getDepositoDestino() == Robotino::AREA2) {
+            objetivo_completo = 27;
+        }else {
+            robotino->setAreaDeposito(666);
+            robotino->change_state(ContarLinhas::instance());
+            objetivo_completo = 27;
+        }
 
     }else if (objetivo_completo == 27){
 
@@ -418,8 +454,12 @@ void Modulo3::execute(Robotino *robotino)
          objetivo_completo = 29;
 
     }else if (objetivo_completo == 29) {
-
-        robotino->definirParedeAlvo(Robotino::SUL90);
+        robotino->setCarregando(false);
+        if (robotino->getDepositoDestino() == Robotino::AREA2){
+            robotino->definirParedeAlvo(Robotino::SULN90);
+        }else {
+            robotino->definirParedeAlvo(Robotino::SUL90);
+        }
         robotino->setDistParede(10);
         robotino->change_state(IrParaParede::instance());
         objetivo_completo=30;
@@ -475,9 +515,21 @@ void Modulo3::execute(Robotino *robotino)
         robotino->setDepositoDestino(Robotino::AREA2);
         robotino->definirDestino(robotino->odometryX()/10 + 20, robotino->odometryY()/10);
         robotino->change_state(IrParaPonto::instance());
-        objetivo_completo = 341;
+        if (!deixando){
+            objetivo_completo = 341;
+        }else{
+            objetivo_completo = 342;
+        }
+
 
     }else if (objetivo_completo == 341) {
+
+        robotino->definirParedeAlvo(Robotino::OESTE180);
+        robotino->setDistParede(30);
+        robotino->change_state(IrParaParede::instance());
+        objetivo_completo = 342;
+
+    }else if (objetivo_completo == 342) {
 
         robotino->definirParedeAlvo(Robotino::OESTE0);
         robotino->setDistParede(10);
@@ -500,7 +552,14 @@ void Modulo3::execute(Robotino *robotino)
 
     }else if (objetivo_completo == 36){
         robotino->setCarregando(false);
-        robotino->definirDestino(robotino->odometryX()/10 - 30, robotino->odometryY()/10);
+        robotino->definirDestino(robotino->odometryX()/10 + 20, robotino->odometryY()/10);
+        robotino->change_state(IrParaPonto::instance());
+        deixando = false;
+        objetivo_completo = 361;
+
+    }else if (objetivo_completo == 361){
+        robotino->setCarregando(false);
+        robotino->definirDestino(robotino->odometryX()/10 - 40, robotino->odometryY()/10);
         robotino->change_state(IrParaPonto::instance());
         deixando = false;
         objetivo_completo = 37;
@@ -509,6 +568,7 @@ void Modulo3::execute(Robotino *robotino)
 // Voltar da area intermediaria ----------------------------------------------------------------------------------------------------------------------------------------------
 
     else if (objetivo_completo == 37) {
+        robotino->setCarregando(false);
         robotino->setThetaR(-90);
         robotino->change_state(Girar::instance());
         objetivo_completo = 38;
@@ -587,17 +647,22 @@ void Modulo3::execute(Robotino *robotino)
 
     }else if (objetivo_completo == 451){
         robotino->setCarregando(false);
-        robotino->definirDestino(robotino->odometryX()/10-10, robotino->odometryY()/10);
+        robotino->definirDestino(robotino->odometryX()/10-15, robotino->odometryY()/10);
         robotino->change_state(IrParaPonto::instance());
         deixando = false;
         objetivo_completo = 46;  // Ve em qual area ele pega o proximo//
 
     }else if (objetivo_completo == 46){
         robotino->setCarregando(false);
-        robotino->definirDestino(robotino->odometryX()/10+50, robotino->odometryY()/10);
+        robotino->definirDestino(robotino->odometryX()/10+55, robotino->odometryY()/10);
         robotino->change_state(IrParaPonto::instance());
         deixando = false;
-        objetivo_completo = 19;  // Ve em qual area ele pega o proximo//
+        objetivo_completo = 461;  // Ve em qual area ele pega o proximo//
+
+    }else if (objetivo_completo == 461){
+
+        robotino->change_state(AjustarNasLinhasOrtogonais::instance());
+        objetivo_completo = 191;
 
     }
 
@@ -625,18 +690,27 @@ void Modulo3::execute(Robotino *robotino)
 
 // Voltar para o Inicio -----------------------------------------------------------------------------------------------------------------------------------------------------
 
-    else if (objetivo_completo == 50) {
+    else if (objetivo_completo == 50){
+
+        robotino->setCarregando(false);
+        robotino->definirDestino(robotino->odometryX()/10+20, robotino->odometryY()/10);
+        robotino->change_state(IrParaPonto::instance());
+
+        objetivo_completo = 501;
+
+    }else if (objetivo_completo == 501) {
 
         robotino->definirParedeAlvo(Robotino::LESTE180);
-        robotino->setDistParede(6);
+        robotino->setDistParede(10);
         robotino->change_state(IrParaParede::instance());
         objetivo_completo = 51;
 
     } else if (objetivo_completo == 51) {
 
         robotino->definirParedeAlvo(Robotino::NORTE90);
-        robotino->setDistParede(6);
-        robotino->change_state(IrParaParede::instance());
+        robotino->setDistParede(10);
+        robotino->setDistTrasParede(10);
+        robotino->change_state(IrParedePelaParede::instance());
         objetivo_completo = 52;
 
     }else if (objetivo_completo == 52) {

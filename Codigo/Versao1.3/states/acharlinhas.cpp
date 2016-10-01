@@ -128,6 +128,7 @@ void AcharLinhas::execute(Robotino *robotino)
     }
 
     cv::imshow("Linha", cdst);
+    cvMoveWindow("Linha",500,0);
     cv::waitKey(1);
 }
 

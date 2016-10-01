@@ -219,6 +219,7 @@ void IdentificarCor::execute(Robotino *robotino)
        // cout << "Preto: " << robotino->objetosPretos.size() << endl;
 
     imshow(windowName,cameraFeed);
+    cvMoveWindow(windowName.c_str(),500,300);
     //imshow(windowName1,HSV);
 
     //delay 30ms so that screen can refresh.

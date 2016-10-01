@@ -22,7 +22,8 @@ Robotino::Robotino(const char *hostname,
     thetaD(0),
     camera(this),
     girar(false),
-    disco(false){
+    disco(false),
+    seteiOdometria(false){
     // Connect
     try{
         this->start_connection();
@@ -58,15 +59,28 @@ bool Robotino::bumper(){
 }
 
 float Robotino::odometryX(){
-    return this->currentSensorState.odometryX;
+    if(seteiOdometria){
+        return this->odometriaX;
+    }else{
+        return this->currentSensorState.odometryX;
+    }
+
 }
 
 float Robotino::odometryY(){
-    return this->currentSensorState.odometryY;
+    if(seteiOdometria){
+        return this->odometriaY;
+    }else{
+        return this->currentSensorState.odometryY;
+    }
 }
 
 float Robotino::odometryPhi(){
-    return this->currentSensorState.odometryPhi;
+    if(seteiOdometria){
+        return this->odometriaPhi;
+    }else{
+        return this->currentSensorState.odometryPhi;
+    }
 }
 
 float Robotino::motorVelocity(unsigned int motor){
@@ -151,10 +165,14 @@ void Robotino::update(){
                 this->exit("Bateu");
             }
             state_machine.update();
-
             if(!this->waitForUpdate(0)) std::cout << "Falhou aqui\n";
             this->currentSensorState = this->sensorState();
             mapa.mostrar_mapa_com_robo(Coordenadas(this->odometryX()/10,-this->odometryY()/10,-this->odometryPhi()));
+
+            float dif = std::abs(this->currentSensorState.odometryX-this->odometriaX)+std::abs(this->currentSensorState.odometryY-this->odometriaY)+std::abs(this->currentSensorState.odometryPhi-this->odometriaPhi);
+            if(dif < 10){
+                seteiOdometria = false;
+            }
             cv::imshow("Amor", this->getImage());
             cvMoveWindow("Amor",0,500);
             //std::cout << "Odometria : " << odometryPhi() << std::endl;
@@ -194,6 +212,10 @@ void Robotino::definirDestino(float x, float y){
 
 void Robotino::setOdometry(float x, float y, float theta){
     odometry.set(x,y,theta);
+    odometriaX = x;
+    odometriaY = y;
+    odometriaPhi = theta;
+    seteiOdometria = true;
 }
 
 Coordenadas Robotino::pegarCoordenadaArea(int id, Coordenadas p){

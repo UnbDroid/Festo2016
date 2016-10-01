@@ -186,6 +186,7 @@ void SeguirCor::execute(Robotino *robotino)
 
     // Descomentar essa parte para mostrar o que está sendo seguido
     imshow(windowName,cameraFeed);
+    cvMoveWindow(windowName.c_str(),500,300);
     waitKey(1);
 
     // Calculo dos erros em X (Horizontal) e Y (Vertical)

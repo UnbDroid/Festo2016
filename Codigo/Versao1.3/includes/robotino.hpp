@@ -235,6 +235,8 @@ private:
     float refDistTrasParede;
     float velocidadeBusca;
     int areaDeposito;
+    float odometriaX, odometriaY, odometriaPhi;
+    bool seteiOdometria;
 
 };
 
