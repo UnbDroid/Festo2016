@@ -47,7 +47,7 @@ Robotino::Robotino(const char *hostname,
 
 void Robotino::construir_mapa(){
     FabricaDeMapas criador;
-    criador.criarMapa("Modulo3Teste",mapa);
+    criador.criarMapa("Modulo11Teste",mapa);
 }
 
 Robotino::~Robotino(){

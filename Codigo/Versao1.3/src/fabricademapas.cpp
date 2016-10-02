@@ -11,6 +11,11 @@ bool FabricaDeMapas::criarMapa(string nome, Mapa& mapa){
         mapaModulo1Teste(mapa);
         return true;
 
+    }else if(nome == "Modulo11Teste"){
+
+        mapaModulo11Teste(mapa);
+        return true;
+
     }else if(nome == "Modulo2Teste"){
 
         mapaModulo2Teste(mapa);
@@ -75,6 +80,40 @@ void FabricaDeMapas::mapaModulo1Teste(Mapa & mapa){
     mapa.inserir_retangulo(Coordenadas(76.5,66.5),Coordenadas(78.5,135),mapa.LINHA);
     mapa.inserir_retangulo(Coordenadas(76.5,133),Coordenadas(125,135),mapa.LINHA);
 }
+
+void FabricaDeMapas::mapaModulo11Teste(Mapa & mapa){
+
+    mapa = Mapa(186, 373, 0.5);
+    // Paredes da arena
+    mapa.inserir_retangulo(Coordenadas(0,0), Coordenadas(186,1.5),mapa.PAREDE);
+    mapa.inserir_retangulo(Coordenadas(0,0), Coordenadas(1.5,373),mapa.PAREDE);
+    mapa.inserir_retangulo(Coordenadas(0,371.5), Coordenadas(186,373),mapa.PAREDE);
+    mapa.inserir_retangulo(Coordenadas(184.5,0), Coordenadas(186,373),mapa.PAREDE);
+
+    // Area de inicio
+    mapa.inserir_retangulo(Coordenadas(2,2),Coordenadas(59,59),2);
+
+    // Linhas da area de inicio
+    mapa.inserir_retangulo(Coordenadas(59.5,2),Coordenadas(61.5,61.5),mapa.LINHA);
+    mapa.inserir_retangulo(Coordenadas(2,59.5),Coordenadas(61.5,61.5),mapa.LINHA);
+
+    // Area de deposito
+    mapa.inserir_retangulo(Coordenadas(128.5,313),Coordenadas(184.5,371.5),3);
+
+    // Linhas da area de deposito
+    mapa.inserir_retangulo(Coordenadas(126,311.5),Coordenadas(128,371.5),mapa.LINHA);
+    mapa.inserir_retangulo(Coordenadas(126,311.5),Coordenadas(184.5,313.5),mapa.LINHA);
+
+    // Area central
+    mapa.inserir_retangulo(Coordenadas(48,89),Coordenadas(139,284),4);
+
+    // Linhas da area central
+    mapa.inserir_retangulo(Coordenadas(45.5,86.5),Coordenadas(141.5,88.5),mapa.LINHA);
+    mapa.inserir_retangulo(Coordenadas(45.5,86.5),Coordenadas(47.5,286.5),mapa.LINHA);
+    mapa.inserir_retangulo(Coordenadas(139.5,86.5),Coordenadas(141.5,286.5),mapa.LINHA);
+    mapa.inserir_retangulo(Coordenadas(45.5,284.5),Coordenadas(141.5,286.5),mapa.LINHA);
+}
+
 
 void FabricaDeMapas::mapaModulo2Teste(Mapa & mapa){
     mapa = Mapa(200, 200, 0.5);

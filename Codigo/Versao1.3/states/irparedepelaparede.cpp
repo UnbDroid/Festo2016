@@ -81,12 +81,6 @@ void IrParedePelaParede::execute(Robotino *robotino)
 
         Vx = Kpx*erroDistTras;
 
-        if(Vy > 75){
-            Vy = 75;
-        }else if(Vy < -75){
-            Vy = -75;
-        }
-
         erro = te - td;
         w = Kp*erro;
 
@@ -113,12 +107,6 @@ void IrParedePelaParede::execute(Robotino *robotino)
         erroDistTras = refDistTras - (distancia_de_tras - 20);
 
         Vx = Kpx*erroDistTras;
-
-        if(Vy > 75){
-            Vy = 75;
-        }else if(Vy < -75){
-            Vy = -75;
-        }
 
         erro = te - td;
         w = Kp*erro;

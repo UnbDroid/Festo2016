@@ -43,6 +43,7 @@ void PercorrerProcurandoDiscos::execute(Robotino *robotino)
     float yMaior = -1;
     float erros;
     float Vx, w;
+    int cor = -1;
     static bool entrei = false;
     vector<Vec4i> lines;
     Vec4i l, l2;
@@ -109,11 +110,24 @@ void PercorrerProcurandoDiscos::execute(Robotino *robotino)
 
     robotino->change_state(IdentificarCor::instance());
 
+
+
     if (robotino->objetosAmarelos.size() > 0 || robotino->objetosVermelhos.size() > 0 || robotino->objetosAzuis.size() > 0 ){
 
-        robotino->setVelocity(0,0,0);
-        entrei = false;
-        robotino->change_state(voltar);
+        if(robotino->objetosAmarelos.size() > 0){
+            cor = Robotino::AMARELO;
+        }else if(robotino->objetosVermelhos.size() > 0){
+            cor = Robotino::VERMELHO;
+        }else if(robotino->objetosAzuis.size() > 0){
+             cor = Robotino::AZUL;
+        }
+
+        if (robotino->corFaltando(cor)){
+            robotino->removerCorFaltando(cor);
+            robotino->setVelocity(0,0,0);
+            entrei = false;
+            robotino->change_state(voltar);
+        }
 
     }else{
         robotino->setVelocity(Vx,Vy,w);

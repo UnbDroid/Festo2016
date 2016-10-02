@@ -8,6 +8,7 @@
 #include "mapa.hpp"
 #include "object.hpp"
 #include "coordenadas.hpp"
+#include <algorithm>
 #include <opencv2/opencv.hpp>
 
 
@@ -208,6 +209,12 @@ public:
 
     void setCorDiscoDeposito (Object, Object);
 
+    void adicionarCorFaltando(int cor){coresFaltando.push_back(cor);};
+
+    void removerCorFaltando(int cor){coresFaltando.erase(std::remove(coresFaltando.begin(), coresFaltando.end(), cor), coresFaltando.end());}
+
+    bool corFaltando(int cor){return (std::find(coresFaltando.begin(), coresFaltando.end(), cor) != coresFaltando.end());}
+
     // -------------------------------------------------------------------
 
     void girei(){girar = false;}
@@ -237,6 +244,7 @@ private:
     int areaDeposito;
     float odometriaX, odometriaY, odometriaPhi;
     bool seteiOdometria;
+    std::vector<int> coresFaltando;
 
 };
 

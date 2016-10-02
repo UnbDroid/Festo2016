@@ -20,7 +20,9 @@
 #include "basestate.hpp"
 #include "irparaparede.hpp"
 #include "modulo1.hpp"
+#include "modulo1_V2.hpp"
 #include "modulo2.hpp"
+#include "modulo2_V2.hpp"
 #include "modulo3.hpp"
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/opencv.hpp>
@@ -28,6 +30,7 @@
 #include "ajustarnaslinhas.hpp"
 #include "navegarentreareas2.hpp"
 #include "contarlinhas.hpp"
+#include "percorrerprocurandodiscos.hpp"
 
 using namespace rec::robotino::com;
 
@@ -45,7 +48,7 @@ int main( int argc, char **argv )
 
 	/*FabricaDeMapas fab;
 	Mapa mapa;
-	fab.criarMapa("Modulo3Teste",mapa);
+	fab.criarMapa("Modulo11Teste",mapa);
 	mapa.mostrar_mapa();
 	waitKey();*/
 	try{
@@ -55,7 +58,7 @@ int main( int argc, char **argv )
 			hostname = argv[1];
 		}
 		//Banana
-		Robotino robo(hostname.c_str(), Modulo2::instance(), Coordenadas(173.5,-173.5,90));// Modulo 3 Coordenadas(173.5,-100,180)); // Modulo 2 Coordenadas(173.5,-173.5,90)); : modulo 2
+		Robotino robo(hostname.c_str(), Control::instance(), Coordenadas(30,-30,0));// Modulo 3 Coordenadas(173.5,-100,180)); // Modulo 2 Coordenadas(173.5,-173.5,90)); : modulo 2
 
 		while(true){
 			try{

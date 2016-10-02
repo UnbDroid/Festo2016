@@ -241,7 +241,7 @@ void SeguirCor::execute(Robotino *robotino)
 
     robotino->setVelocity(Vx,0,w);
     if (etapasAprox == 3){
-    	robotino->setCarregando(true);
+    	//robotino->setCarregando(true);
     	robotino->change_state(robotino->previous_state());
     	etapasAprox = 0;
     }

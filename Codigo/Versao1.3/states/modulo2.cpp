@@ -16,6 +16,7 @@
 #include "ajustarnaslinhas.hpp"
 #include "andarpelaparedeatelinha.hpp"
 #include "contarlinhas.hpp"
+#include "modulo2_V2.hpp"
 #include "percorrerprocurandodiscos.hpp"
 #include "irparedepelaparede.hpp"
 #include <unistd.h>
@@ -50,7 +51,7 @@ void Modulo2::enter(Robotino *robotino)
     //robotino->omniDrive.setVelocity(-200, 0 , 0 );
 }
 
-int decidirQualAreaIr(Robotino * robotino){
+/*int decidirQualAreaIr(Robotino * robotino){
     if (robotino->objetosAmarelos.size() > 0){
 
         robotino->definirObjetoAlvo(Robotino::AMARELO);
@@ -187,7 +188,7 @@ void identificarCorFaltandoArea3(Robotino *robotino){
             robotino->area3discoFaltando = robotino->area3disco1;
         }
     }
-}
+}*/
 
 /*
     Se certificar que ele entregue o disco completamente
@@ -195,7 +196,7 @@ void identificarCorFaltandoArea3(Robotino *robotino){
 
 void Modulo2::execute(Robotino *robotino)
 {
-    static int objetivo_completo = 3;
+   /* static int objetivo_completo = 3;
     static int discos_entregues = 0;
     std::cout << "objetivo_completo = " << objetivo_completo << std::endl;
 
@@ -616,7 +617,7 @@ void Modulo2::execute(Robotino *robotino)
         robotino->change_state(IrParedePelaParede::instance());
         objetivo_completo = 64;
 
-    }
+    }*/
 
 }
 

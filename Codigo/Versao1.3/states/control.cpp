@@ -12,7 +12,11 @@
 #include "procurarcor.hpp"
 #include "seguircor.hpp"
 #include "irparaparede.hpp"
+#include "alinhartraseiro.hpp"
 #include "irparalinha.hpp"
+#include "irparedepelaparede.hpp"
+#include "percorrerprocurandodiscos.hpp"
+#include "ajustarnaslinhas.hpp"
 #include <vector>
 #include <cmath>
 #include <opencv2/highgui/highgui.hpp>
@@ -50,7 +54,7 @@ float corrigirAngulo(float Angulo){
 
 void Control::execute(Robotino *robotino)
 {
-    static int objetivo_completo = 9;
+    static int objetivo_completo = 60;
     //robotino->definirDestino(0,100);
     //robotino->change_state(IrParaPonto::instance());
 
@@ -62,11 +66,26 @@ void Control::execute(Robotino *robotino)
         robotino->definirDestino(destino.get_x(), -destino.get_y());
         robotino->change_state(IrParaPonto::instance());
         objetivo_completo = 3;
-    }else if(objetivo_completo == 1){
-        Coordenadas destino = robotino->pegarCoordenadaArea(Robotino::AREA2);//,Coordenadas(robotino->odometryX()/10, -robotino->odometryY()/10));
-        robotino->definirDestino(destino.get_x(),-destino.get_y());
+
+    }else if (objetivo_completo == 60) {
+
+        robotino->definirParedeAlvo(Robotino::SUL90);
+        robotino->setDistTrasParede(20);
+        robotino->change_state(AlinharTraseiro::instance());
+        objetivo_completo = 1;
+    }
+
+    else if(objetivo_completo == 1){
+        Coordenadas destino = robotino->pegarCoordenadaArea(Robotino::AREA3);//,Coordenadas(robotino->odometryX()/10, -robotino->odometryY()/10));
+        std::cout << "Destino:  " << destino << std::endl;
+        robotino->definirDestino(robotino->odometryX()/10,-destino.get_y());
         robotino->change_state(IrParaPonto::instance());
-        objetivo_completo = 5;
+        objetivo_completo = 50;
+
+    }else if (objetivo_completo == 50) {
+        robotino->change_state(AjustarNasLinhas::instance());
+
+
     }else if (objetivo_completo == 2){
         Coordenadas destino = robotino->pegarCoordenadaArea(Robotino::AREA1,Coordenadas(robotino->odometryX()/10, -robotino->odometryY()/10));
         robotino->definirDestino(destino.get_x(),-destino.get_y());
@@ -85,9 +104,11 @@ void Control::execute(Robotino *robotino)
         objetivo_completo = 5;
     }else if(objetivo_completo == 5){
         std::cout << "Indo para SUL" << std::endl;
-        robotino->definirParedeAlvo (Robotino::SULN90);
-        robotino->change_state(IrParaParede::instance());
-        objetivo_completo = 6;
+        robotino->definirParedeAlvo (Robotino::NORTEN90);
+        robotino->setDistParede(10);
+        robotino->setDistTrasParede(6);
+        robotino->change_state(IrParedePelaParede::instance());
+        objetivo_completo = 60;
     }else if(objetivo_completo == 6){
         std::cout << "Indo para oeste" << std::endl;
         robotino->definirParedeAlvo (Robotino::LESTE0);
@@ -132,6 +153,10 @@ void Control::execute(Robotino *robotino)
         std::cout << "Sensor frente esquerda: " << robotino->irDistance(Robotino::IR_F_ESQUERDO) << std::endl;
         std::cout << "Sensor frente direito: " << robotino->irDistance(Robotino::IR_F_DIREITO) << std::endl;
         objetivo_completo = 15;
+
+    }else if (objetivo_completo == 20) {
+        robotino->change_state(PercorrerProcurandoDiscos::instance());
+        objetivo_completo = 100;
 
     }
 

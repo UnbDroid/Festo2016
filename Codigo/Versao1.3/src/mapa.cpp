@@ -13,8 +13,8 @@ using namespace std;
 
 // Insira a altura e largula do objeto em metros, se quiser escolhe a granulacao
 Mapa::Mapa(float altura, float largura, float granulacao){
-	int m = (int) (altura/granulacao  + 1);
-	int n = (int) (largura/granulacao + 1);
+	int n = (int) (altura/granulacao  + 1);
+	int m = (int) (largura/granulacao + 1);
 	mapa = new int [m*n];
 	img_mapa =  Mat::zeros(m, n, CV_8UC3);
 	coordenadas_do_mapa = new Coordenadas [m*n];
@@ -26,7 +26,7 @@ Mapa::Mapa(float altura, float largura, float granulacao){
 	this->granulacao = granulacao;
 	for (int i = 0; i < m*n; ++i){
 		mapa[i] = 0;
-		coordenadas_do_mapa[i] = Coordenadas((int)(i/n)*granulacao,(int)(i%n)*granulacao);
+		coordenadas_do_mapa[i] = Coordenadas((int)(i/m)*granulacao,(int)(i%m)*granulacao);
 	}
 	construir_representacao();
 }
@@ -54,19 +54,19 @@ string Mapa::representacao() const{
 }
 
 void Mapa::inserir_parede(Coordenadas coord){
-	int m = coord.get_x()/granulacao;
-	int n = coord.get_y()/granulacao;
+	int m = coord.get_y()/granulacao;
+	int n = coord.get_x()/granulacao;
 	if(m >= this->m || n >= this->n || m < 0 || n < 0)
 		return;
 	mapa[m*this->n+n] = 1;
-	repr.replace(4*(m*this->n+n)+2,1,"\u25A0",2,2);
+	repr.replace(4*(n*this->m+m)+2,1,"\u25A0",2,2);
 }
 
 void Mapa::inserir_retangulo(Coordenadas coord1, Coordenadas coord2, int tipo){
-	int m_inicial = coord1.get_x()/granulacao;
-	int n_inicial = coord1.get_y()/granulacao;
-	int m_final = coord2.get_x()/granulacao;
-	int n_final = coord2.get_y()/granulacao;
+	int m_inicial = coord1.get_y()/granulacao;
+	int n_inicial = coord1.get_x()/granulacao;
+	int m_final = coord2.get_y()/granulacao;
+	int n_final = coord2.get_x()/granulacao;
 	bool cond1 = (m_inicial >= m || n_inicial >= n || m < 0 || n < 0);
 	bool cond2 = (m_final >= m || n_final >= n);
 	bool cond3 = (m_inicial > m_final || n_inicial > n_final);
@@ -79,15 +79,15 @@ void Mapa::inserir_retangulo(Coordenadas coord1, Coordenadas coord2, int tipo){
 			areas_armazenadas[tipo] = Area(tipo);
 	}
 
-	rectangle(img_mapa,Point(m_inicial,n_inicial),Point(m_final,n_final), cores[tipo],-1);
-	for (int i = m_inicial; i <= m_final; ++i){
-		for (int j = n_inicial; j <= n_final; ++j){
+	rectangle(img_mapa,Point(n_inicial,m_inicial),Point(n_final,m_final), cores[tipo],-1);
+	for (int j = m_inicial; j <= m_final; ++j){
+		for (int i = n_inicial; i <= n_final; ++i){
 			if(tipo == LINHA){
 				inserir_linha(Coordenadas(i*granulacao,j*granulacao));
 			}else if(tipo == PAREDE){
 				inserir_parede(Coordenadas(i*granulacao,j*granulacao));
 			}else{
-				areas_armazenadas[tipo].adicionar_coordenada(coordenadas_do_mapa[i*this->n+j]);
+				areas_armazenadas[tipo].adicionar_coordenada(coordenadas_do_mapa[i*this->m+j]);
 				inserir_marcador(Coordenadas(i*granulacao,j*granulacao),tipo);
 			}
 		}
@@ -107,37 +107,37 @@ Coordenadas Mapa::coordenada_area(int id){
 }
 
 void Mapa::inserir_linha(Coordenadas coord){
-	int m = coord.get_x()/granulacao;
-	int n = coord.get_y()/granulacao;
+	int m = coord.get_y()/granulacao;
+	int n = coord.get_x()/granulacao;
 	if(m >= this->m || n >= this->n || m < 0 || n < 0)
 		return;
-	mapa[m*this->n+n] = 2;
-	repr.replace(4*(m*this->n+n)+2,1,"\u25A4",2,2);
+	mapa[n*this->m+m] = 2;
+	repr.replace(4*(n*this->m+m)+2,1,"\u25A4",2,2);
 }
 
 void Mapa::inserir_marcador(Coordenadas coord, int tipo){
-	int m = coord.get_x()/granulacao;
-	int n = coord.get_y()/granulacao;
+	int m = coord.get_y()/granulacao;
+	int n = coord.get_x()/granulacao;
 	if(m >= this->m || n >= this->n || m < 0 || n < 0 || tipo == LINHA || tipo == PAREDE)
 		return;
-	mapa[m*this->n+n] = tipo;
-	repr.replace(4*(m*this->n+n)+2,1,"\u25B2",2,2);
+	mapa[n*this->m+m] = tipo;
+	repr.replace(4*(n*this->m+m)+2,1,"\u25B2",2,2);
 }
 
 bool Mapa::checar_se_na_area(Coordenadas p, int area){
-	int m = p.get_x()/granulacao;
-	int n = p.get_y()/granulacao;
+	int m = p.get_y()/granulacao;
+	int n = p.get_x()/granulacao;
 	if(m >= this->m || n >= this->n || m < 0 || n < 0)
 		return false;
-	return mapa[m*this->n+n]==area;
+	return mapa[n*this->m+m]==area;
 }
 
 int Mapa::qual_area(Coordenadas p){
-	int m = p.get_x()/granulacao;
-	int n = p.get_y()/granulacao;
+	int m = p.get_y()/granulacao;
+	int n = p.get_x()/granulacao;
 	if(m >= this->m || n >= this->n || m < 0 || n < 0)
 		return false;
-	return mapa[m*this->n+n];
+	return mapa[n*this->m+m];
 }
 
 /*void Mapa::inserir_objeto(Objeto * obj){
@@ -182,10 +182,10 @@ void Mapa::mostrar_mapa(){
 
 void Mapa::mostrar_mapa_com_robo(Coordenadas p){
 	Mat pos_robo = Mat::zeros(m, n, CV_8UC3);
-	int m = p.get_x()/granulacao;
-	int n  = p.get_y()/granulacao;
-	circle(pos_robo,Point(m,n),20/granulacao,Scalar(0,0,255),-1);
-	line(pos_robo,Point(m,n),Point(m+20*cos(p.get_theta()*PI/180)/granulacao,n+20*sin(p.get_theta()*PI/180)/granulacao),Scalar(255,255,255),2);
+	int m = p.get_y()/granulacao;
+	int n  = p.get_x()/granulacao;
+	circle(pos_robo,Point(n,m),20/granulacao,Scalar(0,0,255),-1);
+	line(pos_robo,Point(n,m),Point(n+20*cos(p.get_theta()*PI/180)/granulacao,m+20*sin(p.get_theta()*PI/180)/granulacao),Scalar(255,255,255),2);
 	imshow("Mapa",img_mapa+pos_robo);
 }
 
