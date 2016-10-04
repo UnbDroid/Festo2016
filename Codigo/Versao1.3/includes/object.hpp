@@ -42,9 +42,11 @@ public:
 
 	Object& operator=(Object);
 
+	int getTipo(){return tipo;}
+
 private:
 
-	int xPos, yPos;
+	int xPos, yPos, tipo;
 	string type;
 	Scalar HSVmin, HSVmax;
 	Scalar Color;

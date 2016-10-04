@@ -58,7 +58,7 @@ int main( int argc, char **argv )
 			hostname = argv[1];
 		}
 		//Banana
-		Robotino robo(hostname.c_str(), Control::instance(), Coordenadas(30,-30,0));// Modulo 3 Coordenadas(173.5,-100,180)); // Modulo 2 Coordenadas(173.5,-173.5,90)); : modulo 2
+		Robotino robo(hostname.c_str(), Modulo2_V2::instance(), Coordenadas(173.5,-173.5,90));// Modulo 1 Coordenadas(30,-30,0));// Modulo 3 Coordenadas(173.5,-100,180)); // Modulo 2 Coordenadas(173.5,-173.5,90)); : modulo 2
 
 		while(true){
 			try{

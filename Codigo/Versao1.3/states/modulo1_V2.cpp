@@ -167,8 +167,8 @@ void Modulo1_V2::execute(Robotino *robotino)
         robotino->setDistTrasParede(10);
         robotino->change_state(IrParedePelaParede::instance());
 
-        objetivo_completo = 16
-        ;
+        objetivo_completo = 16;
+
     }else if(objetivo_completo == 16){
         robotino->definirParedeAlvo(Robotino::OESTE0);
         robotino->setDistParede(10);
@@ -176,6 +176,11 @@ void Modulo1_V2::execute(Robotino *robotino)
         robotino->change_state(IrParedePelaParede::instance());
 
         objetivo_completo = 17;
+    }
+    else if(objetivo_completo == 17){
+
+        robotino->exit("Terminei");
+
     }
 }
 

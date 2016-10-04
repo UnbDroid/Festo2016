@@ -23,6 +23,7 @@ Object::Object(string name){
 		//BGR value for Green:
 		setColor(Scalar(255,0,0));
 
+		tipo = 2;
 	}
 	if(name=="green"){
 
@@ -34,6 +35,8 @@ Object::Object(string name){
 
 		//BGR value for Yellow:
 		setColor(Scalar(0,255,0));
+
+		tipo = 4;
 
 	}
 	if(name=="yellow"){
@@ -47,6 +50,8 @@ Object::Object(string name){
 		//BGR value for Red:
 		setColor(Scalar(0,255,255));
 
+		tipo = 1;
+
 	}
 	if(name=="red"){
 
@@ -59,6 +64,8 @@ Object::Object(string name){
 		//BGR value for Red:
 		setColor(Scalar(0,0,255));
 
+		tipo = 0;
+
 	}
 	if(name =="black"){
 
@@ -70,6 +77,8 @@ Object::Object(string name){
 
 		//BGR value for Red:
 		setColor(Scalar(0,0,0));
+
+		tipo = 5;
 
 	}
 }
@@ -131,4 +140,5 @@ Object& Object::operator= (Object o){
 	this->HSVmin = o.getHSVmin();
 	this->HSVmax = o.getHSVmax();
 	this->Color = o.getColor();
+	this->tipo = o.getTipo();
 }

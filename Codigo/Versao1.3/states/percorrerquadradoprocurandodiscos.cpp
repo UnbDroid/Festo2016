@@ -292,20 +292,20 @@ void PercorrerQuadradoProcurandoDiscos::execute(Robotino *robotino)
 
     if (robotino->objetosAmarelos.size() > 0 || robotino->objetosVermelhos.size() > 0 || robotino->objetosAzuis.size() > 0 ){
 
-        if(robotino->objetosAmarelos.size() > 0){
-            cor = Robotino::AMARELO;
-        }else if(robotino->objetosVermelhos.size() > 0){
-            cor = Robotino::VERMELHO;
-        }else if(robotino->objetosAzuis.size() > 0){
-             cor = Robotino::AZUL;
-        }
+        // if(robotino->objetosAmarelos.size() > 0){
+        //     cor = Robotino::AMARELO;
+        // }else if(robotino->objetosVermelhos.size() > 0){
+        //     cor = Robotino::VERMELHO;
+        // }else if(robotino->objetosAzuis.size() > 0){
+        //      cor = Robotino::AZUL;
+        // }
 
         //if (robotino->corFaltando(cor)){
-            robotino->definirObjetoAlvo(cor);
-            //robotino->removerCorFaltando(cor);
-            robotino->setVelocity(0,0,0);
-            entrei = false;
-            robotino->change_state(voltar);
+        robotino->definirObjetoAlvo(Robotino::TODAS);
+        //robotino->removerCorFaltando(cor);
+        robotino->setVelocity(0,0,0);
+        entrei = false;
+        robotino->change_state(voltar);
         //}
 
     }else{

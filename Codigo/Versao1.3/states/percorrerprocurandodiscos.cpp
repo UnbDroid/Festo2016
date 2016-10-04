@@ -114,20 +114,48 @@ void PercorrerProcurandoDiscos::execute(Robotino *robotino)
 
     if (robotino->objetosAmarelos.size() > 0 || robotino->objetosVermelhos.size() > 0 || robotino->objetosAzuis.size() > 0 ){
 
-        if(robotino->objetosAmarelos.size() > 0){
+        if(robotino->objetosAmarelos.size() > 0 && entrei){
             cor = Robotino::AMARELO;
-        }else if(robotino->objetosVermelhos.size() > 0){
+            if (robotino->corFaltando(cor)){
+                std::cout << "Percorreu e vai pegar amarelo " << std::endl;
+                std::cout << "Cor:  " << cor << std::endl;
+                robotino->removerCorFaltando(cor);
+                robotino->definirObjetoAlvo(Robotino::AMARELO);
+                robotino->setVelocity(0,0,0);
+                entrei = false;
+                robotino->change_state(voltar);
+            }else{
+                robotino->setVelocity(Vx,Vy,w);
+            }
+        }if(robotino->objetosVermelhos.size() > 0  && entrei){
             cor = Robotino::VERMELHO;
-        }else if(robotino->objetosAzuis.size() > 0){
+            if (robotino->corFaltando(cor)){
+                std::cout << "Percorreu e vai pegar vermelho " << std::endl;
+                std::cout << "Cor:  " << cor << std::endl;
+                robotino->removerCorFaltando(cor);
+                robotino->definirObjetoAlvo(Robotino::VERMELHO);
+                robotino->setVelocity(0,0,0);
+                entrei = false;
+                robotino->change_state(voltar);
+            }else{
+                robotino->setVelocity(Vx,Vy,w);
+            }
+        }if(robotino->objetosAzuis.size() > 0  && entrei){
              cor = Robotino::AZUL;
+            if (robotino->corFaltando(cor)){
+                std::cout << "Percorreu e vai pegar azul " << std::endl;
+                std::cout << "Cor:  " << cor << std::endl;
+                robotino->removerCorFaltando(cor);
+                robotino->definirObjetoAlvo(Robotino::AZUL);
+                robotino->setVelocity(0,0,0);
+                entrei = false;
+                robotino->change_state(voltar);
+            }else{
+                robotino->setVelocity(Vx,Vy,w);
+            }
         }
+        std::cout << "OIIII????\n";
 
-        if (robotino->corFaltando(cor)){
-            robotino->removerCorFaltando(cor);
-            robotino->setVelocity(0,0,0);
-            entrei = false;
-            robotino->change_state(voltar);
-        }
 
     }else{
         robotino->setVelocity(Vx,Vy,w);

@@ -211,9 +211,17 @@ public:
 
     void adicionarCorFaltando(int cor){coresFaltando.push_back(cor);};
 
-    void removerCorFaltando(int cor){coresFaltando.erase(std::remove(coresFaltando.begin(), coresFaltando.end(), cor), coresFaltando.end());}
+    void removerCorFaltando(int cor);
 
     bool corFaltando(int cor){return (std::find(coresFaltando.begin(), coresFaltando.end(), cor) != coresFaltando.end());}
+
+    void mostrarCoresFaltando(){
+        std::cout << "Cores faltando------------------------\n";
+        for (int i = 0; i < coresFaltando.size(); ++i){
+            std::cout << coresFaltando[i] << "\n";
+        }
+        std::cout << "--------------------------------------------\n";
+    }
 
     // -------------------------------------------------------------------
 

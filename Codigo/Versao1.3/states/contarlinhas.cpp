@@ -46,7 +46,7 @@ void ContarLinhas::execute(Robotino *robotino)
     }
 
     if((robotino->readInductiveSensor() > 9.9 && !viMetal) || !robotino->readInductiveSensor()){
-         robotino->setVelocity(40,0,0);
+         robotino->setVelocity(80,0,0);
 
     }else{
         if (preto){

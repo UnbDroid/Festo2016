@@ -60,9 +60,11 @@ int decidirQualAreaIr(Robotino * robotino){
     std::cout<< "Area2Entregue: " << area2Entregue<< std::endl;
     std::cout<< "Area3Entregue: " << area3Entregue<< std::endl;
 
-    if (robotino->objetosAmarelos.size() > 0){
+    std::cout<< "Cor a ser entregue: " << robotino->objetoAlvo.getType() << std::endl;
 
-        robotino->definirObjetoAlvo(Robotino::AMARELO);
+    if (robotino->objetoAlvo.getType() == "yellow" ){
+
+        //robotino->definirObjetoAlvo(Robotino::AMARELO);
         std::cout<< "seguindo amarelo " << std::endl;
         if(robotino->area1discoFaltando.getType() == "yellow"  && area1Entregue == false){
             area1Entregue = true;
@@ -75,9 +77,9 @@ int decidirQualAreaIr(Robotino * robotino){
             return OBJETIVOAREA3;
         }
 
-    }else if (robotino->objetosAzuis.size() > 0){
+    }else if (robotino->objetoAlvo.getType() == "blue" ){
 
-        robotino->definirObjetoAlvo(Robotino::AZUL);
+        //robotino->definirObjetoAlvo(Robotino::AZUL);
         std::cout<< "seguindo azul " << std::endl;
         if(robotino->area1discoFaltando.getType() == "blue"  && area1Entregue == false){
             area1Entregue = true;
@@ -90,9 +92,9 @@ int decidirQualAreaIr(Robotino * robotino){
             return OBJETIVOAREA3;
         }
 
-    }else if (robotino->objetosVermelhos.size() > 0){
+    }else if (robotino->objetoAlvo.getType() == "red"){
 
-        robotino->definirObjetoAlvo(Robotino::VERMELHO);
+        //robotino->definirObjetoAlvo(Robotino::VERMELHO);
         std::cout<< "seguindo vermelho " << std::endl;
         if(robotino->area1discoFaltando.getType() == "red"   && area1Entregue == false){
             area1Entregue = true;
@@ -112,108 +114,96 @@ void identificarCorFaltandoArea1(Robotino *robotino){
 
     if(robotino->area1disco1.getType() == "yellow"){
         if(robotino->objetosAmarelos.size() > 0){
-            robotino->adicionarCorFaltando(Robotino::AMARELO);
             robotino->area1discoFaltando = robotino->area1disco2;
         }
     }else if(robotino->area1disco1.getType() == "red"){
         if(robotino->objetosVermelhos.size() > 0){
-            robotino->adicionarCorFaltando(Robotino::VERMELHO);
             robotino->area1discoFaltando = robotino->area1disco2;
         }
     }else if(robotino->area1disco1.getType() == "blue"){
         if(robotino->objetosAzuis.size() > 0){
-            robotino->adicionarCorFaltando(Robotino::AZUL);
             robotino->area1discoFaltando = robotino->area1disco2;
         }
     }
     if(robotino->area1disco2.getType() == "yellow"){
         if(robotino->objetosAmarelos.size() > 0){
-            robotino->adicionarCorFaltando(Robotino::AMARELO);
             robotino->area1discoFaltando = robotino->area1disco1;
         }
     }else if(robotino->area1disco2.getType() == "red"){
         if(robotino->objetosVermelhos.size() > 0){
-            robotino->adicionarCorFaltando(Robotino::VERMELHO);
             robotino->area1discoFaltando = robotino->area1disco1;
         }
     }else if(robotino->area1disco2.getType() == "blue"){
         if(robotino->objetosAzuis.size() > 0){
-            robotino->adicionarCorFaltando(Robotino::AZUL);
             robotino->area1discoFaltando = robotino->area1disco1;
         }
     }
+    robotino->adicionarCorFaltando(robotino->area1discoFaltando.getTipo());
+    std::cout << "Cores faltando area 1: "<< robotino->area1discoFaltando.getTipo() << std::endl;
 }
 
 void identificarCorFaltandoArea2(Robotino *robotino){
 
     if(robotino->area2disco1.getType() == "yellow"){
         if(robotino->objetosAmarelos.size() > 0){
-            robotino->adicionarCorFaltando(Robotino::AMARELO);
             robotino->area2discoFaltando = robotino->area2disco2;
         }
     }else if(robotino->area2disco1.getType() == "red"){
         if(robotino->objetosVermelhos.size() > 0){
-            robotino->adicionarCorFaltando(Robotino::VERMELHO);
             robotino->area2discoFaltando = robotino->area2disco2;
         }
     }else if(robotino->area2disco1.getType() == "blue"){
         if(robotino->objetosAzuis.size() > 0){
-            robotino->adicionarCorFaltando(Robotino::AZUL);
             robotino->area2discoFaltando = robotino->area2disco2;
         }
     }
     if(robotino->area2disco2.getType() == "yellow"){
         if(robotino->objetosAmarelos.size() > 0){
-            robotino->adicionarCorFaltando(Robotino::AMARELO);
             robotino->area2discoFaltando = robotino->area2disco1;
         }
     }else if(robotino->area2disco2.getType() == "red"){
         if(robotino->objetosVermelhos.size() > 0){
-            robotino->adicionarCorFaltando(Robotino::VERMELHO);
             robotino->area2discoFaltando = robotino->area2disco1;
         }
     }else if(robotino->area2disco2.getType() == "blue"){
         if(robotino->objetosAzuis.size() > 0){
-            robotino->adicionarCorFaltando(Robotino::AZUL);
             robotino->area2discoFaltando = robotino->area2disco1;
         }
     }
+    robotino->adicionarCorFaltando(robotino->area2discoFaltando.getTipo());
+    std::cout << "Cores faltando area 2: "<< robotino->area2discoFaltando.getTipo() << std::endl;
 }
 
 void identificarCorFaltandoArea3(Robotino *robotino){
 
     if(robotino->area3disco1.getType() == "yellow"){
         if(robotino->objetosAmarelos.size() > 0){
-            robotino->adicionarCorFaltando(Robotino::AMARELO);
             robotino->area3discoFaltando = robotino->area3disco2;
         }
     }else if(robotino->area3disco1.getType() == "red"){
         if(robotino->objetosVermelhos.size() > 0){
-            robotino->adicionarCorFaltando(Robotino::VERMELHO);
             robotino->area3discoFaltando = robotino->area3disco2;
         }
     }else if(robotino->area3disco1.getType() == "blue"){
         if(robotino->objetosAzuis.size() > 0){
-            robotino->adicionarCorFaltando(Robotino::AZUL);
             robotino->area3discoFaltando = robotino->area3disco2;
         }
     }
     if(robotino->area3disco2.getType() == "yellow"){
         if(robotino->objetosAmarelos.size() > 0){
-            robotino->adicionarCorFaltando(Robotino::AMARELO);
             robotino->area3discoFaltando = robotino->area3disco1;
         }
     }else if(robotino->area3disco2.getType() == "red"){
         if(robotino->objetosVermelhos.size() > 0){
-            robotino->adicionarCorFaltando(Robotino::VERMELHO);
             robotino->area3discoFaltando = robotino->area3disco1;
         }
     }else if(robotino->area3disco2.getType() == "blue"){
         if(robotino->objetosAzuis.size() > 0){
-            robotino->adicionarCorFaltando(Robotino::AZUL);
             robotino->area3discoFaltando = robotino->area3disco1;
         }
     }
+    robotino->adicionarCorFaltando(robotino->area3discoFaltando.getTipo());
+    std::cout << "Cores faltando area 3: "<< robotino->area3discoFaltando.getTipo() << std::endl;
 }
 
 /*
@@ -228,8 +218,7 @@ void Modulo2_V2::execute(Robotino *robotino)
     std::cout << "objetivo_completo = " << objetivo_completo << std::endl;
 
 // Usado para fazer teste pulando etapas --------------------------------------------------------------------------------------------------------------------
-
-    if(objetivo_completo == 0){
+if(objetivo_completo == 0){
 
         Coordenadas destino = robotino->pegarCoordenadaArea(Robotino::AREA7);//,Coordenadas(robotino->odometryX()/10, -robotino->odometryY()/10));
         std::cout <<"Resultado"<<destino<<"\n";
@@ -585,8 +574,13 @@ void Modulo2_V2::execute(Robotino *robotino)
         robotino->change_state(IrParedePelaParede::instance());
         objetivo_completo = 64;
 
+    }else if(objetivo_completo == 64){
+
+        robotino->exit("Terminei");
+
     }
 
+    robotino->mostrarCoresFaltando();
 }
 
 void Modulo2_V2::exit(Robotino *robotino) {

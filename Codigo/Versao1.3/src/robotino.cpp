@@ -30,6 +30,7 @@ Robotino::Robotino(const char *hostname,
         odometry.set(pontoInicial.get_x()*10,pontoInicial.get_y()*10,pontoInicial.get_theta());
         camera.setStreaming(true);
         construir_mapa();
+        coresFaltando = std::vector<int>();
     }
     catch( const rec::robotino::com::ComException& e ){
         std::cerr << "Com Error: " << e.what() << std::endl;
@@ -47,7 +48,7 @@ Robotino::Robotino(const char *hostname,
 
 void Robotino::construir_mapa(){
     FabricaDeMapas criador;
-    criador.criarMapa("Modulo11Teste",mapa);
+    criador.criarMapa("Modulo2Teste",mapa);
 }
 
 Robotino::~Robotino(){
@@ -170,8 +171,15 @@ void Robotino::update(){
             mapa.mostrar_mapa_com_robo(Coordenadas(this->odometryX()/10,-this->odometryY()/10,-this->odometryPhi()));
 
             float dif = std::abs(this->currentSensorState.odometryX-this->odometriaX)+std::abs(this->currentSensorState.odometryY-this->odometriaY)+std::abs(this->currentSensorState.odometryPhi-this->odometriaPhi);
-            if(dif < 10){
+            static int countOdometria = 0;
+
+            if (seteiOdometria){
+                countOdometria ++;
+            }
+
+            if(dif < 10 || countOdometria == 10){
                 seteiOdometria = false;
+                countOdometria = 0;
             }
             cv::imshow("Amor", this->getImage());
             cvMoveWindow("Amor",0,500);
@@ -317,11 +325,11 @@ void Robotino::definirObjetoAlvo(int cor){
     }
 
     if(cor == TODAS){
-        int yMaxR = 999999, yMaxY = 999999, yMaxB = 999999;
+        int yMaxR =-1, yMaxY = -1, yMaxB = -1;
         Object alvoAzul, alvoVermelho, alvoAmarelo;
         for (std::vector<Object>::iterator i = objetosAzuis.begin(); i != objetosAzuis.end(); ++i)
         {
-            if(i->getYPos() > yMax){
+            if(i->getYPos() > yMaxB){
 
                 alvoAzul = *i;
                 yMaxB = i->getYPos();
@@ -329,7 +337,7 @@ void Robotino::definirObjetoAlvo(int cor){
         }
         for (std::vector<Object>::iterator i = objetosAmarelos.begin(); i != objetosAmarelos.end(); ++i)
         {
-            if(i->getYPos() > yMax){
+            if(i->getYPos() > yMaxY){
 
                 alvoAmarelo = *i;
                 yMaxY = i->getYPos();
@@ -337,7 +345,7 @@ void Robotino::definirObjetoAlvo(int cor){
         }
         for (std::vector<Object>::iterator i = objetosVermelhos.begin(); i != objetosVermelhos.end(); ++i)
         {
-            if(i->getYPos() > yMax){
+            if(i->getYPos() > yMaxR){
 
                 alvoVermelho = *i;
                 yMaxR = i->getYPos();
@@ -392,4 +400,9 @@ void Robotino::setCorDiscoDeposito (Object obj1, Object obj2) {
 
     }
 
+}
+
+void Robotino::removerCorFaltando(int cor){
+    coresFaltando.erase(std::find(coresFaltando.begin(), coresFaltando.end(), cor));
+    std::cout << "Perigo de dar caquinha\n";
 }
