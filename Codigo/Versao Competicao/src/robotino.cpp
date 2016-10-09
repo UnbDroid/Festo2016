@@ -11,7 +11,7 @@
 #define VXMAX 200
 #define VYMAX  200
 #define OMEGAMAX 40
-#define ACELERAR 1
+#define ACELERAR 1.6
 
 
 Robotino::Robotino(const char *hostname,
@@ -50,7 +50,7 @@ Robotino::Robotino(const char *hostname,
 
 void Robotino::construir_mapa(){
     FabricaDeMapas criador;
-    criador.criarMapa("Modulo3",mapa);
+    criador.criarMapa("Modulo1",mapa);
 }
 
 Robotino::~Robotino(){
@@ -167,8 +167,8 @@ float Robotino::calcDist(float x1, float x2, float y1, float y2){
 void Robotino::update(){
     try{
         if(this->isConnected()){
-            if(this->bumper() == true){
-                this->exit("Bateu");
+             if(this->bumper() == true){
+                //this->exit("Bateu");
             }
             state_machine.update();
             if(!this->waitForUpdate(0)) std::cout << "Falhou aqui\n";

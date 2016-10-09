@@ -17,11 +17,17 @@ Object::Object(string name){
 		//TODO: use "calibration mode" to find HSV min
 		//and HSV max values
 
-		setHSVmin(Scalar(85,120,20)); //(95,120,30)
+		/*setHSVmin(Scalar(85,120,20)); //(95,120,30)
 		setHSVmax(Scalar(124,256,256));
 
-		//BGR value for Green:
-		setColor(Scalar(255,0,0));
+		//BGR value for blue:
+		setColor(Scalar(255,0,0));*/
+
+		setHSVmin(Scalar(34,120,40)); // tava50
+		setHSVmax(Scalar(80,256,200));
+
+		//BGR value for green:
+		setColor(Scalar(0,255,0));
 
 		tipo = 2;
 	}

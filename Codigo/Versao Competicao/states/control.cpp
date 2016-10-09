@@ -18,6 +18,7 @@
 #include "andarpelaparedeatelinhasensor.hpp"
 #include "percorrerprocurandodiscos.hpp"
 #include "ajustarnaslinhas.hpp"
+#include "ajustarnaslinhasnavegando.hpp"
 #include <vector>
 #include <cmath>
 #include <opencv2/highgui/highgui.hpp>
@@ -55,7 +56,7 @@ float corrigirAngulo(float Angulo){
 
 void Control::execute(Robotino *robotino)
 {
-    static int objetivo_completo = 7;
+    static int objetivo_completo = 37;
     //robotino->definirDestino(0,100);
     //robotino->change_state(IrParaPonto::instance());
 
@@ -85,7 +86,7 @@ void Control::execute(Robotino *robotino)
         objetivo_completo = 50;
 
     }else if (objetivo_completo == 50) {
-        robotino->change_state(AjustarNasLinhas::instance());
+        robotino->change_state(AjustarNasLinhasNavegando::instance());
 
 
     }else if (objetivo_completo == 2){
@@ -95,7 +96,7 @@ void Control::execute(Robotino *robotino)
         objetivo_completo = 6;
     }else if (objetivo_completo == 3){
         robotino->change_state(IdentificarCor::instance());
-        objetivo_completo = 11;
+        objetivo_completo = 3;
     }else if(objetivo_completo == 11){
         robotino->definirCorAlvo(Robotino::VERMELHO);
         robotino->change_state(ProcurarCor::instance());
@@ -143,6 +144,15 @@ void Control::execute(Robotino *robotino)
 
         robotino->setThetaR(180);
         robotino->change_state(Girar::instance());
+        objetivo_completo = 322;
+    }
+    else if(objetivo_completo == 150){
+
+        robotino->definirParedeAlvo(Robotino::LESTE0);
+        robotino->setDistParede(10);
+        robotino->setDistTrasParede(15);
+        //robotino->setThetaR(180);
+    //    robotino->change_state(IrParedePelaParedeProcurandoDisco::instance());
         objetivo_completo = 322;
     }
 
@@ -200,6 +210,12 @@ void Control::execute(Robotino *robotino)
         robotino->change_state(AndarPelaParedeAteLinhaSensor::instance());
         robotino->setCarregando(false);
         objetivo_completo = 500;
+
+    }else if (objetivo_completo == 37){
+
+        robotino->definirObjetoAlvo(Robotino::TODAS);
+        robotino->change_state(SeguirCor::instance());
+        objetivo_completo = 38;
 
     }
 

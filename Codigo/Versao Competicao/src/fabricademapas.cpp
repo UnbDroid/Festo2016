@@ -220,25 +220,69 @@ void FabricaDeMapas::mapaModulo3Teste(Mapa & mapa){
 
 void FabricaDeMapas::mapaModulo1(Mapa & mapa){
 
-    mapa = Mapa(403, 403, 0.5);
-    // Paredes da arena
-    mapa.inserir_retangulo(Coordenadas(0,0), Coordenadas(403,1.5),mapa.PAREDE);
-    mapa.inserir_retangulo(Coordenadas(0,0), Coordenadas(1.5,403),mapa.PAREDE);
-    mapa.inserir_retangulo(Coordenadas(0,401.5), Coordenadas(403,403),mapa.PAREDE);
-    mapa.inserir_retangulo(Coordenadas(401.5,0), Coordenadas(403,403),mapa.PAREDE);
+    // Modulo 1 A ----------------------------------------------------------------------------------------------------------------------
 
+    mapa = Mapa(200, 403, 0.5);
+    // Paredes da arena
+    mapa.inserir_retangulo(Coordenadas(0,0), Coordenadas(200,1.5),mapa.PAREDE);
+    mapa.inserir_retangulo(Coordenadas(0,0), Coordenadas(1.5,403),mapa.PAREDE);
+    mapa.inserir_retangulo(Coordenadas(0,401.5), Coordenadas(200,403),mapa.PAREDE);
+    mapa.inserir_retangulo(Coordenadas(198.5,0), Coordenadas(200,403),mapa.PAREDE);
+
+    // Area central
+    mapa.inserir_retangulo(Coordenadas(56.5,109.5),Coordenadas(145.5,295.5),2);
+
+    // Linhas da area intermediaria 2
+    mapa.inserir_retangulo(Coordenadas(50.5,103.5),Coordenadas(151.5,109),mapa.LINHA);
+    mapa.inserir_retangulo(Coordenadas(50.5,103.5),Coordenadas(56,301.5),mapa.LINHA);
+    mapa.inserir_retangulo(Coordenadas(146,103.5),Coordenadas(151.5,301.5),mapa.LINHA);
+    mapa.inserir_retangulo(Coordenadas(50.5,296),Coordenadas(151.5,301.5),mapa.LINHA);
+
+    // Area inicial
+    mapa.inserir_retangulo(Coordenadas(2,2),Coordenadas(51,49.5),3);
+
+    // Linhas da area intermediaria 2
+    mapa.inserir_retangulo(Coordenadas(51.5,2),Coordenadas(56.5,49.5),mapa.LINHA);
+
+    // Area despejo
+    mapa.inserir_retangulo(Coordenadas(147,351.5),Coordenadas(198,401.5),4);
+
+    // Linhas da area intermediaria 2
+    mapa.inserir_retangulo(Coordenadas(141.5,351.5),Coordenadas(146.5,401.5),mapa.LINHA);
+
+     // Modulo 1 B ----------------------------------------------------------------------------------------------------------------------
+    /*
+    mapa = Mapa(203, 403, 0.5);
+    // Paredes da arena
+    mapa.inserir_retangulo(Coordenadas(0,0), Coordenadas(203,1.5),mapa.PAREDE);
+    mapa.inserir_retangulo(Coordenadas(0,0), Coordenadas(1.5,403),mapa.PAREDE);
+    mapa.inserir_retangulo(Coordenadas(0,401.5), Coordenadas(203,403),mapa.PAREDE);
+    mapa.inserir_retangulo(Coordenadas(201.5,0), Coordenadas(203,403),mapa.PAREDE);
+    */
 
 
 }
 
 void FabricaDeMapas::mapaModulo2(Mapa & mapa){
 
-    mapa = Mapa(403, 403, 0.5);
+ // Modulo 2 A ----------------------------------------------------------------------------------------------------------------------
+    /*
+    mapa = Mapa(200, 403, 0.5);
     // Paredes da arena
-    mapa.inserir_retangulo(Coordenadas(0,0), Coordenadas(403,1.5),mapa.PAREDE);
+    mapa.inserir_retangulo(Coordenadas(0,0), Coordenadas(200,1.5),mapa.PAREDE);
     mapa.inserir_retangulo(Coordenadas(0,0), Coordenadas(1.5,403),mapa.PAREDE);
-    mapa.inserir_retangulo(Coordenadas(0,401.5), Coordenadas(403,403),mapa.PAREDE);
-    mapa.inserir_retangulo(Coordenadas(401.5,0), Coordenadas(403,403),mapa.PAREDE);
+    mapa.inserir_retangulo(Coordenadas(0,401.5), Coordenadas(200,403),mapa.PAREDE);
+    mapa.inserir_retangulo(Coordenadas(198.5,0), Coordenadas(200,403),mapa.PAREDE);
+    */
+     // Modulo 2 B ----------------------------------------------------------------------------------------------------------------------
+
+    mapa = Mapa(203, 403, 0.5);
+    // Paredes da arena
+    mapa.inserir_retangulo(Coordenadas(0,0), Coordenadas(203,1.5),mapa.PAREDE);
+    mapa.inserir_retangulo(Coordenadas(0,0), Coordenadas(1.5,403),mapa.PAREDE);
+    mapa.inserir_retangulo(Coordenadas(0,401.5), Coordenadas(203,403),mapa.PAREDE);
+    mapa.inserir_retangulo(Coordenadas(201.5,0), Coordenadas(203,403),mapa.PAREDE);
+
 
 }
 

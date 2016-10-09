@@ -4,6 +4,7 @@
 #include <cmath>
 #include "control.hpp"
 #include "modulo1.hpp"
+#include "modulo1_V3.hpp"
 
 #define limiar 0.5
 #define R 20
@@ -71,7 +72,8 @@ void AjusteInicial::execute(Robotino *robotino)
         std::cout << "Distância da esquerda: " << distancia_da_esquerda << "\n";
         std::cout << "Distância de tras: " << distancia_de_tras << "\n";
         robotino->setOdometry(distancia_de_tras*10+15,-(distancia_da_esquerda*10+15),0);
-        robotino->change_state(Modulo1::instance());
+        //robotino->change_state(Modulo1::instance());
+        robotino->change_state(Modulo1_V3::instance());
     }
 
 }

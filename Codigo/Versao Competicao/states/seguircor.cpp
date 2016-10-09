@@ -10,8 +10,8 @@
 #define KiY 0.2*0
 
 #define limiarAprox 25
-#define limiarAprox2 7
-#define limiarAprox3 9
+#define limiarAprox2 6
+#define limiarAprox3 7
 #define limiarAproxLim 30
 
 #define Kpir 10
@@ -221,7 +221,7 @@ void SeguirCor::execute(Robotino *robotino)
 
     // Calculo das velocidades de acordo com cada etapa
     if(etapasAprox == 0){
-		w  = KpX*erroX;
+	w  = KpX*erroX;
     	Vx   = KpY*erroY;
     }else if(etapasAprox == 1){
     	w = 0;

@@ -38,7 +38,7 @@ void AjustarNasLinhasNavegando::execute(Robotino *robotino)
 {
 
     Mat img, cdst;
-    int min_Hough = 70, dist_Hough = 50;
+    int min_Hough = 70, dist_Hough = 150; //50
     int min_canny =150 , max_canny = 3*min_canny;
     float angLinhas = 0;
     float xMedio = 0;
@@ -59,8 +59,8 @@ void AjustarNasLinhasNavegando::execute(Robotino *robotino)
     Canny( cdst, cdst, (double)min_canny, (double)max_canny, 3 );
     convertScaleAbs(cdst, cdst);
 
-    //cv::imshow("Canny",cdst);
-    //cv::waitKey(1);
+    cv::imshow("Canny",cdst);
+    cv::waitKey(1);
 
     threshold(cdst, cdst, (double)5, (double)255, CV_THRESH_BINARY);
 
@@ -130,13 +130,13 @@ void AjustarNasLinhasNavegando::execute(Robotino *robotino)
     std::cout<<"Soma dos erros: " << erros <<std::endl;
 
     if(erros < limiarParada){
-        robotino->setVelocity(0,0,0);
+        //robotino->setVelocity(0,0,0);
         usleep(500000);
         n = 0;
 
         robotino->change_state(robotino->previous_state());
     }else{
-        robotino->setVelocity(Vx,Vy,w);
+        //robotino->setVelocity(Vx,Vy,w);
     }
 
     cv::imshow("Linha", cdst);

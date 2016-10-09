@@ -57,7 +57,7 @@ void Modulo1_V2::execute(Robotino *robotino)
 
 
     if(objetivo_completo == 0){
-        robotino->adicionarCorFaltando(Robotino::AZUL);
+       // robotino->adicionarCorFaltando(Robotino::AZUL);
         robotino->adicionarCorFaltando(Robotino::AZUL);
         robotino->adicionarCorFaltando(Robotino::VERMELHO);
         robotino->adicionarCorFaltando(Robotino::VERMELHO);
@@ -69,7 +69,7 @@ void Modulo1_V2::execute(Robotino *robotino)
         robotino->change_state(IrParaParede::instance());
         objetivo_completo = 1;
     }else if(objetivo_completo == 1){
-        Coordenadas destino = robotino->pegarCoordenadaArea(Robotino::AREA3);
+        Coordenadas destino = robotino->pegarCoordenadaArea(Robotino::AREA1);
         robotino->definirDestino(destino.get_x()-20, robotino->odometryY()/10);
         robotino->change_state(IrParaPonto::instance());
 
