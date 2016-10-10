@@ -17,6 +17,9 @@ TARGET = $(BUILD)/$(NOME_EXECUTAVEL)
 
 all: $(TARGET)
 
+explosion:
+	echo "Explodiu!"
+
 clean :
 	rm -f $(OBJ_FILES) $(TARGET)
 	rm -r -f $(BUILD)

@@ -13,6 +13,7 @@
 #define PI 3.14159265
 #define Kp 5
 #define Ki 1
+#define minFrames 3
 
 //*****************************************************************************************************************
 // IrParedePelaParedeProcurandoDisco
@@ -49,6 +50,7 @@ void IrParedePelaParedeProcurandoDisco::execute(Robotino *robotino)
     static bool pronto = false;
     static bool entrei = true;
     static State<Robotino> * voltar;
+    static int contadorFramesAmarelos = 0, contadorFramesAzuis = 0, contadorFramesVermelhos = 0;
 
     static float a = std::sin(60*PI/180)/std::sin(80*PI/180);
     static float cos20 = std::cos(20*PI/180);
@@ -272,16 +274,42 @@ void IrParedePelaParedeProcurandoDisco::execute(Robotino *robotino)
     }
 
     if (robotino->objetosAmarelos.size() > 0 || robotino->objetosVermelhos.size() > 0 || robotino->objetosAzuis.size() > 0 ) {
-        robotino->definirObjetoAlvo(Robotino::TODAS);
-        robotino->change_state(voltar);
-        girei = false;
-        robotino->setNaoDevoGirarParede(girei);
-        ajuste = false;
-        pronto = false;
-        erro_intDist = 0;
-        erro_int = 0;
-        entrei = true;
-        robotino->setVelocity(0,0,0);
+
+        if(robotino->objetosAmarelos.size() > 0){
+            contadorFramesAmarelos++;
+        }else{
+            contadorFramesAmarelos = 0;
+        }
+
+        if(robotino->objetosVermelhos.size() > 0){
+            contadorFramesVermelhos++;
+        }else{
+            contadorFramesVermelhos = 0;
+
+        }
+
+        if(robotino->objetosAzuis.size() > 0){
+            contadorFramesAzuis++;
+        }else{
+            contadorFramesAzuis = 0;
+        }
+
+
+        if(contadorFramesAzuis > minFrames || contadorFramesAmarelos > minFrames || contadorFramesVermelhos > minFrames){
+            robotino->definirObjetoAlvo(Robotino::TODAS);
+            robotino->change_state(voltar);
+            girei = false;
+            robotino->setNaoDevoGirarParede(girei);
+            ajuste = false;
+            pronto = false;
+            erro_intDist = 0;
+            erro_int = 0;
+            entrei = true;
+            contadorFramesAzuis = 0;
+            contadorFramesAmarelos  = 0;
+            contadorFramesVermelhos = 0;
+            robotino->setVelocity(0,0,0);
+        }
     }
 
 }
