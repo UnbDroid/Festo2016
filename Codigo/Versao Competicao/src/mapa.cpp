@@ -45,7 +45,7 @@ void Mapa::definir_cores(){
 	cores[5] = Scalar(255,255,0);
 	cores[6] = Scalar(0,255,170);
 	cores[7] = Scalar(52,135,0);
-	cores[8] = Scalar(89,40,0);
+	cores[8] = Scalar(120,40,0);
 	cores[9] = Scalar(20,200,180);
 }
 

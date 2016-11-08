@@ -13,7 +13,7 @@
 #define PI 3.14159265
 #define Kp 5
 #define Ki 1
-#define minFrames 3
+#define minFrames 1
 
 //*****************************************************************************************************************
 // IrParedePelaParedeProcurandoDisco
@@ -261,7 +261,7 @@ void IrParedePelaParedeProcurandoDisco::execute(Robotino *robotino)
                 robotino->setOdometry(robotino->odometryX(),-((robotino->getLarguraMapa()) * 10-(distancia_da_direita*10+15)),0);
             }
             if (paredeAlvo == Robotino::NORTE90) {
-                robotino->setOdometry((robotino->getAlturaMapa() - (distancia_da_direita*10+15)),robotino->odometryY(),90);
+                robotino->setOdometry((robotino->getAlturaMapa()*10 - (distancia_da_direita*10+15)),robotino->odometryY(),90);
             }
             if (paredeAlvo == Robotino::OESTE180) {
                 robotino->setOdometry(robotino->odometryX(),-((distancia_da_direita*10+15)),180);
@@ -276,24 +276,33 @@ void IrParedePelaParedeProcurandoDisco::execute(Robotino *robotino)
     if (robotino->objetosAmarelos.size() > 0 || robotino->objetosVermelhos.size() > 0 || robotino->objetosAzuis.size() > 0 ) {
 
         if(robotino->objetosAmarelos.size() > 0){
+            std::cout << "Vi um bumbum amaerlo \n";
             contadorFramesAmarelos++;
         }else{
+            std::cout << "Nao vi um bumbum amaerlo \n";
             contadorFramesAmarelos = 0;
         }
 
         if(robotino->objetosVermelhos.size() > 0){
+            std::cout << "Vi um bumbum vermelho \n";
             contadorFramesVermelhos++;
         }else{
+            std::cout << "Nao vi um bumbum vermelho \n";
             contadorFramesVermelhos = 0;
 
         }
 
         if(robotino->objetosAzuis.size() > 0){
+            std::cout << "Vi um bumbum azuis\n";
             contadorFramesAzuis++;
         }else{
+            std::cout << "Nap vi um bumbum azuis \n";
             contadorFramesAzuis = 0;
         }
 
+        std::cout << "Seu Bumbum Amarelo: "<< contadorFramesAmarelos <<"\n";
+        std::cout << "Seu Bumbum Azul: "<< contadorFramesAzuis <<"\n";
+        std::cout << "Seu Bumbum Vermelho: "<< contadorFramesVermelhos <<"\n";
 
         if(contadorFramesAzuis > minFrames || contadorFramesAmarelos > minFrames || contadorFramesVermelhos > minFrames){
             robotino->definirObjetoAlvo(Robotino::TODAS);

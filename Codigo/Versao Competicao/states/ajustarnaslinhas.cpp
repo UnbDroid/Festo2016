@@ -10,10 +10,10 @@
 #define Kpx 2
 #define Kpy 1.5
 #define KpW 4
-#define yRef 220
+#define yRef 160
 #define xRef 160
 #define N 6
-#define limiarParada 12
+#define limiarParada 1.5
 //*****************************************************************************************************************
 // AjustarNasLinhas
 //*****************************************************************************************************************
@@ -37,7 +37,7 @@ void AjustarNasLinhas::execute(Robotino *robotino)
 {
 
     Mat img, cdst;
-    int min_Hough = 70, dist_Hough = 50;
+    int min_Hough = 45, dist_Hough = 150; // 70, 50
     int min_canny =150 , max_canny = 3*min_canny;
     float angLinhas = 0;
     float xMedio = 0;
@@ -118,10 +118,11 @@ void AjustarNasLinhas::execute(Robotino *robotino)
     Vy = Kpy*erro_y;
     w = KpW*erro_theta;
 
-    erros = abs(erro_x)+abs(erro_y)+abs(erro_theta);
+    //erros = abs(erro_x)+abs(erro_y)+abs(erro_theta);
+
+    erros = abs(erro_y)+abs(erro_theta);
 
     std::cout<<"Soma dos erros: " << erros <<std::endl;
-
     if(erros < limiarParada){
         robotino->setVelocity(0,0,0);
         usleep(500000);
@@ -129,7 +130,10 @@ void AjustarNasLinhas::execute(Robotino *robotino)
 
         robotino->change_state(robotino->previous_state());
     }else{
-        robotino->setVelocity(Vx,Vy,w);
+        //robotino->setVelocity(Vx,Vy,w);
+        robotino->setVelocity(0,Vy,w);
+    }if (std::isnan(erros)) {
+        robotino->setVelocity(-50,0,0);
     }
 
     cv::imshow("Linha", cdst);

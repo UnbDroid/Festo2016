@@ -266,85 +266,137 @@ void FabricaDeMapas::mapaModulo1(Mapa & mapa){
 void FabricaDeMapas::mapaModulo2(Mapa & mapa){
 
  // Modulo 2 A ----------------------------------------------------------------------------------------------------------------------
-    /*
+
     mapa = Mapa(200, 403, 0.5);
     // Paredes da arena
     mapa.inserir_retangulo(Coordenadas(0,0), Coordenadas(200,1.5),mapa.PAREDE);
     mapa.inserir_retangulo(Coordenadas(0,0), Coordenadas(1.5,403),mapa.PAREDE);
     mapa.inserir_retangulo(Coordenadas(0,401.5), Coordenadas(200,403),mapa.PAREDE);
     mapa.inserir_retangulo(Coordenadas(198.5,0), Coordenadas(200,403),mapa.PAREDE);
-    */
-     // Modulo 2 B ----------------------------------------------------------------------------------------------------------------------
 
+    // Area de inicio
+    mapa.inserir_retangulo(Coordenadas(2,177),Coordenadas(51.5,226.5),2);
+
+    // Linhas da area de inicio
+    mapa.inserir_retangulo(Coordenadas(2,171.5),Coordenadas(51.5,176.5),mapa.LINHA);
+    mapa.inserir_retangulo(Coordenadas(2,227),Coordenadas(51.5,232),mapa.LINHA);
+
+    //Area de deposito 1
+    mapa.inserir_retangulo(Coordenadas(119,2),Coordenadas(151.5,34.5),3);
+
+    // Linhas da area de deposito 1
+    mapa.inserir_retangulo(Coordenadas(36,35),Coordenadas(157,40),mapa.LINHA);
+    mapa.inserir_retangulo(Coordenadas(152,2),Coordenadas(157,40),mapa.LINHA);
+
+    //Area de deposito 2
+    mapa.inserir_retangulo(Coordenadas(80,2),Coordenadas(113,34.5),4);
+
+    // Linhas da area de deposito 2
+    mapa.inserir_retangulo(Coordenadas(113.5,2),Coordenadas(118.5,40),mapa.LINHA);
+    mapa.inserir_retangulo(Coordenadas(74.5,2),Coordenadas(79.5,40),mapa.LINHA);
+
+    //Area de deposito 3
+    mapa.inserir_retangulo(Coordenadas(41.5,2),Coordenadas(74,34.5),5);
+
+    // Linhas da area de deposito 3
+    mapa.inserir_retangulo(Coordenadas(35.5,2),Coordenadas(41,40),mapa.LINHA);
+
+    // Area de retirada 1
+    mapa.inserir_retangulo(Coordenadas(151.5,241.5),Coordenadas(198,290.5),6);
+
+    // Linhas da area de retirada 1
+   mapa.inserir_retangulo(Coordenadas(151.5,236),Coordenadas(198,241),mapa.LINHA);
+   mapa.inserir_retangulo(Coordenadas(151.5,291),Coordenadas(198,296),mapa.LINHA);
+
+    // Area de retirada 2
+    mapa.inserir_retangulo(Coordenadas(151.5,296.5),Coordenadas(198,340.5),7);
+
+    // Linhas da area de retirada 2
+    mapa.inserir_retangulo(Coordenadas(151.5,341),Coordenadas(198,346),mapa.LINHA);
+
+    // Area de retirada 3
+    mapa.inserir_retangulo(Coordenadas(100.5,346.5),Coordenadas(150.5,401.5),8);
+
+    // Linhas da area de retirada 3
+    mapa.inserir_retangulo(Coordenadas(95,346.5),Coordenadas(100,401.5),mapa.LINHA);
+    mapa.inserir_retangulo(Coordenadas(151,346.5),Coordenadas(156,401.5),mapa.LINHA);
+
+
+
+     // Modulo 2 B ----------------------------------------------------------------------------------------------------------------------
+    /*
     mapa = Mapa(203, 403, 0.5);
     // Paredes da arena
     mapa.inserir_retangulo(Coordenadas(0,0), Coordenadas(203,1.5),mapa.PAREDE);
     mapa.inserir_retangulo(Coordenadas(0,0), Coordenadas(1.5,403),mapa.PAREDE);
     mapa.inserir_retangulo(Coordenadas(0,401.5), Coordenadas(203,403),mapa.PAREDE);
     mapa.inserir_retangulo(Coordenadas(201.5,0), Coordenadas(203,403),mapa.PAREDE);
-
+    */
 
 }
 
 void FabricaDeMapas::mapaModulo3(Mapa & mapa){
 
-    mapa = Mapa(403, 403, 0.5);
+    mapa = Mapa(200, 403, 0.5);
     // Paredes da arena
-    mapa.inserir_retangulo(Coordenadas(0,0), Coordenadas(403,1.5),mapa.PAREDE);
+    mapa.inserir_retangulo(Coordenadas(0,0), Coordenadas(200,1.5),mapa.PAREDE);
     mapa.inserir_retangulo(Coordenadas(0,0), Coordenadas(1.5,403),mapa.PAREDE);
-    mapa.inserir_retangulo(Coordenadas(0,401.5), Coordenadas(403,403),mapa.PAREDE);
-    mapa.inserir_retangulo(Coordenadas(401.5,0), Coordenadas(403,403),mapa.PAREDE);
+    mapa.inserir_retangulo(Coordenadas(0,401.5), Coordenadas(200,403),mapa.PAREDE);
+    mapa.inserir_retangulo(Coordenadas(198.5,0), Coordenadas(200,403),mapa.PAREDE);
 
     // Area de inicio
-     mapa.inserir_retangulo(Coordenadas(341.5,111.5),Coordenadas(401.5,169.5),2);
+     mapa.inserir_retangulo(Coordenadas(150.5,173.5),Coordenadas(198,222.5),2);
 
     // Linhas da area de inicio
-    mapa.inserir_retangulo(Coordenadas(339,109),Coordenadas(341,172),mapa.LINHA);
-    mapa.inserir_retangulo(Coordenadas(339,109),Coordenadas(401.5,111),mapa.LINHA);
-    mapa.inserir_retangulo(Coordenadas(339,170),Coordenadas(401.5,172),mapa.LINHA);
+    mapa.inserir_retangulo(Coordenadas(150.5,168),Coordenadas(198,173),mapa.LINHA);
+    mapa.inserir_retangulo(Coordenadas(150.5,223),Coordenadas(198,228),mapa.LINHA);
 
 
       // Area de deposito 1
-    mapa.inserir_retangulo(Coordenadas(2,2),Coordenadas(71.5,66),3);
+    mapa.inserir_retangulo(Coordenadas(2,56),Coordenadas(51,105.5),3);
 
     // Linhas da area de deposito 1
-    mapa.inserir_retangulo(Coordenadas(72,2),Coordenadas(74,400),mapa.LINHA);
-    mapa.inserir_retangulo(Coordenadas(2,66.5),Coordenadas(71.5,68.5),mapa.LINHA);
+    mapa.inserir_retangulo(Coordenadas(51.5,50.5),Coordenadas(55.5,386),mapa.LINHA);
+    mapa.inserir_retangulo(Coordenadas(2,50.5),Coordenadas(51.5,55.5),mapa.LINHA);
 
     // Area de deposito 2
-    mapa.inserir_retangulo(Coordenadas(2,69),Coordenadas(71.5,132),4);
+    mapa.inserir_retangulo(Coordenadas(2,111.5),Coordenadas(51,160.5),4);
 
     // Linhas da area de deposito 2
-    mapa.inserir_retangulo(Coordenadas(2,132.5),Coordenadas(71.5,134.5),mapa.LINHA);
+    mapa.inserir_retangulo(Coordenadas(2,106),Coordenadas(51.5,111),mapa.LINHA);
 
     // Area de deposito 3
-    mapa.inserir_retangulo(Coordenadas(2,135),Coordenadas(71.5,198),5);
+    mapa.inserir_retangulo(Coordenadas(2,166.5),Coordenadas(51,215.5),5);
 
     // Linhas da area de deposito 3
-    mapa.inserir_retangulo(Coordenadas(2,198.5),Coordenadas(71.5,200.5),mapa.LINHA);
+    mapa.inserir_retangulo(Coordenadas(2,161),Coordenadas(51.5,166),mapa.LINHA);
 
         // Area de deposito 4
-    mapa.inserir_retangulo(Coordenadas(2,201),Coordenadas(71.5,264),6);
+    mapa.inserir_retangulo(Coordenadas(2,221.5),Coordenadas(51,270.5),6);
 
     // Linhas da area de deposito 4
-    mapa.inserir_retangulo(Coordenadas(2,264.5),Coordenadas(71.5,266.5),mapa.LINHA);
+    mapa.inserir_retangulo(Coordenadas(2,216),Coordenadas(51.5,221),mapa.LINHA);
 
         // Area de deposito 5
-    mapa.inserir_retangulo(Coordenadas(2,267),Coordenadas(71.5,330),7);
+    mapa.inserir_retangulo(Coordenadas(2,276.5),Coordenadas(51,325.5),7);
 
     // Linhas da area de deposito 5
-    mapa.inserir_retangulo(Coordenadas(2,330.5),Coordenadas(71.5,332.5),mapa.LINHA);
+    mapa.inserir_retangulo(Coordenadas(2,271),Coordenadas(51.5,276),mapa.LINHA);
 
         // Area de deposito 6
-    mapa.inserir_retangulo(Coordenadas(2,333),Coordenadas(71.5,400),8);
+    mapa.inserir_retangulo(Coordenadas(2,331.5),Coordenadas(51,380.5),8);
+
+     // Linhas da area de deposito 6
+    mapa.inserir_retangulo(Coordenadas(2,326),Coordenadas(51.5,331),mapa.LINHA);
+    mapa.inserir_retangulo(Coordenadas(2,381),Coordenadas(51.5,386),mapa.LINHA);
 
     // Area Intermediaria
-    mapa.inserir_retangulo(Coordenadas(203,2),Coordenadas(263,61.5),9);
+    mapa.inserir_retangulo(Coordenadas(87,2),Coordenadas(159,34),9);
 
     // Linhas da area de deposito 5
-    mapa.inserir_retangulo(Coordenadas(200.5,2),Coordenadas(202.5,64),mapa.LINHA);
-    mapa.inserir_retangulo(Coordenadas(200.5, 62),Coordenadas(265.5,64),mapa.LINHA);
-    mapa.inserir_retangulo(Coordenadas(263.5,2),Coordenadas(265.5,64),mapa.LINHA);
+    mapa.inserir_retangulo(Coordenadas(81.5,2),Coordenadas(86.5,39.5),mapa.LINHA);
+    mapa.inserir_retangulo(Coordenadas(81.5, 34.5),Coordenadas(164.5,39.5),mapa.LINHA);
+    mapa.inserir_retangulo(Coordenadas(159.5,2),Coordenadas(164.5,39.5),mapa.LINHA);
 
 
 }

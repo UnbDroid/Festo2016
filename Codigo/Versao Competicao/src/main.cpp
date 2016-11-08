@@ -23,8 +23,11 @@
 #include "modulo1.hpp"
 #include "modulo1_V3.hpp"
 #include "modulo2.hpp"
-#include "modulo2_V2.hpp"
+#include "modulo2_V3.hpp"
+#include "modulo2_V3Turbo.hpp"
 #include "modulo3.hpp"
+#include "modulo3testar.hpp"
+#include "modulo3louco.hpp"
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/opencv.hpp>
 #include "fabricademapas.hpp"
@@ -50,7 +53,7 @@ int main( int argc, char **argv )
 
 	/*FabricaDeMapas fab;
 	Mapa mapa;
-	fab.criarMapa("Modulo1",mapa);
+	fab.criarMapa("Modulo3",mapa);
 	mapa.mostrar_mapa();
 	waitKey();*/
 	try{
@@ -60,7 +63,7 @@ int main( int argc, char **argv )
 			hostname = argv[1];
 		}
 		//Banana
-		Robotino robo(hostname.c_str(), AjusteInicialEsquerda::instance(), Coordenadas(25,-25,0));//Coordenadas(371,-141,180));//Coordenadas(173.5,-173.5,90));// Modulo 1 Coordenadas(30,-30,0));// Modulo 3 Coordenadas(173.5,-100,180)); // Modulo 2 Coordenadas(173.5,-173.5,90)); : modulo 2
+		Robotino robo(hostname.c_str(), Modulo3Testar::instance(), Coordenadas(174.,-198,180));//Coordenadas(371,-141,180));//Coordenadas(173.5,-173.5,90));// Modulo 1 Coordenadas(30,-30,0));// Modulo 3 Coordenadas(173.5,-100,180)); // Modulo 2 Coordenadas(173.5,-173.5,90)); : modulo 2
 
 		while(true){
 			try{

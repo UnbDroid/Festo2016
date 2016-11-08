@@ -11,7 +11,7 @@
 #define Kpy 10
 #define Kiy 0
 #define dt 0.01
-#define numeroLinhasMin 2
+#define numeroLinhasMin 1
 
 //*****************************************************************************************************************
 // AndarPelaParedeAteLinha
@@ -63,6 +63,23 @@ void AndarPelaParedeAteLinha::execute(Robotino *robotino)
 
     distParede = robotino->getRefDistParede();
     distParede += R;
+
+    img = robotino->getImage();
+
+    cvtColor( img, cdst, CV_BGR2GRAY );
+
+    Canny( cdst, cdst, (double)min_canny, (double)max_canny, 3 );
+    convertScaleAbs(cdst, cdst);
+
+    //cv::imshow("Canny",cdst);
+    //cv::waitKey(1);
+
+    threshold(cdst, cdst, (double)5, (double)255, CV_THRESH_BINARY);
+
+    HoughLinesP(cdst, lines, 1, CV_PI/180, min_Hough, min_Hough, dist_Hough );
+
+    cvtColor( cdst, cdst, CV_GRAY2BGR );
+
 
     if (paredeAlvo == Robotino::NORTEN90  || paredeAlvo == Robotino::OESTE0 || paredeAlvo == Robotino::SUL90 || paredeAlvo == Robotino::LESTE180){
 
@@ -123,7 +140,7 @@ void AndarPelaParedeAteLinha::execute(Robotino *robotino)
                 robotino->setOdometry(robotino->odometryX(),-((robotino->getLarguraMapa()) * 10-(distancia_da_direita*10+15)),0);
             }
             if (paredeAlvo == Robotino::NORTE90) {
-                robotino->setOdometry((robotino->getAlturaMapa() - (distancia_da_direita*10+15)),robotino->odometryY(),90);
+                robotino->setOdometry((robotino->getAlturaMapa()*10 - (distancia_da_direita*10+15)),robotino->odometryY(),90);
             }
             if (paredeAlvo == Robotino::OESTE180) {
                 robotino->setOdometry(robotino->odometryX(),-((distancia_da_direita*10+15)),180);
@@ -131,21 +148,7 @@ void AndarPelaParedeAteLinha::execute(Robotino *robotino)
         }
     }
 
-    img = robotino->getImage();
 
-    cvtColor( img, cdst, CV_BGR2GRAY );
-
-    Canny( cdst, cdst, (double)min_canny, (double)max_canny, 3 );
-    convertScaleAbs(cdst, cdst);
-
-    //cv::imshow("Canny",cdst);
-    //cv::waitKey(1);
-
-    threshold(cdst, cdst, (double)5, (double)255, CV_THRESH_BINARY);
-
-    HoughLinesP(cdst, lines, 1, CV_PI/180, min_Hough, min_Hough, dist_Hough );
-
-    cvtColor( cdst, cdst, CV_GRAY2BGR );
 
     if(distParede > 99){
         robotino->setVelocity(Vx,0,0);
@@ -155,9 +158,9 @@ void AndarPelaParedeAteLinha::execute(Robotino *robotino)
 
 for( size_t i = 0; i < lines.size(); i++ ){
       Vec4i l = lines[i];
-      if (l[3]  > 100 || l[1]  > 100){
+      //if (l[3]  > 100 || l[1]  > 100){
         num_linha++;
-      }
+      //}
     }
 
     if (num_linha > numeroLinhasMin){

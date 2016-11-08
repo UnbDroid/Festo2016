@@ -20,9 +20,9 @@
 #define AumentoDisco 1.0
 #define DiminuiDisco 1.0
 #define SomaDisco 0
-#define Aumento 1
-#define Diminui 1
-#define Soma 0
+#define Aumento 0.95
+#define Diminui 1.05
+#define Soma -1.5
 
 //*****************************************************************************************************************
 // Girar
@@ -191,7 +191,7 @@ void Girar::execute(Robotino *robotino){
                         }else if(robotino->thetaR < 0){
                             fatorM = Aumento;
                         }else{
-                            fatorAdd = 6;
+                            fatorAdd = Soma;
                         }
                     }else{
                         if(robotino->thetaR > 0){
@@ -217,7 +217,7 @@ void Girar::execute(Robotino *robotino){
                         }else if(robotino->thetaR < 0){
                             fatorM = Diminui;
                         }else{
-                            fatorAdd = 6;
+                            fatorAdd = Soma;
                         }
                     }else{
                         if(robotino->thetaR > 0){

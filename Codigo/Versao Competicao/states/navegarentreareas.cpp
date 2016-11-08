@@ -17,6 +17,11 @@ NavegarEntreAreas::NavegarEntreAreas() {}
 
 NavegarEntreAreas::~NavegarEntreAreas() {}
 
+float coordenadaAreaLouco(int area, Robotino * robotino){
+    Coordenadas coord = robotino->pegarCoordenadaArea(area);
+    return -coord.get_y()*10;
+}
+
 void NavegarEntreAreas::enter(Robotino *robotino)
 {
     std::cout << "Entrando no estado NavegarEntreAreas...\n";
@@ -49,6 +54,7 @@ void NavegarEntreAreas::execute(Robotino *robotino)
 
         if (depositoAtual + contador <= depositoDestino) {
             if  (!chegueiPonto){
+                robotino->setOdometry(robotino->odometryX(), coordenadaAreaLouco(depositoAtual+contador-1,robotino), 180);
                 Coordenadas destino = robotino->pegarCoordenadaArea(depositoAtual+contador);
                 robotino->definirDestino(robotino->odometryX()/10, -(destino.get_y()));
                 robotino->change_state(IrParaPonto::instance());
@@ -65,6 +71,7 @@ void NavegarEntreAreas::execute(Robotino *robotino)
 
         if (depositoAtual - contador >= depositoDestino) {
             if  (!chegueiPonto){
+                robotino->setOdometry(robotino->odometryX(), coordenadaAreaLouco(depositoAtual-(contador-1),robotino), 180);
                 Coordenadas destino = robotino->pegarCoordenadaArea(depositoAtual-contador);
                 robotino->definirDestino(robotino->odometryX()/10, -(destino.get_y()));
                 robotino->setCarregando(false);
@@ -93,6 +100,9 @@ void NavegarEntreAreas::execute(Robotino *robotino)
         entrei = true;
         chegueiPonto = false;
         contador = 1;
+
+
+
     }
 }
 

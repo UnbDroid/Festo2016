@@ -9,10 +9,10 @@
 #define KpY 2.5
 #define KiY 0.2*0
 
-#define limiarAprox 25
-#define limiarAprox2 6
-#define limiarAprox3 7
-#define limiarAproxLim 30
+#define limiarAprox 30
+#define limiarAprox2 8
+#define limiarAprox3 6.1
+#define limiarAproxLim 35
 
 #define Kpir 10
 #define Kpir2 20
@@ -212,7 +212,7 @@ void SeguirCor::execute(Robotino *robotino)
     if(robotino->irDistance(Robotino::IR_FRONTAL) < limiarAprox && (etapasAprox == 0 || etapasAprox == 1)){
     	etapasAprox = 1;
     }if(robotino->irDistance(Robotino::IR_FRONTAL) < limiarAprox2 && (etapasAprox == 1 || etapasAprox == 2)){
-    	etapasAprox = 2;
+    	etapasAprox = 3; // Mudou aqui, tirou a etapa 2
     }if(robotino->irDistance(Robotino::IR_FRONTAL) > limiarAprox3 &&  etapasAprox == 2){
     	etapasAprox = 3;
     }if(robotino->irDistance(Robotino::IR_FRONTAL) > limiarAproxLim){ //&& etapasAprox == 2){

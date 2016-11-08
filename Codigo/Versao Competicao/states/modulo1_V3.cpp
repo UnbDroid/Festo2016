@@ -100,11 +100,13 @@ void Modulo1_V3::execute(Robotino *robotino)
     else if(objetivo_completo == 1){
 
         robotino->change_state(SeguirCor::instance());
-        if (discos_entregues == 0){
-            objetivo_completo = 3;
-        }else {
-            objetivo_completo = 6;
-        }
+
+        objetivo_completo = 6;
+        // if (discos_entregues == 0){
+        //     objetivo_completo = 3;
+        // }else {
+        //     objetivo_completo = 6;
+        // }
 
     }
 
@@ -234,6 +236,9 @@ void Modulo1_V3::execute(Robotino *robotino)
     else if(objetivo_completo == 17){
 
         robotino->setVelocity(-100,0,0);
+        if(robotino->bumper() == true){
+                robotino->exit("Terminou");
+        }
 
     }
 }

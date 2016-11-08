@@ -233,22 +233,22 @@ if(objetivo_completo == 0){
 
     else if(objetivo_completo == 3){
 
-        robotino->definirParedeAlvo(Robotino::LESTE180);
-        robotino->setDistParede(6);
+        robotino->definirParedeAlvo(Robotino::SUL90);
+        robotino->setDistParede(10);
         robotino->change_state(IrParaParede::instance());
         objetivo_completo = 4;
 
     }else if(objetivo_completo == 4){
 
-        robotino->definirParedeAlvo(Robotino::LESTE180);
-        robotino->setDistParede(6);
+        robotino->definirParedeAlvo(Robotino::SUL90);
+        robotino->setDistParede(15);
         robotino->change_state(AndarPelaParedeAteLinha::instance());
         objetivo_completo = 5;
 
     }else if(objetivo_completo == 5){
 
         robotino->change_state(AjustarNasLinhas::instance());
-        objetivo_completo =6;
+        objetivo_completo = 6;
 
     }else if (objetivo_completo == 6){
 
@@ -256,21 +256,21 @@ if(objetivo_completo == 0){
         robotino->change_state(ContarLinhas::instance());
         objetivo_completo = 7;
 
-    }else if (objetivo_completo == 7){
+    }else if (objetivo_completo == 8){
 
-        robotino->change_state(IdentificarCor::instance());
-        objetivo_completo = 8;
+        //robotino->change_state(IdentificarCor::instance());
+        //objetivo_completo = 8;
 
     }else if (objetivo_completo == 8){
 
         std::cout << "Disco 1 da cor: " << robotino->area3disco1.getType() << "\n";
         std::cout << "Disco 2 da cor: " << robotino->area3disco2.getType() << "\n";
-        identificarCorFaltandoArea3(robotino);
-        objetivo_completo = 9;
+        //identificarCorFaltandoArea3(robotino);
+        objetivo_completo = 10;
 
     }else if (objetivo_completo == 9){
 
-        std::cout << "Esta faltando o disco da cor: " << robotino->area3discoFaltando.getType() << "\n";
+        //std::cout << "Esta faltando o disco da cor: " << robotino->area3discoFaltando.getType() << "\n";
         objetivo_completo = 10;
 
     }
@@ -279,14 +279,14 @@ if(objetivo_completo == 0){
 
     else if (objetivo_completo == 10) {
 
-        robotino->definirDestino((robotino->odometryX())/10+30, robotino->odometryY()/10);
+        robotino->definirDestino((robotino->odometryX())/10, robotino->odometryY()/10 - 50);
         robotino->change_state(IrParaPonto::instance());
         objetivo_completo = 11;
 
     }else if (objetivo_completo == 11){
 
         Coordenadas destino = robotino->pegarCoordenadaArea(Robotino::AREA3);
-        robotino->definirDestino(robotino->odometryX()/10, -(destino.get_y()));
+        robotino->definirDestino(destino.get_x(), robotino->odometryY()/10);
         std::cout << "Destino: " << destino << std::endl;
         robotino->change_state(IrParaPonto::instance());
         objetivo_completo = 12;
@@ -299,17 +299,17 @@ if(objetivo_completo == 0){
     }else if (objetivo_completo == 13){
         robotino->setAreaDeposito(Robotino::AREA3);
         robotino->change_state(ContarLinhas::instance());
-        objetivo_completo = 14;
+        objetivo_completo = 15;
 
     }else if (objetivo_completo == 14){
-        robotino->change_state(IdentificarCor::instance());
+        //robotino->change_state(IdentificarCor::instance());
         objetivo_completo = 15;
 
     }else if (objetivo_completo == 15){
         std::cout << "Disco 1 da cor: " << robotino->area2disco1.getType() << "\n";
         std::cout << "Disco 2 da cor: " << robotino->area2disco2.getType() << "\n";
-        identificarCorFaltandoArea2(robotino);
-        objetivo_completo = 16;
+        //identificarCorFaltandoArea2(robotino);
+        objetivo_completo = 17;
 
     }else if (objetivo_completo == 16){
         std::cout << "Esta faltando o disco da cor: " << robotino->area2discoFaltando.getType() << "\n";
@@ -321,14 +321,14 @@ if(objetivo_completo == 0){
 
     else if (objetivo_completo == 17) {
 
-        robotino->definirDestino((robotino->odometryX())/10+30, robotino->odometryY()/10);
+        robotino->definirDestino((robotino->odometryX())/10, robotino->odometryY()/10 - 50);
         robotino->change_state(IrParaPonto::instance());
         objetivo_completo = 18;
 
     }else if (objetivo_completo == 18){
 
         Coordenadas destino = robotino->pegarCoordenadaArea(Robotino::AREA2);
-        robotino->definirDestino(robotino->odometryX()/10, -(destino.get_y()));
+        robotino->definirDestino(destino.get_x(), robotino->odometryY()/10);
         std::cout << "Destino: " << destino << std::endl;
         robotino->change_state(IrParaPonto::instance());
         objetivo_completo = 19;

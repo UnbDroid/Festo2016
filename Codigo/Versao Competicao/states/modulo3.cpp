@@ -22,6 +22,7 @@
 #include "irparedepelaparede.hpp"
 #include "nobusca.hpp"
 #include "navegarentreareas2.hpp"
+#include "navegarentreareas3.hpp"
 #include "alinhartraseiro.hpp"
 #include <unistd.h>
 #include <vector>
@@ -178,19 +179,19 @@ void Modulo3::execute(Robotino *robotino)
     if(objetivo_completo == 0){
 
         robotino->definirParedeAlvo(Robotino::LESTE180);
-        robotino->setDistParede(10);
+        robotino->setDistParede(15);
         robotino->setDistTrasParede(15);
         robotino->change_state(IrParedePelaParede::instance());
-        objetivo_completo = 1;
+        objetivo_completo = 5001;
 
     }else if (objetivo_completo == 1){
 
-        robotino->setDistParede(10);
+        robotino->setDistParede(20);
         robotino->definirParedeAlvo(Robotino::LESTE180);
         robotino->definirLinhaAlvo(263, Robotino::HORIZONTAL); // mudei para arena competicao
         robotino->change_state(AndarPelaParedeAteLinhaSensor::instance());
         robotino->setCarregando(false);
-        objetivo_completo = 2;
+        objetivo_completo = 4;
 
     }else if (objetivo_completo == 2){
 
@@ -243,7 +244,7 @@ void Modulo3::execute(Robotino *robotino)
        else if (objetivo_completo == 6) {
             robotino->setDepositoAtual(Robotino::AREA7);
             robotino->setDepositoDestino(Robotino::AREA6);
-            robotino->change_state(NavegarEntreAreas2::instance());
+            robotino->change_state(NavegarEntreAreas3::instance());
             objetivo_completo = 7;
         }
         else if (objetivo_completo == 7){
@@ -270,7 +271,7 @@ void Modulo3::execute(Robotino *robotino)
        else if (objetivo_completo == 9001) {
             robotino->setDepositoAtual(Robotino::AREA6);
             robotino->setDepositoDestino(Robotino::AREA5);
-            robotino->change_state(NavegarEntreAreas2::instance());
+            robotino->change_state(NavegarEntreAreas3::instance());
             objetivo_completo = 10;
         }
         else if (objetivo_completo == 10){
@@ -297,7 +298,7 @@ void Modulo3::execute(Robotino *robotino)
        else if (objetivo_completo == 103) {
             robotino->setDepositoAtual(Robotino::AREA5);
             robotino->setDepositoDestino(Robotino::AREA4);
-            robotino->change_state(NavegarEntreAreas2::instance());
+            robotino->change_state(NavegarEntreAreas3::instance());
             objetivo_completo = 104;
         }
         else if (objetivo_completo == 104){
@@ -325,7 +326,7 @@ void Modulo3::execute(Robotino *robotino)
         else if (objetivo_completo == 111) {
             robotino->setDepositoAtual(Robotino::AREA4);
             robotino->setDepositoDestino(Robotino::AREA3);
-            robotino->change_state(NavegarEntreAreas2::instance());
+            robotino->change_state(NavegarEntreAreas3::instance());
             objetivo_completo = 112;
         }
         else if (objetivo_completo == 112){
@@ -352,7 +353,7 @@ void Modulo3::execute(Robotino *robotino)
     else if (objetivo_completo == 12) {
         robotino->setDepositoAtual(Robotino::AREA3);
         robotino->setDepositoDestino(Robotino::AREA2);
-        robotino->change_state(NavegarEntreAreas2::instance());
+        robotino->change_state(NavegarEntreAreas3::instance());
         objetivo_completo = 15;
     }
 
@@ -413,7 +414,7 @@ void Modulo3::execute(Robotino *robotino)
 
         robotino->setDepositoAtual(robotino->getDepositoDestino());
         robotino->setDepositoDestino(Robotino::AREA2);
-        robotino->change_state(NavegarEntreAreas2::instance());
+        robotino->change_state(NavegarEntreAreas3::instance());
 
         if (!deixando){
             objetivo_completo = 26;
@@ -427,7 +428,7 @@ void Modulo3::execute(Robotino *robotino)
 
         robotino->setDepositoAtual(robotino->getDepositoDestino());
         robotino->setDepositoDestino(Robotino::AREA3);
-        robotino->change_state(NavegarEntreAreas2::instance());
+        robotino->change_state(NavegarEntreAreas3::instance());
 
         if (!deixando){
             objetivo_completo = 26;
@@ -441,7 +442,7 @@ void Modulo3::execute(Robotino *robotino)
 
         robotino->setDepositoAtual(robotino->getDepositoDestino());
         robotino->setDepositoDestino(Robotino::AREA4);
-        robotino->change_state(NavegarEntreAreas2::instance());
+        robotino->change_state(NavegarEntreAreas3::instance());
 
         if (!deixando){
             objetivo_completo = 26;
@@ -456,7 +457,7 @@ void Modulo3::execute(Robotino *robotino)
 
         robotino->setDepositoAtual(robotino->getDepositoDestino());
         robotino->setDepositoDestino(Robotino::AREA5);
-        robotino->change_state(NavegarEntreAreas2::instance());
+        robotino->change_state(NavegarEntreAreas3::instance());
 
         if (!deixando){
             objetivo_completo = 26;
@@ -471,7 +472,7 @@ void Modulo3::execute(Robotino *robotino)
 
         robotino->setDepositoAtual(robotino->getDepositoDestino());
         robotino->setDepositoDestino(Robotino::AREA6);
-        robotino->change_state(NavegarEntreAreas2::instance());
+        robotino->change_state(NavegarEntreAreas3::instance());
 
         if (!deixando){
             objetivo_completo = 26;
@@ -485,7 +486,7 @@ void Modulo3::execute(Robotino *robotino)
 
         robotino->setDepositoAtual(robotino->getDepositoDestino());
         robotino->setDepositoDestino(Robotino::AREA7);
-        robotino->change_state(NavegarEntreAreas2::instance());
+        robotino->change_state(NavegarEntreAreas3::instance());
 
         if (!deixando){
             objetivo_completo = 26;
@@ -784,22 +785,19 @@ void Modulo3::execute(Robotino *robotino)
     }else if (objetivo_completo == 52) {
         robotino->definirParedeAlvo(Robotino::NORTE90);
         robotino->setDistParede(15);
-        robotino->definirLinhaAlvo(-171, Robotino::VERTICAL); //mudei para arena nova
+        robotino->definirLinhaAlvo(-225, Robotino::VERTICAL); //mudei para arena nova
         robotino->change_state(AndarPelaParedeAteLinhaSensor::instance());
         robotino->setCarregando(false);
         objetivo_completo = 53;
 
     }else if(objetivo_completo == 53){
-        std::cout << "Y: " << robotino->odometryY() << "\n";
-        if(robotino->odometryY() < -1300){       //mudei para arena nova
-             robotino->setVelocity(100,0,0);
-        }else{
-            robotino->setVelocity(0,0,0);
-            objetivo_completo = 54;
-        }
-
+        robotino->definirDestino((robotino->odometryX())/10, robotino->odometryY()/10+35);
+        robotino->change_state(IrParaPonto::instance());
+        objetivo_completo = 54;
     }else if(objetivo_completo == 54){
-        robotino->exit("Terminei");
+
+        robotino->exit("Terminou");
+
     }
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

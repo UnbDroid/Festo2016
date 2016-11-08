@@ -252,7 +252,7 @@ void IrParaParede::execute(Robotino *robotino)
                 robotino->setOdometry(robotino->odometryX(),-((robotino->getLarguraMapa()) * 10-(distancia_da_direita*10+15)),0);
             }
             if (paredeAlvo == Robotino::NORTE90) {
-                robotino->setOdometry((robotino->getAlturaMapa() - (distancia_da_direita*10+15)),robotino->odometryY(),90);
+                robotino->setOdometry((robotino->getAlturaMapa()*10 - (distancia_da_direita*10+15)),robotino->odometryY(),90);
             }
             if (paredeAlvo == Robotino::OESTE180) {
                 robotino->setOdometry(robotino->odometryX(),-((distancia_da_direita*10+15)),180);

@@ -23,8 +23,8 @@ Object::Object(string name){
 		//BGR value for blue:
 		setColor(Scalar(255,0,0));*/
 
-		setHSVmin(Scalar(34,120,40)); // tava50
-		setHSVmax(Scalar(80,256,200));
+		setHSVmin(Scalar(34,120,55)); // tava50
+		setHSVmax(Scalar(90,256,256));
 
 		//BGR value for green:
 		setColor(Scalar(0,255,0));

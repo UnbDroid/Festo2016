@@ -1,5 +1,6 @@
 #include "contarlinhas.hpp"
 #include "robotino.hpp"
+#include "irparaponto.hpp"
 
 //*****************************************************************************************************************
 // ContarLinhas
@@ -25,7 +26,9 @@ void ContarLinhas::execute(Robotino *robotino)
     static bool viMetal = false;
     static bool preto = false;
     static bool tag = false;
+    static bool bati = false;
     static int numeroLinhas = 0;
+    static State<Robotino> * voltar;
 
     std::cout << viMetal<<"\n";
     std::cout << robotino->readInductiveSensor()<<"\n--------------\n";
@@ -54,7 +57,7 @@ void ContarLinhas::execute(Robotino *robotino)
         }
         robotino->setVelocity(0,0,0);
         viMetal = true;
-        robotino->setOdometry(750,robotino->odometryY(),179);
+        robotino->setOdometry(760 , robotino->odometryY(), 180);
         if (numeroLinhas == 1){
             robotino->setCorDiscoDeposito(Object("blue"), Object("red"));
         }else if (numeroLinhas == 2){
@@ -66,7 +69,23 @@ void ContarLinhas::execute(Robotino *robotino)
         viMetal = false;
         preto = false;
         tag = false;
+        bati = false;
         numeroLinhas = 0;
+    }
+    if (bati) {
+        robotino->setVelocity(0,0,0);
+        robotino->change_state(voltar);
+        viMetal = false;
+        preto = false;
+        tag = false;
+        numeroLinhas = 0;
+        bati = false;
+    }
+    if (robotino->bumper() == true){
+        voltar = robotino->previous_state();
+        robotino->definirDestino(robotino->odometryX()/10 + 60, robotino->odometryY()/10);
+        robotino->change_state(IrParaPonto::instance());
+        bati = true;
     }
 
 }
